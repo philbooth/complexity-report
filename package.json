@@ -1,0 +1,39 @@
+{
+    "name": "complexity-report",
+    "version": "0.1.0",
+    "author": "Phil Booth <pmbooth@gmail.com>",
+    "description": "A tool for reporting code complexity metrics in JavaScript projects.",
+    "contributors": {
+        "name": "Phil Booth",
+        "email": "pmbooth@gmail.com"
+    },
+    "main": "./src/complexityReport.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/philbooth/complexityReport.js"
+    },
+    "keywords": [
+        "cyclomatic complexity",
+        "code complexity",
+        "conditional complexity",
+        "complexity analysis",
+        "complexity",
+        "simplicity",
+        "static analysis"
+    ],
+    "dependencies": {
+        "esprima": "0.9.x"
+    },
+    "devDependencies": {
+        "jake": "0.3.x",
+        "jshint": "0.7.x",
+        "mocha": "1.2.x",
+        "chai": "1.1.x",
+        "uglify-js": "1.3.x"
+    },
+    "license": "MIT",
+    "scripts": {
+        "test": "jake test"
+    }
+}
+
