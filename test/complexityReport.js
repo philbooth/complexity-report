@@ -56,6 +56,10 @@
                     cr.run('console.log("foo");');
                 });
             });
+
+            test('run returns object', function () {
+                assert.isObject(cr.run('"foo"'));
+            });
         });
     });
 }());

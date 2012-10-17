@@ -20,6 +20,8 @@
         ast = esprima.parse(source, {
             loc: true
         });
+
+        return {};
     }
 
     function processFunction (fn) {
