@@ -13,15 +13,17 @@
         "url": "https://github.com/philbooth/complexityReport.js"
     },
     "keywords": [
+        "complexity",
+        "simplicity",
         "cyclomatic complexity",
         "code complexity",
         "conditional complexity",
         "complexity analysis",
-        "complexity",
-        "simplicity",
         "static analysis"
     ],
     "dependencies": {
+        "coffee-script": "1.3.x",
+        "check-types": "0.1.x",
         "esprima": "0.9.x"
     },
     "devDependencies": {
