@@ -65,6 +65,10 @@
                 assert.isObject(cr.run('"foo"').aggregate.complexity);
             });
 
+            test('run returns functions property', function () {
+                assert.isArray(cr.run('"foo"').functions);
+            });
+
             suite('run against function call:', function () {
                 var report;
 
@@ -79,6 +83,10 @@
                 test('aggregate cyclomatic complexity is 1', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
                 });
+
+                test('functions is empty', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
             });
 
             suite('run against function definition:', function () {
@@ -92,8 +100,16 @@
                     report = undefined;
                 });
 
-                test('cyclomatic complexity is 1', function () {
+                test('aggregate cyclomatic complexity is 1', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
+                });
+
+                test('functions has length one', function () {
+                    assert.lengthOf(report.functions, 1);
+                });
+
+                test('function has correct name', function () {
+                    assert.strictEqual(report.functions[0].name, 'foo');
                 });
             });
 
@@ -108,8 +124,12 @@
                     report = undefined;
                 });
 
-                test('cyclomatic complexity is 1', function () {
+                test('aggregate cyclomatic complexity is 1', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
+                });
+
+                test('functions is empty', function () {
+                    assert.lengthOf(report.functions, 0);
                 });
             });
 
@@ -126,6 +146,10 @@
 
                 test('cyclomatic complexity is 2', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
+                });
+
+                test('functions is empty', function () {
+                    assert.lengthOf(report.functions, 0);
                 });
             });
         });

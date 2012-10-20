@@ -6,7 +6,8 @@
     var check, esprima,
 
     syntaxHandlers = {
-        IfStatement: processCondition
+        IfStatement: processCondition,
+        FunctionDeclaration: processFunction
     };
 
     require('coffee-script');
@@ -25,16 +26,21 @@
             loc: true
         });
 
+        //console.log('');
+        //console.log('-= AST BEGIN =-');
         //console.dir(ast);
+        //console.log('-= AST END =-');
+        //console.log('');
 
-        processAst(ast.body, report);
+        processTree(ast.body, report);
 
         return report;
     }
 
     function createReport () {
         return {
-            aggregate: createFunctionReport()
+            aggregate: createFunctionReport(),
+            functions: []
         };
     }
 
@@ -47,32 +53,57 @@
         };
     }
 
-    function processAst (ast, report) {
+    function processTree (tree, report) {
         var i;
 
-        check.verifyArray(ast, 'Invalid syntax tree');
+        check.verifyArray(tree, 'Invalid syntax tree');
 
-        for (i = 0; i < ast.length; i += 1) {
-            check.verifyObject(ast[i], 'Invalid node');
+        for (i = 0; i < tree.length; i += 1) {
+            processNode(tree[i], report);
+        }
+    }
 
-            if (check.isFunction(syntaxHandlers[ast[i].type])) {
-                syntaxHandlers[ast[i].type](ast[i], report);
-            }
+    function processNode (node, report) {
+        check.verifyObject(node, 'Invalid syntax node');
+
+        if (check.isFunction(syntaxHandlers[node.type])) {
+            syntaxHandlers[node.type](node, report);
         }
     }
 
     function processCondition (condition, report) {
         report.aggregate.complexity.cyclomatic += 1;
 
+        console.log('');
+        console.log('-= TEST BEGIN =-');
         console.dir(condition.test);
-        console.dir(condition.consequent);
+        console.log('-= TEST END =-');
+        console.log('');
+        console.log('');
+        console.log('-= CONSEQUENT BEGIN =-');
+        console.dir( condition.consequent);
+        console.log('-= CONSEQUENT END =-');
+        console.log('');
+        console.log('');
+        console.log('-= ALTERNATE BEGIN =-');
         console.dir(condition.alternate);
+        console.log('-= ALTERNATE END =-');
+        console.log('');
     }
 
     function processBlock (block, report) {
     }
 
     function processFunction (fn, report) {
+        var functionReport = createFunctionReport(fn.id.name);
+
+        report.functions.push(functionReport);
+
+        console.log('');
+        console.log('-= FN BEGIN =-');
+        console.dir(fn);
+        console.log('-= FN END =-');
+        console.log('');
     }
 }());
 
