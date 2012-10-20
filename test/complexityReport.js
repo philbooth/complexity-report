@@ -189,6 +189,26 @@
                 });
             });
 
+            suite('run against ternary condtional expression assigned to variable', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('var foo = true ? "bar" : "baz";');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
+                });
+
+                test('functions is empty', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+            });
+
             // TODO
             // ====
             // assignment rvalues

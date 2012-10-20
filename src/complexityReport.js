@@ -14,12 +14,13 @@
 
     syntaxHandlers = {
         IfStatement: processCondition,
+        ConditionalExpression: processCondition,
         BlockStatement: processBlock,
         FunctionDeclaration: processFunction,
+        FunctionExpression: processFunction,
         VariableDeclaration: processVariables,
         VariableDeclarator: processVariable,
         ReturnStatement: processReturn,
-        FunctionExpression: processFunction,
         ExpressionStatement: processExpression,
         CallExpression: processCall
     };
@@ -117,16 +118,13 @@
     }
 
     function processVariable (variable, report, currentReport) {
-        var name;
-
-        if (variable.init.type === 'FunctionExpression') {
-            if (check.isObject(variable.init.id)) {
-                name = variable.init.id.name;
-            } else {
-                name = variable.id.name;
-            }
-
-            processFunctionBody(name, variable.init.body, report);
+        if (
+            variable.init.type === 'FunctionExpression' &&
+            check.isObject(variable.init.id) === false
+        ) {
+            processFunctionBody(variable.id.name, variable.init.body, report);
+        } else {
+            processNode(variable.init, report, currentReport);
         }
     }
 
