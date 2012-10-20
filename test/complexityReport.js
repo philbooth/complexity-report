@@ -264,6 +264,26 @@
                     assert.strictEqual(report.functions[1].complexity.cyclomatic, 1);
                 });
             });
+
+            suite('run against function declaration containing conditional:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('function foo () { if (true) { "bar"; } }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
+                });
+
+                test('function has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.functions[0].complexity.cyclomatic, 2);
+                });
+            });
         });
     });
 }());

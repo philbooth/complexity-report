@@ -56,47 +56,50 @@
         };
     }
 
-    function processTree (tree, report) {
+    function processTree (tree, report, currentReport) {
         var i;
 
         check.verifyArray(tree, 'Invalid syntax tree');
 
         for (i = 0; i < tree.length; i += 1) {
-            processNode(tree[i], report);
+            processNode(tree[i], report, currentReport);
         }
     }
 
-    function processNode (node, report) {
+    function processNode (node, report, currentReport) {
         check.verifyObject(node, 'Invalid syntax node');
 
         if (check.isFunction(syntaxHandlers[node.type])) {
-            syntaxHandlers[node.type](node, report);
+            syntaxHandlers[node.type](node, report, currentReport);
         }
     }
 
-    function processCondition (condition, report) {
+    function processCondition (condition, report, currentReport) {
         report.aggregate.complexity.cyclomatic += 1;
+        if (currentReport) {
+            currentReport.complexity.cyclomatic += 1;
+        }
 
         if (condition.consequent) {
-            processNode(condition.consequent, report);
+            processNode(condition.consequent, report, currentReport);
         }
 
         if (condition.alternate) {
-            processNode(condition.alternate, report);
+            processNode(condition.alternate, report, currentReport);
         }
     }
 
-    function processBlock (block, report) {
-        processTree(block.body, report);
+    function processBlock (block, report, currentReport) {
+        processTree(block.body, report, currentReport);
     }
 
     function processFunction (fn, report) {
-        var functionReport = createFunctionReport(fn.id.name);
+        var currentReport = createFunctionReport(fn.id.name);
 
-        report.functions.push(functionReport);
+        report.functions.push(currentReport);
 
         if (fn.body) {
-            processNode(fn.body, report);
+            processNode(fn.body, report, currentReport);
         }
     }
 }());
