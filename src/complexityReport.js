@@ -29,12 +29,6 @@
             loc: true
         });
 
-        //console.log('');
-        //console.log('-= AST BEGIN =-');
-        //console.dir(ast);
-        //console.log('-= AST END =-');
-        //console.log('');
-
         processTree(ast.body, report);
 
         return report;
