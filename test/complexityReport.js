@@ -143,10 +143,6 @@
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 3);
                 });
-
-                test('functions is empty', function () {
-                    assert.lengthOf(report.functions, 0);
-                });
             });
 
             suite('run against alternate dual condition:', function () {
@@ -163,10 +159,6 @@
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 3);
                 });
-
-                test('functions is empty', function () {
-                    assert.lengthOf(report.functions, 0);
-                });
             });
 
             suite('run against nested condition:', function () {
@@ -182,6 +174,22 @@
 
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 3);
+                });
+            });
+
+            suite('run against assignment expression', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('var foo = "bar";');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
                 });
 
                 test('functions is empty', function () {
@@ -203,16 +211,27 @@
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
                 });
+            });
 
-                test('functions is empty', function () {
-                    assert.lengthOf(report.functions, 0);
+            suite('run against logical or expression assigned to variable', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('var foo = true || false;');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
                 });
             });
 
             // TODO
             // ====
             // assignment rvalues
-            // ternary operator
             // logical or operator in assignment
             // function call arguments
             // return statements

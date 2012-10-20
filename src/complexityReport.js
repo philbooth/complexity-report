@@ -16,6 +16,7 @@
         IfStatement: processCondition,
         ConditionalExpression: processCondition,
         BlockStatement: processBlock,
+        LogicalExpression: processLogical,
         FunctionDeclaration: processFunction,
         FunctionExpression: processFunction,
         VariableDeclaration: processVariables,
@@ -93,6 +94,15 @@
 
     function processBlock (block, report, currentReport) {
         processTree(block.body, report, currentReport);
+    }
+
+    function processLogical (logical, report, currentReport) {
+        if (logical.operator === '||') {
+            processCondition({
+                consequent: logical.left,
+                alternate: logical.right
+            }, report, currentReport);
+        }
     }
 
     function processFunction (fn, report, currentReport) {
