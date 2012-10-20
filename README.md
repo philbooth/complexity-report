@@ -23,11 +23,11 @@ var complexityReport = require('complexity-report');
 
 ### Calling the library
 
-'TODO'
+TODO
 
 ### Examples
 
-'TODO'
+TODO
 
 ## Development
 
