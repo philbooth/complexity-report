@@ -189,6 +189,14 @@
                 });
             });
 
+            // TODO
+            // ====
+            // assignment rvalues
+            // ternary operator
+            // logical or operator in assignment
+            // function call arguments
+            // return statements
+
             suite('run against function declaration:', function () {
                 var report;
 
@@ -232,10 +240,6 @@
                     report = undefined;
                 });
 
-                test('aggregate cyclomatic complexity is correct', function () {
-                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
-                });
-
                 test('functions has correct length', function () {
                     assert.lengthOf(report.functions, 2);
                 });
@@ -244,24 +248,8 @@
                     assert.strictEqual(report.functions[0].name, 'foo');
                 });
 
-                test('first function has complexity property', function () {
-                    assert.isObject(report.functions[0].complexity);
-                });
-
-                test('first function has correct cyclomatic complexity', function () {
-                    assert.strictEqual(report.functions[0].complexity.cyclomatic, 1);
-                });
-
                 test('second function has correct name', function () {
                     assert.strictEqual(report.functions[1].name, 'bar');
-                });
-
-                test('second function has complexity property', function () {
-                    assert.isObject(report.functions[1].complexity);
-                });
-
-                test('second function has correct cyclomatic complexity', function () {
-                    assert.strictEqual(report.functions[1].complexity.cyclomatic, 1);
                 });
             });
 
@@ -296,20 +284,12 @@
                     report = undefined;
                 });
 
-                test('aggregate has correct cyclomatic complexity', function () {
-                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
-                });
-
                 test('functions has correct length', function () {
                     assert.lengthOf(report.functions, 1);
                 });
 
                 test('function has correct name', function () {
                     assert.strictEqual(report.functions[0].name, 'foo');
-                });
-
-                test('function has correct cyclomatic complexity', function () {
-                    assert.strictEqual(report.functions[0].complexity.cyclomatic, 1);
                 });
             });
 
@@ -404,13 +384,6 @@
                     assert.strictEqual(report.functions[0].name, 'foo');
                 });
             });
-
-            // TODO
-            // ====
-            // assignment rvalues
-            // function call arguments
-            // return statements
-            // ternary operator
         });
     });
 }());
