@@ -3,24 +3,27 @@
 (function () {
     'use strict';
 
-    var check, esprima,
+    var check, esprima, syntaxHandlers;
 
-    syntaxHandlers = {
-        IfStatement: processCondition,
-        FunctionDeclaration: processFunction
-    };
+    exports.run = run;
 
     require('coffee-script');
 
     check = require('check-types');
     esprima = require('esprima');
 
-    exports.run = run;
+    syntaxHandlers = {
+        IfStatement: processCondition,
+        BlockStatement: processBlock,
+        FunctionDeclaration: processFunction
+    };
 
     function run (source) {
-        var ast, report = createReport();
+        var report, ast;
 
         check.verifyUnemptyString(source, 'Invalid source');
+
+        report = createReport();
 
         ast = esprima.parse(source, {
             loc: true
@@ -74,24 +77,17 @@
     function processCondition (condition, report) {
         report.aggregate.complexity.cyclomatic += 1;
 
-        console.log('');
-        console.log('-= TEST BEGIN =-');
-        console.dir(condition.test);
-        console.log('-= TEST END =-');
-        console.log('');
-        console.log('');
-        console.log('-= CONSEQUENT BEGIN =-');
-        console.dir( condition.consequent);
-        console.log('-= CONSEQUENT END =-');
-        console.log('');
-        console.log('');
-        console.log('-= ALTERNATE BEGIN =-');
-        console.dir(condition.alternate);
-        console.log('-= ALTERNATE END =-');
-        console.log('');
+        if (condition.consequent) {
+            processNode(condition.consequent, report);
+        }
+
+        if (condition.alternate) {
+            processNode(condition.alternate, report);
+        }
     }
 
     function processBlock (block, report) {
+        processTree(block.body, report);
     }
 
     function processFunction (fn, report) {
@@ -99,11 +95,9 @@
 
         report.functions.push(functionReport);
 
-        console.log('');
-        console.log('-= FN BEGIN =-');
-        console.dir(fn);
-        console.log('-= FN END =-');
-        console.log('');
+        if (fn.body) {
+            processNode(fn.body, report);
+        }
     }
 }());
 

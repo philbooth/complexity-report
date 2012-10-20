@@ -80,51 +80,7 @@
                     report = undefined;
                 });
 
-                test('aggregate cyclomatic complexity is 1', function () {
-                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
-                });
-
-                test('functions is empty', function () {
-                    assert.lengthOf(report.functions, 0);
-                });
-            });
-
-            suite('run against function definition:', function () {
-                var report;
-
-                setup(function () {
-                    report = cr.run('function foo () { "bar"; }');
-                });
-
-                teardown(function () {
-                    report = undefined;
-                });
-
-                test('aggregate cyclomatic complexity is 1', function () {
-                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
-                });
-
-                test('functions has length one', function () {
-                    assert.lengthOf(report.functions, 1);
-                });
-
-                test('function has correct name', function () {
-                    assert.strictEqual(report.functions[0].name, 'foo');
-                });
-            });
-
-            suite('run against assignment:', function () {
-                var report;
-
-                setup(function () {
-                    report = cr.run('var foo = "bar";');
-                });
-
-                teardown(function () {
-                    report = undefined;
-                });
-
-                test('aggregate cyclomatic complexity is 1', function () {
+                test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
                 });
 
@@ -144,12 +100,168 @@
                     report = undefined;
                 });
 
-                test('cyclomatic complexity is 2', function () {
+                test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
                 });
 
                 test('functions is empty', function () {
                     assert.lengthOf(report.functions, 0);
+                });
+            });
+
+            suite('run against condition with alternate:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('if (true) { "foo"; } else { "bar"; }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
+                });
+
+                test('functions is empty', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+            });
+
+            suite('run against dual condition:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('if (true) { "foo"; } if (false) { "bar"; }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 3);
+                });
+
+                test('functions is empty', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+            });
+
+            suite('run against alternate dual condition:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('if (true) { "foo"; } else if (false) { "bar"; }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 3);
+                });
+
+                test('functions is empty', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+            });
+
+            suite('run against nested condition:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('if (true) { "foo"; if (false) { "bar"; } }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 3);
+                });
+
+                test('functions is empty', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+            });
+
+            suite('run against function declaration:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('function foo () { "bar"; }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
+                });
+
+                test('functions has correct length', function () {
+                    assert.lengthOf(report.functions, 1);
+                });
+
+                test('function has correct name', function () {
+                    assert.strictEqual(report.functions[0].name, 'foo');
+                });
+
+                test('function has complexity property', function () {
+                    assert.isObject(report.functions[0].complexity);
+                });
+
+                test('function has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.functions[0].complexity.cyclomatic, 1);
+                });
+            });
+
+            suite('run against nested function declaration:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('function foo () { bar(); function bar () { "baz"; } }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate cyclomatic complexity is correct', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
+                });
+
+                test('functions has correct length', function () {
+                    assert.lengthOf(report.functions, 2);
+                });
+
+                test('first function has correct name', function () {
+                    assert.strictEqual(report.functions[0].name, 'foo');
+                });
+
+                test('first function has complexity property', function () {
+                    assert.isObject(report.functions[0].complexity);
+                });
+
+                test('first function has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.functions[0].complexity.cyclomatic, 1);
+                });
+
+                test('second function has correct name', function () {
+                    assert.strictEqual(report.functions[1].name, 'bar');
+                });
+
+                test('second function has complexity property', function () {
+                    assert.isObject(report.functions[1].complexity);
+                });
+
+                test('second function has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.functions[1].complexity.cyclomatic, 1);
                 });
             });
         });
