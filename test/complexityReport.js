@@ -312,6 +312,52 @@
                     assert.strictEqual(report.functions[0].complexity.cyclomatic, 1);
                 });
             });
+
+            suite('run against named function assigned to variable:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('var foo = function bar () { "baz"; }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('function has correct name', function () {
+                    assert.strictEqual(report.functions[0].name, 'bar');
+                });
+            });
+
+            suite('run against anonymous function returned from function:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('function foo () { return function () { "bar"; }; }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('functions has correct length', function () {
+                    assert.lengthOf(report.functions, 2);
+                });
+
+                test('first function has correct name', function () {
+                    assert.strictEqual(report.functions[0].name, 'foo');
+                });
+
+                test('second function is anonymous', function () {
+                    assert.isUndefined(report.functions[1].name);
+                });
+            });
+
+            // TODO
+            // ====
+            // assignment rvalues
+            // function call arguments
+            // return statements
         });
     });
 }());

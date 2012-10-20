@@ -17,7 +17,8 @@
         BlockStatement: processBlock,
         FunctionDeclaration: processFunction,
         VariableDeclaration: processVariables,
-        VariableDeclarator: processVariable
+        VariableDeclarator: processVariable,
+        ReturnStatement: processReturn
     };
 
     function run (source) {
@@ -91,17 +92,13 @@
     }
 
     function processFunction (fn, report, currentReport) {
-        processFunctionBody(fn.id.name, fn.body, report);
-    }
+        var name;
 
-    function processVariables (variables, report, currentReport) {
-        processTree(variables.declarations, report, currentReport);
-    }
-
-    function processVariable (variable, report, currentReport) {
-        if (variable.init.type === 'FunctionExpression') {
-            processFunctionBody(variable.id.name, variable.init.body, report);
+        if (check.isObject(fn.id)) {
+            name = fn.id.name;
         }
+
+        processFunctionBody(name, fn.body, report);
     }
 
     function processFunctionBody (name, body, report) {
@@ -110,6 +107,34 @@
         report.functions.push(currentReport);
 
         processNode(body, report, currentReport);
+    }
+
+    function processVariables (variables, report, currentReport) {
+        processTree(variables.declarations, report, currentReport);
+    }
+
+    function processVariable (variable, report, currentReport) {
+        var name;
+
+        if (variable.init.type === 'FunctionExpression') {
+            if (check.isObject(variable.init.id)) {
+                name = variable.init.id.name;
+            } else {
+                name = variable.id.name;
+            }
+
+            processFunctionBody(name, variable.init.body, report);
+        }
+    }
+
+    function processReturn (rtn, report, currentReport) {
+        var name;
+
+        if (check.isObject(rtn.argument)) {
+            if (rtn.argument.type === 'FunctionExpression') {
+                processFunction(rtn.argument, report, currentReport);
+            }
+        }
     }
 }());
 
