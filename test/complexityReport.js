@@ -284,6 +284,34 @@
                     assert.strictEqual(report.functions[0].complexity.cyclomatic, 2);
                 });
             });
+
+            suite('run against anonymous function assigned to variable:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('var foo = function () { "bar"; }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
+                });
+
+                test('functions has correct length', function () {
+                    assert.lengthOf(report.functions, 1);
+                });
+
+                test('function has correct name', function () {
+                    assert.strictEqual(report.functions[0].name, 'foo');
+                });
+
+                test('function has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.functions[0].complexity.cyclomatic, 1);
+                });
+            });
         });
     });
 }());

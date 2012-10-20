@@ -15,7 +15,9 @@
     syntaxHandlers = {
         IfStatement: processCondition,
         BlockStatement: processBlock,
-        FunctionDeclaration: processFunction
+        FunctionDeclaration: processFunction,
+        VariableDeclaration: processVariables,
+        VariableDeclarator: processVariable
     };
 
     function run (source) {
@@ -25,6 +27,7 @@
 
         report = createReport();
 
+        // TODO: Ditch `loc` if we don't end up using it.
         ast = esprima.parse(source, {
             loc: true
         });
@@ -87,14 +90,26 @@
         processTree(block.body, report, currentReport);
     }
 
-    function processFunction (fn, report) {
-        var currentReport = createFunctionReport(fn.id.name);
+    function processFunction (fn, report, currentReport) {
+        processFunctionBody(fn.id.name, fn.body, report);
+    }
+
+    function processVariables (variables, report, currentReport) {
+        processTree(variables.declarations, report, currentReport);
+    }
+
+    function processVariable (variable, report, currentReport) {
+        if (variable.init.type === 'FunctionExpression') {
+            processFunctionBody(variable.id.name, variable.init.body, report);
+        }
+    }
+
+    function processFunctionBody (name, body, report) {
+        var currentReport = createFunctionReport(name);
 
         report.functions.push(currentReport);
 
-        if (fn.body) {
-            processNode(fn.body, report, currentReport);
-        }
+        processNode(body, report, currentReport);
     }
 }());
 
