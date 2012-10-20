@@ -421,6 +421,38 @@
                 });
             });
 
+            suite('run against ternary condtional expression passed as argument', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('parseInt("10", true ? 10 : 8);');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
+                });
+            });
+
+            suite('run against logical or expression passed as argument', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('parseInt("10", 10 || 8);');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
+                });
+            });
+
             suite('run against anonymous function passed as argument:', function () {
                 var report;
 
