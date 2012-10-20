@@ -18,7 +18,10 @@
         FunctionDeclaration: processFunction,
         VariableDeclaration: processVariables,
         VariableDeclarator: processVariable,
-        ReturnStatement: processReturn
+        ReturnStatement: processReturn,
+        FunctionExpression: processFunction,
+        ExpressionStatement: processExpression,
+        CallExpression: processCall
     };
 
     function run (source) {
@@ -128,13 +131,15 @@
     }
 
     function processReturn (rtn, report, currentReport) {
-        var name;
+        processNode(rtn.argument, report, currentReport);
+    }
 
-        if (check.isObject(rtn.argument)) {
-            if (rtn.argument.type === 'FunctionExpression') {
-                processFunction(rtn.argument, report, currentReport);
-            }
-        }
+    function processExpression (expression, report, currentReport) {
+        processNode(expression.expression, report, currentReport);
+    }
+
+    function processCall (call, report, currentReport) {
+        processTree(call.arguments, report, currentReport);
     }
 }());
 

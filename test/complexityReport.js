@@ -353,11 +353,64 @@
                 });
             });
 
+            suite('run against named function returned from function:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('function foo () { return function bar () { "baz"; }; }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('second function has correct name', function () {
+                    assert.strictEqual(report.functions[1].name, 'bar');
+                });
+            });
+
+            suite('run against anonymous function passed as argument:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('setTimeout(function () { "foo"; }, 1000);');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('functions has correct length', function () {
+                    assert.lengthOf(report.functions, 1);
+                });
+
+                test('function is anonymous', function () {
+                    assert.isUndefined(report.functions[0].name);
+                });
+            });
+
+            suite('run against named function passed as argument:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('setTimeout(function foo () { "bar"; }, 1000);');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('function has correct name', function () {
+                    assert.strictEqual(report.functions[0].name, 'foo');
+                });
+            });
+
             // TODO
             // ====
             // assignment rvalues
             // function call arguments
             // return statements
+            // ternary operator
         });
     });
 }());
