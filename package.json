@@ -24,7 +24,8 @@
     "dependencies": {
         "coffee-script": "1.3.x",
         "check-types": "0.1.x",
-        "esprima": "0.9.x"
+        "esprima": "0.9.x",
+        "commander": "1.0.5"
     },
     "devDependencies": {
         "jake": "0.3.x",
