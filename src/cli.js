@@ -1,4 +1,4 @@
-/*globals process */
+/*globals require, process */
 
 (function () {
     'use strict';
@@ -106,7 +106,7 @@
                 }
 
                 exit();
-            }
+            });
         }
     }
 
