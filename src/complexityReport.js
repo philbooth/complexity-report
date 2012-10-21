@@ -23,6 +23,8 @@
         ForInStatement: processForIn,
         WhileStatement: processLoop,
         DoWhileStatement: processLoop,
+        TryStatement: processTry,
+        CatchClause: processCatch,
         FunctionDeclaration: processFunction,
         FunctionExpression: processFunction,
         VariableDeclaration: processVariables,
@@ -137,7 +139,16 @@
     }
 
     function processForIn (forIn, report, customReport) {
-        processBlock(forIn.body, report, customReport);
+        processNode(forIn.body, report, customReport);
+    }
+
+    function processTry (t, report, customReport) {
+        processNode(t.block, report, customReport);
+        processTree(t.handlers, report, customReport);
+    }
+
+    function processCatch (c, report, customReport) {
+        processNode(c.body, report, customReport);
     }
 
     function processFunction (fn, report, currentReport) {

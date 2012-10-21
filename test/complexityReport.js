@@ -293,6 +293,66 @@
                 });
             });
 
+            suite('run against try...catch', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('try { "foo"; } catch (e) { e.message; }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
+                });
+
+                test('functions is empty', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+            });
+
+            suite('run against try containing condition', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('try { if (true) { "foo"; } } catch (e) { "bar"; }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
+                });
+
+                test('functions is empty', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+            });
+
+            suite('run against catch containing condition', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('try { "foo"; } catch (e) { if (true) { "bar"; } }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
+                });
+
+                test('functions is empty', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+            });
+
             suite('run against function declaration:', function () {
                 var report;
 
