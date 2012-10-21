@@ -17,6 +17,7 @@
         ConditionalExpression: processCondition,
         BlockStatement: processBlock,
         LogicalExpression: processLogical,
+        ForStatement: processLoop,
         FunctionDeclaration: processFunction,
         FunctionExpression: processFunction,
         VariableDeclaration: processVariables,
@@ -105,6 +106,14 @@
         }
     }
 
+    function processLoop (loop, report, customReport) {
+        if (loop.test) {
+            processCondition({
+                consequent: loop.body
+            }, report, customReport);
+        }
+    }
+
     function processFunction (fn, report, currentReport) {
         var name;
 
@@ -128,13 +137,15 @@
     }
 
     function processVariable (variable, report, currentReport) {
-        if (
-            variable.init.type === 'FunctionExpression' &&
-            check.isObject(variable.init.id) === false
-        ) {
-            processFunctionBody(variable.id.name, variable.init.body, report);
-        } else {
-            processNode(variable.init, report, currentReport);
+        if (variable.init) {
+            if (
+                variable.init.type === 'FunctionExpression' &&
+                check.isObject(variable.init.id) === false
+            ) {
+                processFunctionBody(variable.id.name, variable.init.body, report);
+            } else {
+                processNode(variable.init, report, currentReport);
+            }
         }
     }
 

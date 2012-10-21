@@ -177,6 +177,26 @@
                 });
             });
 
+            suite('run against for loop:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('var i; for (i = 0; i < 10; i += 1) { "foo"; }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
+                });
+
+                test('functions is empty', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+            });
+
             suite('run against function declaration:', function () {
                 var report;
 
