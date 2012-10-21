@@ -20,6 +20,8 @@
         SwitchStatement: processSwitch,
         SwitchCase: processCase,
         ForStatement: processLoop,
+        WhileStatement: processLoop,
+        DoWhileStatement: processLoop,
         FunctionDeclaration: processFunction,
         FunctionExpression: processFunction,
         VariableDeclaration: processVariables,

@@ -217,6 +217,46 @@
                 });
             });
 
+            suite('run against while loop:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('while (true) { "foo"; }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
+                });
+
+                test('functions is empty', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+            });
+
+            suite('run against do...while loop:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('do { "foo"; } while (true)');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
+                });
+
+                test('functions is empty', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+            });
+
             suite('run against function declaration:', function () {
                 var report;
 
