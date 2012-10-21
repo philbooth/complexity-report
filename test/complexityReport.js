@@ -197,6 +197,66 @@
                 });
             });
 
+            suite('run against switch statement with fall-through case:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('switch (Date.now()) { case 1: case 2: "foo"; break; default: "bar"; }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 3);
+                });
+
+                test('functions is empty', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+            });
+
+            suite('run against switch statement containing condition:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('switch (Date.now()) { case 1: "foo"; break; case 2: "bar"; break; default: if (true) { "baz"; } }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 4);
+                });
+
+                test('functions is empty', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+            });
+
+            suite('run against switch statement:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('switch (Date.now()) { case 1: "foo"; break; case 2: "bar"; break; default: "baz"; }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 3);
+                });
+
+                test('functions is empty', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+            });
+
             suite('run against for loop:', function () {
                 var report;
 
