@@ -509,7 +509,7 @@
                 });
             });
 
-            suite('run against function declaration containing conditional:', function () {
+            suite('run against function declaration containing condition:', function () {
                 var report;
 
                 setup(function () {
