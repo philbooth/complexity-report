@@ -7,6 +7,9 @@
         "name": "Phil Booth",
         "email": "pmbooth@gmail.com"
     },
+    "bin": {
+        "cr": "./src/cli.js"
+    },
     "main": "./src/complexityReport.js",
     "repository": {
         "type": "git",
