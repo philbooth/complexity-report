@@ -217,6 +217,22 @@
                 });
             });
 
+            suite('run against for loop containing condition:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('var i; for (i = 0; i < 10; i += 1) { if (true) { "foo"; } }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 3);
+                });
+            });
+
             suite('run against for...in loop:', function () {
                 var report;
 
@@ -237,7 +253,7 @@
                 });
             });
 
-            suite('run against for...in loop containing test for hasOwnProperty:', function () {
+            suite('run against for...in loop containing condition:', function () {
                 var report;
 
                 setup(function () {
@@ -273,6 +289,22 @@
                 });
             });
 
+            suite('run against while loop containing condition:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('while (true) { if (true) { "foo"; } }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 3);
+                });
+            });
+
             suite('run against do...while loop:', function () {
                 var report;
 
@@ -290,6 +322,22 @@
 
                 test('functions is empty', function () {
                     assert.lengthOf(report.functions, 0);
+                });
+            });
+
+            suite('run against do...while loop containing condition:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('do { if (true) { "foo"; } } while (true)');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 3);
                 });
             });
 
@@ -327,10 +375,6 @@
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
                 });
-
-                test('functions is empty', function () {
-                    assert.lengthOf(report.functions, 0);
-                });
             });
 
             suite('run against catch containing condition', function () {
@@ -346,10 +390,6 @@
 
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
-                });
-
-                test('functions is empty', function () {
-                    assert.lengthOf(report.functions, 0);
                 });
             });
 
