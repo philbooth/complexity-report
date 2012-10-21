@@ -17,6 +17,8 @@
         ConditionalExpression: processCondition,
         BlockStatement: processBlock,
         LogicalExpression: processLogical,
+        SwitchStatement: processSwitch,
+        SwitchCase: processCase,
         ForStatement: processLoop,
         FunctionDeclaration: processFunction,
         FunctionExpression: processFunction,
@@ -103,6 +105,23 @@
                 consequent: logical.left,
                 alternate: logical.right
             }, report, currentReport);
+        }
+    }
+
+    function processSwitch (s, report, customReport) {
+        processTree(s.cases, report, customReport);
+    }
+
+    function processCase (c, report, customReport) {
+        if (c.test) {
+            processCondition({
+                consequent: {
+                    type: 'BlockStatement',
+                    body: c.consequent
+                }
+            }, report, customReport);
+        } else {
+            processTree(c.consequent, report, customReport);
         }
     }
 
