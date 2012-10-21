@@ -217,6 +217,42 @@
                 });
             });
 
+            suite('run against for...in loop:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('var property; for (property in { foo: "bar", baz: "qux" }) { "wibble"; }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
+                });
+
+                test('functions is empty', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+            });
+
+            suite('run against for...in loop containing test for hasOwnProperty:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('var property, object = { foo: "bar", baz: "qux" }; for (property in object) { if (object.hasOwnProperty(property)) { "wibble"; } }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
+                });
+            });
+
             suite('run against while loop:', function () {
                 var report;
 
@@ -353,7 +389,7 @@
                 });
             });
 
-            suite('run against ternary condtional expression assigned to variable', function () {
+            suite('run against ternary condtional expression assigned to variable:', function () {
                 var report;
 
                 setup(function () {
@@ -369,7 +405,7 @@
                 });
             });
 
-            suite('run against logical or expression assigned to variable', function () {
+            suite('run against logical or expression assigned to variable:', function () {
                 var report;
 
                 setup(function () {
@@ -421,7 +457,7 @@
                 });
             });
 
-            suite('run against ternary condtional expression returned from function', function () {
+            suite('run against ternary condtional expression returned from function:', function () {
                 var report;
 
                 setup(function () {
@@ -441,7 +477,7 @@
                 });
             });
 
-            suite('run against logical or expression returned from function', function () {
+            suite('run against logical or expression returned from function:', function () {
                 var report;
 
                 setup(function () {
@@ -501,7 +537,7 @@
                 });
             });
 
-            suite('run against ternary condtional expression passed as argument', function () {
+            suite('run against ternary condtional expression passed as argument:', function () {
                 var report;
 
                 setup(function () {
@@ -517,7 +553,7 @@
                 });
             });
 
-            suite('run against logical or expression passed as argument', function () {
+            suite('run against logical or expression passed as argument:', function () {
                 var report;
 
                 setup(function () {

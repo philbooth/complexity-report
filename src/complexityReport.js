@@ -20,6 +20,7 @@
         SwitchStatement: processSwitch,
         SwitchCase: processCase,
         ForStatement: processLoop,
+        ForInStatement: processForIn,
         WhileStatement: processLoop,
         DoWhileStatement: processLoop,
         FunctionDeclaration: processFunction,
@@ -133,6 +134,10 @@
                 consequent: loop.body
             }, report, customReport);
         }
+    }
+
+    function processForIn (forIn, report, customReport) {
+        processBlock(forIn.body, report, customReport);
     }
 
     function processFunction (fn, report, currentReport) {
