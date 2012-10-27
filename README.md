@@ -26,11 +26,11 @@ cr [options] <file...>
 
 * `-o <file>`: Specify an output file for the report.
 * `-f <format`: Specify an output format for the report.
-* `-th <threshold>`: Specify the per-function complexity threshold.
-* `-lo`: Disregads operator `||` as a source of cyclomatic complexity.
-* `-sc`: Disegards switch statements as a source of cyclomatic complexity.
-* `-fi`: Treats for...in loops as a source of cyclomatic complexity.
-* `-tc`: Treats catch clauses as a source of cyclomatic complexity.
+* `-t <threshold>`: Specify the per-function complexity threshold.
+* `-l`: Disregads operator `||` as a source of cyclomatic complexity.
+* `-s`: Disegards switch statements as a source of cyclomatic complexity.
+* `-i`: Treats for...in loops as a source of cyclomatic complexity.
+* `-c`: Treats catch clauses as a source of cyclomatic complexity.
 
 #### Output formats
 
