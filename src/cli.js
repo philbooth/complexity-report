@@ -80,16 +80,24 @@
     }
 
     function readSourceFile (path) {
-        fs.readFile(path, 'utf8', function (error, source) {
-            if (error) {
-                console.log('Fatal error: ' + error.message);
-                process.exit(1);
+        fs.readFile(path, 'utf8', function (err, source) {
+            if (err) {
+                error('readSourceFile', err);
             }
 
             getReport(path, source);
 
             finish();
         });
+    }
+
+    function error (functionName, err) {
+        fail('Fatal error [' + functionName + ']: ' + err.message);
+    }
+
+    function fail (message) {
+        console.log(message);
+        process.exit(1);
     }
 
     function getReport (path, source) {
@@ -132,10 +140,9 @@
         var formatted = formatter.format(reports);
 
         if (check.isUnemptyString(cli.output)) {
-            fs.writeFile(cli.output, formatted, 'utf8', function (error) {
-                if (error) {
-                    console.log('Fatal error: ' + error.message);
-                    process.exit(1);
+            fs.writeFile(cli.output, formatted, 'utf8', function (err) {
+                if (err) {
+                    error('writeReport', err);
                 }
             });
         } else {
@@ -146,16 +153,11 @@
     }
 
     function exit () {
-        // TODO: Refactor all the exity stuff
-        // TODO: Refactor all the loggy stuff
         // TODO: Use Q
 
         if (state.tooComplex) {
-            console.log('Complexity threshold breached');
-            process.exit(1);
+            fail('Warning: Complexity threshold breached!');
         }
-
-        console.log('Done');
     }
 }());
 
