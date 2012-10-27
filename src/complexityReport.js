@@ -39,10 +39,14 @@
 
         check.verifyUnemptyString(source, 'Invalid source');
 
-        settings = options;
+        if (check.isObject(options)) {
+            settings = options;
+        } else {
+            settings = getDefaultSettings();
+        }
+
         report = createReport();
 
-        // TODO: Ditch `loc` if we don't end up using it.
         ast = esprima.parse(source, {
             loc: true
         });
@@ -50,6 +54,15 @@
         processTree(ast.body);
 
         return report;
+    }
+
+    function getDefaultSettings () {
+        return {
+            logicalor: true,
+            switchcase: true,
+            forin: false,
+            trycatch: false
+        };
     }
 
     function createReport () {
@@ -146,7 +159,7 @@
     }
 
     function processForIn (forIn, currentReport) {
-        if (settings.trycatch) {
+        if (settings.forin) {
             incrementComplexity(currentReport);
         }
 

@@ -764,6 +764,78 @@
                     assert.strictEqual(report.functions[0].name, 'foo');
                 });
             });
+
+            suite('run against logical or expression with logicalor false:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('var foo = true || false;', {
+                        logicalor: false
+                    });
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
+                });
+            });
+
+            suite('run against switch statement with switchcase false:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('switch (Date.now()) { case 1: "foo"; break; case 2: "bar"; break; default: "baz"; }', {
+                        switchcase: false
+                    });
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
+                });
+            });
+
+            suite('run against for...in loop with forin true:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('var property; for (property in { foo: "bar", baz: "qux" }) { "wibble"; }', {
+                        forin: true
+                    });
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
+                });
+            });
+
+            suite('run against try...catch with trycatch true', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('try { "foo"; } catch (e) { e.message; }', {
+                        trycatch: true
+                    });
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
+                });
+            });
         });
     });
 }());
