@@ -83,8 +83,18 @@
                 process.exit(1);
             }
 
+            getReport(path, source);
+
             finish();
         });
+    }
+
+    function getReport (path, source) {
+        var report = cr.run(source);
+
+        report.module = path;
+
+        reports.push(report);
     }
 
     function finish () {
