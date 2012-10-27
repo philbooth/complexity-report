@@ -28,9 +28,9 @@ cr [options] <file...>
 * `-f <format`: Specify an output format for the report.
 * `-t <threshold>`: Specify the per-function complexity threshold.
 * `-l`: Disregads operator `||` as a source of cyclomatic complexity.
-* `-s`: Disegards switch statements as a source of cyclomatic complexity.
-* `-i`: Treats for...in loops as a source of cyclomatic complexity.
-* `-c`: Treats catch clauses as a source of cyclomatic complexity.
+* `-s`: Disegards `switch` statements as a source of cyclomatic complexity.
+* `-i`: Treats `for`...`in` loops as a source of cyclomatic complexity.
+* `-c`: Treats `catch` clauses as a source of cyclomatic complexity.
 
 #### Output formats
 
@@ -63,9 +63,9 @@ cyclomatic complexity calculation.
 The following options are available:
 
 * `logicalor`: Disregads operator `||` as a source of cyclomatic complexity.
-* `switchcase`: Disegards switch statements as a source of cyclomatic complexity.
-* `forin`: Treats for...in loops as a source of cyclomatic complexity.
-* `trycatch`: Treats catch clauses as a source of cyclomatic complexity.
+* `switchcase`: Disegards `switch` statements as a source of cyclomatic complexity.
+* `forin`: Treats `for`...`in` loops as a source of cyclomatic complexity.
+* `trycatch`: Treats `catch` clauses as a source of cyclomatic complexity.
 
 The returned report is an object
 that contains properties detailing the complexity
