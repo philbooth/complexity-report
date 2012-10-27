@@ -53,7 +53,10 @@
             //).
             option(
                 '-th, --threshold <complexity>',
-                'specifify the per-function complexity threshold'
+                'specifify the per-function complexity threshold',
+                function (value) {
+                    return parseInt(value, 10);
+                }
             );
 
         cli.parse(process.argv);
@@ -92,9 +95,29 @@
     function getReport (path, source) {
         var report = cr.run(source);
 
+        if (
+            state.tooComplex === false &&
+            check.isNumber(cli.threshold) &&
+            isTooComplex(report)
+        ) {
+            state.tooComplex = true;
+        }
+
         report.module = path;
 
         reports.push(report);
+    }
+
+    function isTooComplex (report) {
+        var i;
+
+        for (i = 0; i < report.functions.length; i += 1) {
+            if (report.functions[i].complexity.cyclomatic > cli.threshold) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     function finish () {
@@ -114,12 +137,12 @@
                     console.log('Fatal error: ' + error.message);
                     process.exit(1);
                 }
-
-                exit();
             });
         } else {
             console.log(formatted);
         }
+
+        exit();
     }
 
     function exit () {
