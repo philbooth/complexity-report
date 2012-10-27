@@ -8,7 +8,7 @@ function format (reports) {
     var formatted = '', i;
 
     for (i = 0; i < reports.length; i += 1) {
-        formatted += '\n\n' + formatModule(reports[i]);
+        formatted += formatModule(reports[i]) + '\n\n';
     }
 
     return formatted;
@@ -18,7 +18,7 @@ function formatModule (report) {
     return [
         report.module,
         '\n\n',
-        'Aggregate complexity: ',
+        '  Aggregate complexity: ',
         report.aggregate.complexity.cyclomatic,
         formatFunctions(report.functions)
     ].join('');
@@ -36,10 +36,10 @@ function formatFunctions (report) {
 
 function formatFunction (report) {
     return [
-        'Function: ',
+        '  Function: ',
         report.name,
         '\n',
-        'Cyclomatic complexity: ',
+        '  Cyclomatic complexity: ',
         report.complexity.cyclomatic
     ].join('');
 }
