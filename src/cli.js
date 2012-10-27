@@ -33,26 +33,26 @@
                 'specify the output format of the report'
             ).
             option(
-                '-th, --threshold <complexity>',
+                '-t, --threshold <complexity>',
                 'specifify the per-function complexity threshold',
                 function (value) {
                     return parseInt(value, 10);
                 }
             ).
             option(
-                '-lo, --logicalor',
+                '-l, --logicalor',
                 'disregard operator || as source of cyclomatic complexity'
             ).
             option(
-                '-sc, --switchcase',
+                '-s, --switchcase',
                 'disregard switch statements as source of cyclomatic complexity'
             ).
             option(
-                '-fi, --forin',
+                '-i, --forin',
                 'treat for...in statements as source of cyclomatic complexity'
             ).
             option(
-                '-tc, --trycatch',
+                '-c, --trycatch',
                 'treat catch clauses as source of cyclomatic complexity'
             );
 
