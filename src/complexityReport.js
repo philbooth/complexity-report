@@ -237,7 +237,7 @@
     }
 
     function processCall (call, currentReport) {
-        processTree(call.arguments, currentReport);
+        processTree(call['arguments'], currentReport);
         processNode(call.callee, currentReport);
     }
 }());
