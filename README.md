@@ -16,21 +16,13 @@ npm install complexity-report
 
 ## Usage
 
-### Loading the library
+### From the command line
 
 ```
-var complexityReport = require('complexity-report');
+cr [options] <file...>
 ```
 
-### Calling the library
-
-#### From the command line
-
-```
-complexity-report [options] <file...>
-```
-
-##### Options
+#### Options
 
 * `-o <file>`: Specify an output file for the report.
 * `-f <format`: Specify an output format for the report.
@@ -40,7 +32,7 @@ complexity-report [options] <file...>
 * `-fi`: Treats for...in loops as a source of cyclomatic complexity.
 * `-tc`: Treats catch clauses as a source of cyclomatic complexity.
 
-##### Output formats
+#### Output formats
 
 These are loaded with `require` from the `src/formats` subdirectory.
 Adding new formats is easy,
@@ -49,13 +41,49 @@ that takes a report object as its only argument
 and returns a string representation of the report.
 See `src/formats/plain.js` for an example format.
 
-#### From code
+### From code
 
-### Examples
+#### Loading the library
 
-TODO
+```
+var cr = require('complexity-report');
+```
+
+#### Calling the library
+
+```
+var report = cr.run(source, options);
+```
+
+The argument `source` must be a string
+containing the source code that is to be analysed.
+The argument `options` is an optional object
+that can be used to modify the default settings for
+cyclomatic complexity calculation.
+The following options are available:
+
+* `logicalor`: Disregads operator `||` as a source of cyclomatic complexity.
+* `switchcase`: Disegards switch statements as a source of cyclomatic complexity.
+* `forin`: Treats for...in loops as a source of cyclomatic complexity.
+* `trycatch`: Treats catch clauses as a source of cyclomatic complexity.
+
+The returned report is an object
+that contains properties detailing the complexity
+of each function from the source code.
+There is also an aggregate complexity score
+for the source in its entirety.
 
 ## Development
+
+### Roadmap
+
+The current plan is
+to add Halstead complexity measures
+and then just focus on improving the calculations
+by throwing more and more test cases together.
+If you think there's anything else I should look at,
+raise an issue or,
+even better, implement it and submit a pull request! :)
 
 ### Dependencies
 
