@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    var check, esprima, syntaxHandlers;
+    var check, esprima, syntaxHandlers, settings, report;
 
     exports.run = run;
 
@@ -34,11 +34,12 @@
         CallExpression: processCall
     };
 
-    function run (source) {
-        var report, ast;
+    function run (source, options) {
+        var ast;
 
         check.verifyUnemptyString(source, 'Invalid source');
 
+        settings = options;
         report = createReport();
 
         // TODO: Ditch `loc` if we don't end up using it.
@@ -46,7 +47,7 @@
             loc: true
         });
 
-        processTree(ast.body, report);
+        processTree(ast.body);
 
         return report;
     }
@@ -68,136 +69,149 @@
         };
     }
 
-    function processTree (tree, report, currentReport) {
+    function processTree (tree, currentReport) {
         var i;
 
         check.verifyArray(tree, 'Invalid syntax tree');
 
         for (i = 0; i < tree.length; i += 1) {
-            processNode(tree[i], report, currentReport);
+            processNode(tree[i], currentReport);
         }
     }
 
-    function processNode (node, report, currentReport) {
+    function processNode (node, currentReport) {
         check.verifyObject(node, 'Invalid syntax node');
 
         if (check.isFunction(syntaxHandlers[node.type])) {
-            syntaxHandlers[node.type](node, report, currentReport);
+            syntaxHandlers[node.type](node, currentReport);
         }
     }
 
-    function processCondition (condition, report, currentReport) {
-        report.aggregate.complexity.cyclomatic += 1;
-        if (currentReport) {
-            currentReport.complexity.cyclomatic += 1;
-        }
+    function processCondition (condition, currentReport) {
+        incrementComplexity(currentReport);
 
         if (condition.consequent) {
-            processNode(condition.consequent, report, currentReport);
+            processNode(condition.consequent, currentReport);
         }
 
         if (condition.alternate) {
-            processNode(condition.alternate, report, currentReport);
+            processNode(condition.alternate, currentReport);
         }
     }
 
-    function processBlock (block, report, currentReport) {
-        processTree(block.body, report, currentReport);
+    function incrementComplexity (currentReport) {
+        report.aggregate.complexity.cyclomatic += 1;
+
+        if (currentReport) {
+            currentReport.complexity.cyclomatic += 1;
+        }
     }
 
-    function processLogical (logical, report, currentReport) {
-        if (logical.operator === '||') {
+    function processBlock (block, currentReport) {
+        processTree(block.body, currentReport);
+    }
+
+    function processLogical (logical, currentReport) {
+        if (settings.logicalor && logical.operator === '||') {
             processCondition({
                 consequent: logical.left,
                 alternate: logical.right
-            }, report, currentReport);
+            }, currentReport);
         }
     }
 
-    function processSwitch (s, report, customReport) {
-        processTree(s.cases, report, customReport);
+    function processSwitch (s, currentReport) {
+        processTree(s.cases, currentReport);
     }
 
-    function processCase (c, report, customReport) {
-        if (c.test) {
+    function processCase (c, currentReport) {
+        if (settings.switchcase && c.test) {
             processCondition({
                 consequent: {
                     type: 'BlockStatement',
                     body: c.consequent
                 }
-            }, report, customReport);
+            }, currentReport);
         } else {
-            processTree(c.consequent, report, customReport);
+            processTree(c.consequent, currentReport);
         }
     }
 
-    function processLoop (loop, report, customReport) {
+    function processLoop (loop, currentReport) {
         if (loop.test) {
             processCondition({
                 consequent: loop.body
-            }, report, customReport);
+            }, currentReport);
         }
     }
 
-    function processForIn (forIn, report, customReport) {
-        processNode(forIn.body, report, customReport);
+    function processForIn (forIn, currentReport) {
+        if (settings.trycatch) {
+            incrementComplexity(currentReport);
+        }
+
+        processNode(forIn.body, currentReport);
     }
 
-    function processTry (t, report, customReport) {
-        processNode(t.block, report, customReport);
-        processTree(t.handlers, report, customReport);
+    function processTry (t, currentReport) {
+        processNode(t.block, currentReport);
+        processTree(t.handlers, currentReport);
     }
 
-    function processCatch (c, report, customReport) {
-        processNode(c.body, report, customReport);
+    function processCatch (c, currentReport) {
+        if (settings.trycatch) {
+            incrementComplexity(currentReport);
+        }
+
+        processNode(c.body, currentReport);
     }
 
-    function processFunction (fn, report, currentReport) {
+    function processFunction (fn, currentReport) {
         var name;
 
         if (check.isObject(fn.id)) {
             name = fn.id.name;
         }
 
-        processFunctionBody(name, fn.body, report);
+        processFunctionBody(name, fn.body);
     }
 
-    function processFunctionBody (name, body, report) {
+    function processFunctionBody (name, body) {
         var currentReport = createFunctionReport(name, body.loc);
 
         report.functions.push(currentReport);
 
-        processNode(body, report, currentReport);
+        processNode(body, currentReport);
     }
 
-    function processVariables (variables, report, currentReport) {
-        processTree(variables.declarations, report, currentReport);
+    function processVariables (variables, currentReport) {
+        processTree(variables.declarations, currentReport);
     }
 
-    function processVariable (variable, report, currentReport) {
+    function processVariable (variable, currentReport) {
         if (variable.init) {
             if (
                 variable.init.type === 'FunctionExpression' &&
                 check.isObject(variable.init.id) === false
             ) {
-                processFunctionBody(variable.id.name, variable.init.body, report);
+                processFunctionBody(variable.id.name, variable.init.body);
             } else {
-                processNode(variable.init, report, currentReport);
+                processNode(variable.init, currentReport);
             }
         }
     }
 
-    function processReturn (rtn, report, currentReport) {
-        processNode(rtn.argument, report, currentReport);
+    function processReturn (rtn, currentReport) {
+        processNode(rtn.argument, currentReport);
     }
 
-    function processExpression (expression, report, currentReport) {
-        processNode(expression.expression, report, currentReport);
+    function processExpression (expression, currentReport) {
+        processNode(expression.expression, currentReport);
     }
 
-    function processCall (call, report, currentReport) {
-        processTree(call.arguments, report, currentReport);
-        processNode(call.callee, report, currentReport);
+    function processCall (call, currentReport) {
+        processTree(call.arguments, currentReport);
+        processNode(call.callee, currentReport);
     }
 }());
 

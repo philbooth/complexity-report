@@ -9,6 +9,7 @@
     fs = require('fs'),
     cr = require('./complexityReport'),
     check = require('check-types'),
+    options,
     formatter,
 
     state = {
@@ -31,26 +32,22 @@
                 '-f, --format <format>',
                 'specify the output format of the report'
             ).
-            //option(
-            //    '-lo, --logicalor',
-            //    'disable complexity reporting of operator ||'
-            //).
-            //option(
-            //    '-t, --ternary',
-            //    'disable complexity reporting of operator ?:'
-            //).
-            //option(
-            //    '-sc, --switchcase',
-            //    'disable complexity reporting of switch statements'
-            //).
-            //option(
-            //    '-fi, --forin',
-            //    'enable complexity reporting of for...in statements'
-            //).
-            //option(
-            //    '-tc, --trycatch',
-            //    'enable complexity reporting of catch clauses'
-            //).
+            option(
+                '-lo, --logicalor',
+                'disregard operator || as source of cyclomatic complexity'
+            ).
+            option(
+                '-sc, --switchcase',
+                'disregard switch statements as source of cyclomatic complexity'
+            ).
+            option(
+                '-fi, --forin',
+                'treat for...in statements as source of cyclomatic complexity'
+            ).
+            option(
+                '-tc, --trycatch',
+                'treat catch clauses as source of cyclomatic complexity'
+            ).
             option(
                 '-th, --threshold <complexity>',
                 'specifify the per-function complexity threshold',
@@ -61,10 +58,17 @@
 
         cli.parse(process.argv);
 
+        options = {
+            logicalor: cli.logicalor,
+            ternary: cli.ternary,
+            switchcase: cli.switchcase,
+            forin: cli.forin,
+            trycatch: cli.trycatch,
+        };
+
         if (check.isUnemptyString(cli.format) === false) {
             cli.format = 'plain';
         }
-
         formatter = require('./formats/' + cli.format);
     }
 
@@ -101,7 +105,7 @@
     }
 
     function getReport (path, source) {
-        var report = cr.run(source);
+        var report = cr.run(source, options);
 
         if (
             state.tooComplex === false &&
