@@ -33,6 +33,13 @@
                 'specify the output format of the report'
             ).
             option(
+                '-th, --threshold <complexity>',
+                'specifify the per-function complexity threshold',
+                function (value) {
+                    return parseInt(value, 10);
+                }
+            );
+            option(
                 '-lo, --logicalor',
                 'disregard operator || as source of cyclomatic complexity'
             ).
@@ -48,13 +55,6 @@
                 '-tc, --trycatch',
                 'treat catch clauses as source of cyclomatic complexity'
             ).
-            option(
-                '-th, --threshold <complexity>',
-                'specifify the per-function complexity threshold',
-                function (value) {
-                    return parseInt(value, 10);
-                }
-            );
 
         cli.parse(process.argv);
 
