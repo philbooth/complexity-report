@@ -21,7 +21,6 @@ function formatModule (report) {
         '\n\n',
         'Aggregate complexity: ',
         report.aggregate.complexity.cyclomatic,
-        '\n\n',
         formatFunctions(report.functions)
     ].join('');
 }
