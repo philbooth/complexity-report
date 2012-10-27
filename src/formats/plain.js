@@ -10,6 +10,8 @@ function format (reports) {
     for (i = 0; i < reports.length; i += 1) {
         formatted += formatModule(reports[i]);
     }
+
+    return formatted;
 }
 
 function formatModule (report) {

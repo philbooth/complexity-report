@@ -108,7 +108,7 @@
     function writeReport () {
         var formatted = formatter.format(reports);
 
-        if (cli.output) {
+        if (check.isUnemptyString(cli.output)) {
             fs.writeFile(cli.output, formatted, 'utf8', function (error) {
                 if (error) {
                     console.log('Fatal error: ' + error.message);
@@ -117,6 +117,8 @@
 
                 exit();
             });
+        } else {
+            console.log(formatted);
         }
     }
 
