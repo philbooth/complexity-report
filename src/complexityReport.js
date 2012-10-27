@@ -58,9 +58,10 @@
         };
     }
 
-    function createFunctionReport (name) {
+    function createFunctionReport (name, lines) {
         return {
             name: name,
+            lines: lines,
             complexity: {
                 cyclomatic: 1
             }
@@ -162,7 +163,7 @@
     }
 
     function processFunctionBody (name, body, report) {
-        var currentReport = createFunctionReport(name);
+        var currentReport = createFunctionReport(name, body.loc);
 
         report.functions.push(currentReport);
 

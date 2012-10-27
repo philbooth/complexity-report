@@ -36,11 +36,9 @@ function formatFunctions (report) {
 
 function formatFunction (report) {
     return [
-        '  Function: ',
-        report.name,
-        '\n',
-        '  Cyclomatic complexity: ',
-        report.complexity.cyclomatic
+        '  Function: ', report.name, '\n',
+        '  Lines: ', report.lines.start.line, '-', report.lines.end.line, '\n',
+        '  Cyclomatic complexity: ', report.complexity.cyclomatic
     ].join('');
 }
 
