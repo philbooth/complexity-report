@@ -8,7 +8,7 @@ function format (reports) {
     var formatted = '', i;
 
     for (i = 0; i < reports.length; i += 1) {
-        formatted += formatModule(reports[i]);
+        formatted += '\n\n' + formatModule(reports[i]);
     }
 
     return formatted;
@@ -16,7 +16,6 @@ function format (reports) {
 
 function formatModule (report) {
     return [
-        '\n',
         report.module,
         '\n\n',
         'Aggregate complexity: ',
