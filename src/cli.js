@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    var reports = {},
+    var reports = [],
 
     cli = require('commander'),
     fs = require('fs'),
