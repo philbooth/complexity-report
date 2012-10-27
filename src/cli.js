@@ -38,7 +38,7 @@
                 function (value) {
                     return parseInt(value, 10);
                 }
-            );
+            ).
             option(
                 '-lo, --logicalor',
                 'disregard operator || as source of cyclomatic complexity'
@@ -54,16 +54,15 @@
             option(
                 '-tc, --trycatch',
                 'treat catch clauses as source of cyclomatic complexity'
-            ).
+            );
 
         cli.parse(process.argv);
 
         options = {
-            logicalor: cli.logicalor,
-            ternary: cli.ternary,
-            switchcase: cli.switchcase,
-            forin: cli.forin,
-            trycatch: cli.trycatch,
+            logicalor: !cli.logicalor,
+            switchcase: !cli.switchcase,
+            forin: cli.forin || false,
+            trycatch: cli.trycatch || false
         };
 
         if (check.isUnemptyString(cli.format) === false) {
