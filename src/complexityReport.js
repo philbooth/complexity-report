@@ -1,3 +1,7 @@
+/**
+ * Complexity reporting tool for JavaScript.
+ */
+
 /*globals exports, require */
 
 (function () {
@@ -34,6 +38,16 @@
         CallExpression: processCall
     };
 
+    /**
+     * Public function `run`.
+     *
+     * Returns a an object detailing the complexity of the code in the
+     * source argument.
+     *
+     * @param source {string}    The source code to analyse for complexity.
+     * @param [options] {object} Options to modify the complexity calculation.
+     *
+     */
     function run (source, options) {
         var ast;
 
