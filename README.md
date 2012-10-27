@@ -24,7 +24,32 @@ var complexityReport = require('complexity-report');
 
 ### Calling the library
 
-TODO
+#### From the command line
+
+```
+complexity-report [options] <file...>
+```
+
+##### Options
+
+* `-o <file>`: Specify an output file for the report.
+* `-f <format`: Specify an output format for the report.
+* `-th <threshold>`: Specify the per-function complexity threshold.
+* `-lo`: Disregads operator `||` as a source of cyclomatic complexity.
+* `-sc`: Disegards switch statements as a source of cyclomatic complexity.
+* `-fi`: Treats for...in loops as a source of cyclomatic complexity.
+* `-tc`: Treats catch clauses as a source of cyclomatic complexity.
+
+##### Output formats
+
+These are loaded with `require` from the `src/formats` subdirectory.
+Adding new formats is easy,
+each module must export a function `format`
+that takes a report object as its only argument
+and returns a string representation of the report.
+See `src/formats/plain.js` for an example format.
+
+#### From code
 
 ### Examples
 
