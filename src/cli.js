@@ -25,6 +25,7 @@
 
     function parseCommandLine () {
         cli.
+            description('Reports code complexity metrics for JavaScript projects.').
             usage('[options] <file...>').
             option(
                 '-o, --output <file>',
