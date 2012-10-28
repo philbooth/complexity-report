@@ -31,6 +31,7 @@
         FunctionExpression: processFunction,
         VariableDeclaration: processVariables,
         VariableDeclarator: processVariable,
+        Literal: processLiteral,
         ReturnStatement: processReturn,
         ExpressionStatement: processExpression,
         CallExpression: processCall
@@ -89,8 +90,23 @@
             name: name,
             lines: lines,
             complexity: {
-                cyclomatic: 1
+                cyclomatic: 1,
+                halstead: createInitialHalsteadState()
             }
+        };
+    }
+
+    function createInitialHalsteadState () {
+        return {
+            operators: createInitialOperatorOperandState(),
+            operands: createInitialOperatorOperandState()
+        };
+    }
+
+    function createInitialOperatorOperandState () {
+        return {
+            distinct: 0,
+            total: 0
         };
     }
 
@@ -214,16 +230,31 @@
     }
 
     function processVariable (variable, currentReport) {
+        incrementDistinctOperands(currentReport);
+
         if (variable.init) {
             if (
                 variable.init.type === 'FunctionExpression' &&
                 check.isObject(variable.init.id) === false
             ) {
+                incrementDistinctOperands(currentReport);
                 processFunctionBody(variable.id.name, variable.init.body);
             } else {
                 processNode(variable.init, currentReport);
             }
         }
+    }
+
+    function incrementDistinctOperands (currentReport) {
+        report.aggregate.complexity.halstead.operands.distinct += 1;
+
+        if (currentReport) {
+            currentReport.complexity.halstead.operands.distinct += 1;
+        }
+    }
+
+    function processLiteral (literal, currentReport) {
+        incrementDistinctOperands(currentReport);
     }
 
     function processReturn (rtn, currentReport) {

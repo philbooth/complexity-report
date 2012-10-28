@@ -547,6 +547,10 @@
                 test('functions is empty', function () {
                     assert.lengthOf(report.functions, 0);
                 });
+
+                test('aggregate has correct Halstead distinct operands', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 2);
+                });
             });
 
             suite('run against ternary condtional expression assigned to variable:', function () {
