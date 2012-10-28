@@ -58,14 +58,22 @@ var report = cr.run(source, options);
 The argument `source` must be a string
 containing the source code that is to be analysed.
 The argument `options` is an optional object
-that can be used to modify the default settings for
+which may contain properties that modify
 cyclomatic complexity calculation.
 The following options are available:
 
-* `logicalor`: Disregads operator `||` as a source of cyclomatic complexity.
-* `switchcase`: Disegards `switch` statements as a source of cyclomatic complexity.
-* `forin`: Treats `for`...`in` loops as a source of cyclomatic complexity.
-* `trycatch`: Treats `catch` clauses as a source of cyclomatic complexity.
+* `logicalor`: Boolean indicating whether operator `||`
+  should be considered a source of cyclomatic complexity
+  (defaults to `true`).
+* `switchcase`: Boolean indicating whether `switch` statements 
+  should be considered a source of cyclomatic complexity
+  (defaults to `true`).
+* `forin`: Boolean indicating whether `for`...`in` loops
+  should be considered a source of cyclomatic complexity
+  (defaults to `false`).
+* `trycatch`: Boolean indicating whether `catch` clauses
+  should be considered a source of cyclomatic complexity
+  (defaults to `false`).
 
 The returned report is an object
 that contains properties detailing the complexity
