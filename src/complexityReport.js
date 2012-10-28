@@ -131,6 +131,10 @@
     function processCondition (condition, currentReport) {
         incrementComplexity(currentReport);
 
+        if (condition.test) {
+            processNode(condition.test);
+        }
+
         if (condition.consequent) {
             processNode(condition.consequent, currentReport);
         }

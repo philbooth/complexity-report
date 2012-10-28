@@ -87,6 +87,10 @@
                 test('functions is empty', function () {
                     assert.lengthOf(report.functions, 0);
                 });
+
+                test('aggregate has correct Halstead distinct operands', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 2);
+                });
             });
 
             suite('run against condition:', function () {
@@ -106,6 +110,10 @@
 
                 test('functions is empty', function () {
                     assert.lengthOf(report.functions, 0);
+                });
+
+                test('aggregate has correct Halstead distinct operands', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 2);
                 });
             });
 
