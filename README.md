@@ -96,7 +96,8 @@ for the source in its entirety.
 
 The current plan is
 to add Halstead complexity measures
-and then just focus on improving the calculations
+and the Maintainability Index,
+then just focus on improving the calculations
 by throwing more and more test cases together.
 If you think there's anything else I should look at,
 please raise an issue or,
