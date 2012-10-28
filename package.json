@@ -27,14 +27,13 @@
     "dependencies": {
         "check-types": "0.2.x",
         "esprima": "0.9.x",
-        "commander": "1.0.5"
+        "commander": "1.0.x"
     },
     "devDependencies": {
         "jake": "0.3.x",
         "jshint": "0.7.x",
         "mocha": "1.2.x",
         "chai": "1.1.x",
-        "uglify-js": "1.3.x"
     },
     "license": "MIT",
     "scripts": {
