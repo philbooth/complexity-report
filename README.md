@@ -27,7 +27,7 @@ cr [options] <file...>
 * `-o <file>`: Specify an output file for the report.
 * `-f <format`: Specify an output format for the report.
 * `-t <threshold>`: Specify the per-function complexity threshold
-  (beyond which, the process will fail when exiting).
+  (beyond which, will cause the process to fail when exiting).
 * `-l`: Disregads operator `||` as a source of cyclomatic complexity.
 * `-s`: Disegards `switch` statements as a source of cyclomatic complexity.
 * `-i`: Treats `for`...`in` loops as a source of cyclomatic complexity.
@@ -64,17 +64,17 @@ cyclomatic complexity calculation.
 The following options are available:
 
 * `logicalor`: Boolean indicating whether operator `||`
-  should be considered a source of cyclomatic complexity
-  (defaults to `true`).
+  should be considered a source of cyclomatic complexity,
+  defaults to `true`.
 * `switchcase`: Boolean indicating whether `switch` statements 
-  should be considered a source of cyclomatic complexity
-  (defaults to `true`).
+  should be considered a source of cyclomatic complexity,
+  defaults to `true`.
 * `forin`: Boolean indicating whether `for`...`in` loops
-  should be considered a source of cyclomatic complexity
-  (defaults to `false`).
+  should be considered a source of cyclomatic complexity,
+  defaults to `false`.
 * `trycatch`: Boolean indicating whether `catch` clauses
-  should be considered a source of cyclomatic complexity
-  (defaults to `false`).
+  should be considered a source of cyclomatic complexity,
+  defaults to `false`.
 
 The returned report is an object
 that contains properties detailing the complexity
