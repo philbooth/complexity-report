@@ -11,8 +11,6 @@
 
     exports.run = run;
 
-    require('coffee-script');
-
     check = require('check-types');
     esprima = require('esprima');
 
