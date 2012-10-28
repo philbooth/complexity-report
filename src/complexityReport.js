@@ -312,6 +312,16 @@
     }
 
     function processLiteral (literal, currentReport, currentOperators, currentOperands) {
+        var value;
+
+        if (check.isString(literal)) {
+            // Avoid conflicts between string literals and identifiers.
+            value = '"' + literal.value + '"';
+        } else {
+            value = literal.value;
+        }
+
+        operandEncountered(value, currentReport, currentOperands);
     }
 
     function processReturn (rtn, currentReport, currentOperators, currentOperands) {
