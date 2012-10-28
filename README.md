@@ -82,7 +82,7 @@ to add Halstead complexity measures
 and then just focus on improving the calculations
 by throwing more and more test cases together.
 If you think there's anything else I should look at,
-raise an issue or,
+please raise an issue or,
 even better, implement it and submit a pull request! :)
 
 ### Dependencies
