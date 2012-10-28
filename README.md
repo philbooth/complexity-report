@@ -104,10 +104,17 @@ even better, implement it and submit a pull request! :)
 
 ### Dependencies
 
-The build environment relies on [Node.js][node], [NPM], [Jake], [JSHint],
-[Mocha], [Chai] and [UglifyJS]. Assuming that you already have Node.js
-and NPM set up, you just need to run `npm install` to install all of the
-dependencies as listed in `package.json`.
+The build environment relies on
+[Node.js][node],
+[NPM],
+[Jake],
+[JSHint],
+[Mocha] and
+[Chai].
+Assuming that you already have Node.js and NPM set up,
+you just need to run `npm install`
+to install all of the dependencies
+as listed in `package.json`.
 
 ### Unit tests
 
@@ -123,5 +130,4 @@ command `npm test` or `jake test`.
 [jshint]: https://github.com/jshint/node-jshint
 [mocha]: http://visionmedia.github.com/mocha
 [chai]: http://chaijs.com/
-[uglifyjs]: https://github.com/mishoo/UglifyJS
 
