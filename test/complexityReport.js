@@ -836,6 +836,26 @@
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
                 });
             });
+
+            suite('run against IIFE', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('(function (foo) { if (foo === "foo") { console.log(foo); } }("foo"));');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('functions has correct length', function () {
+                    assert.lengthOf(report.functions, 1);
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
+                });
+            });
         });
     });
 }());
