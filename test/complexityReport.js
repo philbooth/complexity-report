@@ -88,8 +88,20 @@
                     assert.lengthOf(report.functions, 0);
                 });
 
+                test('aggregate has correct Halstead total operators', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 1);
+                });
+
+                test('aggregate has correct Halstead distinct operators', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.distinct, 1);
+                });
+
+                test('aggregate has correct Halstead total operands', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.total, 3);
+                });
+
                 test('aggregate has correct Halstead distinct operands', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 2);
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 3);
                 });
             });
 
@@ -110,10 +122,6 @@
 
                 test('functions is empty', function () {
                     assert.lengthOf(report.functions, 0);
-                });
-
-                test('aggregate has correct Halstead distinct operands', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 2);
                 });
             });
 
@@ -555,10 +563,6 @@
                 test('functions is empty', function () {
                     assert.lengthOf(report.functions, 0);
                 });
-
-                test('aggregate has correct Halstead distinct operands', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 2);
-                });
             });
 
             suite('run against ternary condtional expression assigned to variable:', function () {
@@ -831,7 +835,7 @@
                 });
             });
 
-            suite('run against try...catch with trycatch true', function () {
+            suite('run against try...catch with trycatch true:', function () {
                 var report;
 
                 setup(function () {
@@ -849,7 +853,7 @@
                 });
             });
 
-            suite('run against IIFE', function () {
+            suite('run against IIFE:', function () {
                 var report;
 
                 setup(function () {
@@ -862,6 +866,26 @@
 
                 test('functions has correct length', function () {
                     assert.lengthOf(report.functions, 1);
+                });
+
+                test('function has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.functions[0].complexity.cyclomatic, 2);
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
+                });
+            });
+
+            suite('run against logical and condition:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('if ("foo" && "bar") { "baz"; }');
+                });
+
+                teardown(function () {
+                    report = undefined;
                 });
 
                 test('aggregate has correct cyclomatic complexity', function () {

@@ -7,7 +7,7 @@
 (function () {
     'use strict';
 
-    var check, esprima, syntaxHandlers, settings, report;
+    var check, esprima, syntaxHandlers, settings, report, operators;
 
     exports.run = run;
 
@@ -59,12 +59,13 @@
         }
 
         report = createReport();
+        operators = {};
 
         ast = esprima.parse(source, {
             loc: true
         });
 
-        processTree(ast.body);
+        processTree(ast.body, undefined, {}, {});
 
         return report;
     }
@@ -110,37 +111,38 @@
         };
     }
 
-    function processTree (tree, currentReport) {
+    function processTree (tree, currentReport, currentOperators, currentOperands) {
         var i;
 
         check.verifyArray(tree, 'Invalid syntax tree');
 
         for (i = 0; i < tree.length; i += 1) {
-            processNode(tree[i], currentReport);
+            processNode(tree[i], currentReport, currentOperators, currentOperands);
         }
     }
 
-    function processNode (node, currentReport) {
+    function processNode (node, currentReport, currentOperators, currentOperands) {
         check.verifyObject(node, 'Invalid syntax node');
 
         if (check.isFunction(syntaxHandlers[node.type])) {
-            syntaxHandlers[node.type](node, currentReport);
+            syntaxHandlers[node.type](node, currentReport, currentOperators, currentOperands);
         }
     }
 
-    function processCondition (condition, currentReport) {
+    function processCondition (condition, currentReport, currentOperators, currentOperands) {
         incrementComplexity(currentReport);
+        operatorEncountered(condition.type, currentReport, currentOperators);
 
         if (condition.test) {
-            processNode(condition.test);
+            processNode(condition.test, currentReport, currentOperators, currentOperands);
         }
 
         if (condition.consequent) {
-            processNode(condition.consequent, currentReport);
+            processNode(condition.consequent, currentReport, currentOperators, currentOperands);
         }
 
         if (condition.alternate) {
-            processNode(condition.alternate, currentReport);
+            processNode(condition.alternate, currentReport, currentOperators, currentOperands);
         }
     }
 
@@ -152,66 +154,107 @@
         }
     }
 
-    function processBlock (block, currentReport) {
-        processTree(block.body, currentReport);
+    function operatorEncountered (operator, currentReport, currentOperators) {
+        incrementTotalOperators(report.aggregate);
+        incrementDistinctOperators(operator, operators, report.aggregate);
+
+        incrementTotalOperators(currentReport);
+        incrementDistinctOperators(operator, currentOperators, currentReport);
     }
 
-    function processLogical (logical, currentReport) {
-        if (settings.logicalor && logical.operator === '||') {
-            processCondition({
-                consequent: logical.left,
-                alternate: logical.right
-            }, currentReport);
+    function incrementTotalOperators (baseReport) {
+        incrementOperators(baseReport, 'total');
+    }
+
+    function incrementDistinctOperators (operator, existingOperators, baseReport) {
+        // TODO: Consider what to do if operator is undefined
+        if (!existingOperators[operator]) {
+            incrementOperators(baseReport, 'distinct');
+            existingOperators[operator] = true;
         }
     }
 
-    function processSwitch (s, currentReport) {
-        processTree(s.cases, currentReport);
+    function incrementOperators (baseReport, type) {
+        incrementHalsteadMetric(baseReport, 'operators', type);
     }
 
-    function processCase (c, currentReport) {
+    function incrementHalsteadMetric (baseReport, metric, type) {
+        if (baseReport) {
+            baseReport.complexity.halstead[metric][type] += 1;
+        }
+    }
+
+    function processBlock (block, currentReport, currentOperators, currentOperands) {
+        processTree(block.body, currentReport, currentOperators, currentOperands);
+    }
+
+    function processLogical (logical, currentReport, currentOperators, currentOperands) {
+        if (settings.logicalor && logical.operator === '||') {
+            processCondition({
+                type: logical.operator,
+                consequent: logical.left,
+                alternate: logical.right
+            }, currentReport, currentOperators, currentOperands);
+        } else {
+            operatorEncountered(logical.operator, currentReport, currentOperators);
+        }
+    }
+
+    function processSwitch (s, currentReport, currentOperators, currentOperands) {
+        operatorEncountered(s.type, currentReport, currentOperators);
+
+        processTree(s.cases, currentReport, currentOperators, currentOperands);
+    }
+
+    function processCase (c, currentReport, currentOperators, currentOperands) {
+        operatorEncountered(c.type, currentReport, currentOperators);
+
         if (settings.switchcase && c.test) {
             processCondition({
                 consequent: {
                     type: 'BlockStatement',
                     body: c.consequent
                 }
-            }, currentReport);
+            }, currentReport, currentOperators, currentOperands);
         } else {
-            processTree(c.consequent, currentReport);
+            processTree(c.consequent, currentReport, currentOperators, currentOperands);
         }
     }
 
-    function processLoop (loop, currentReport) {
+    function processLoop (loop, currentReport, currentOperators, currentOperands) {
+        operatorEncountered(loop.type, currentReport, currentOperators);
+
         if (loop.test) {
             processCondition({
                 consequent: loop.body
-            }, currentReport);
+            }, currentReport, currentOperators, currentOperands);
         }
     }
 
-    function processForIn (forIn, currentReport) {
+    function processForIn (forIn, currentReport, currentOperators, currentOperands) {
+        operatorEncountered(forIn.type, currentReport, currentOperators);
+
         if (settings.forin) {
             incrementComplexity(currentReport);
         }
 
-        processNode(forIn.body, currentReport);
+        processNode(forIn.body, currentReport, currentOperators, currentOperands);
     }
 
-    function processTry (t, currentReport) {
-        processNode(t.block, currentReport);
-        processTree(t.handlers, currentReport);
+    function processTry (t, currentReport, currentOperators, currentOperands) {
+        processNode(t.block, currentReport, currentOperators, currentOperands);
+        processTree(t.handlers, currentReport, currentOperators, currentOperands);
     }
 
-    function processCatch (c, currentReport) {
+    function processCatch (c, currentReport, currentOperators, currentOperands) {
         if (settings.trycatch) {
             incrementComplexity(currentReport);
         }
 
-        processNode(c.body, currentReport);
+        processNode(c.body, currentReport, currentOperators, currentOperands);
     }
 
-    function processFunction (fn, currentReport) {
+    function processFunction (fn, currentReport, currentOperators, currentOperands) {
         var name;
 
         if (check.isObject(fn.id)) {
@@ -222,56 +265,48 @@
     }
 
     function processFunctionBody (name, body) {
-        var currentReport = createFunctionReport(name, body.loc);
+        var currentReport = createFunctionReport(name, body.loc),
+            currentOperators = {},
+            currentOperands = {};
 
         report.functions.push(currentReport);
 
-        processNode(body, currentReport);
+        processNode(body, currentReport, currentOperators, currentOperands);
     }
 
-    function processVariables (variables, currentReport) {
-        processTree(variables.declarations, currentReport);
+    function processVariables (variables, currentReport, currentOperators, currentOperands) {
+        processTree(variables.declarations, currentReport, currentOperators, currentOperands);
     }
 
-    function processVariable (variable, currentReport) {
-        incrementDistinctOperands(currentReport);
-
+    function processVariable (variable, currentReport, currentOperators, currentOperands) {
         if (variable.init) {
             if (
                 variable.init.type === 'FunctionExpression' &&
                 check.isObject(variable.init.id) === false
             ) {
-                incrementDistinctOperands(currentReport);
                 processFunctionBody(variable.id.name, variable.init.body);
             } else {
-                processNode(variable.init, currentReport);
+                processNode(variable.init, currentReport, currentOperators, currentOperands);
             }
         }
     }
 
-    function incrementDistinctOperands (currentReport) {
-        report.aggregate.complexity.halstead.operands.distinct += 1;
-
-        if (currentReport) {
-            currentReport.complexity.halstead.operands.distinct += 1;
-        }
+    function processLiteral (literal, currentReport, currentOperators, currentOperands) {
     }
 
-    function processLiteral (literal, currentReport) {
-        incrementDistinctOperands(currentReport);
+    function processReturn (rtn, currentReport, currentOperators, currentOperands) {
+        processNode(rtn.argument, currentReport, currentOperators, currentOperands);
     }
 
-    function processReturn (rtn, currentReport) {
-        processNode(rtn.argument, currentReport);
+    function processExpression (expression, currentReport, currentOperators, currentOperands) {
+        processNode(expression.expression, currentReport, currentOperators, currentOperands);
     }
 
-    function processExpression (expression, currentReport) {
-        processNode(expression.expression, currentReport);
-    }
+    function processCall (call, currentReport, currentOperators, currentOperands) {
+        operatorEncountered(call.type, currentReport, currentOperators);
 
-    function processCall (call, currentReport) {
-        processTree(call['arguments'], currentReport);
-        processNode(call.callee, currentReport);
+        processTree(call['arguments'], currentReport, currentOperators, currentOperands);
+        processNode(call.callee, currentReport, currentOperators, currentOperands);
     }
 }());
 
