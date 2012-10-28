@@ -189,9 +189,12 @@
     }
 
     function incrementDistinctOperands(operand, currentOperands) {
-        // TODO: Consider closures, scoping differences.
-        // Maybe new operands only arrive with var and arguments?
-        // Also globals. Hmmmm. And literals. And function names.
+        // The operand should be considered distinct if it is in a
+        // var declaration, listed as the argument for a function
+        // body, first usage of a literal, first usage of a global
+        // or first call to a function. Because of closures, nested
+        // functions should of course inherit the operand lists of
+        // their parents.
     }
 
     function incrementOperands (baseReport, type) {
