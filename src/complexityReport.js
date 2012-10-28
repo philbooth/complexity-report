@@ -178,6 +178,26 @@
         incrementHalsteadMetric(baseReport, 'operators', type);
     }
 
+    function operandEncountered (operand, currentReport, currentOperands) {
+        incrementTotalOperands(report.aggregate);
+        incrementTotalOperands(currentReport);
+        incrementDistinctOperands(operand, currentOperands);
+    }
+
+    function incrementTotalOperands (baseReport) {
+        incrementOperands(baseReport, 'total');
+    }
+
+    function incrementDistinctOperands(operand, currentOperands) {
+        // TODO: Consider closures, scoping differences.
+        // Maybe new operands only arrive with var and arguments?
+        // Also globals. Hmmmm. And literals. And function names.
+    }
+
+    function incrementOperands (baseReport, type) {
+        incrementHalsteadMetric(baseReport, 'operands', type);
+    }
+
     function incrementHalsteadMetric (baseReport, metric, type) {
         if (baseReport) {
             baseReport.complexity.halstead[metric][type] += 1;
@@ -304,6 +324,7 @@
 
     function processCall (call, currentReport, currentOperators, currentOperands) {
         operatorEncountered(call.type, currentReport, currentOperators);
+        operandEncountered(call.callee.name, currentReport, currentOperands);
 
         processTree(call['arguments'], currentReport, currentOperators, currentOperands);
         processNode(call.callee, currentReport, currentOperators, currentOperands);
