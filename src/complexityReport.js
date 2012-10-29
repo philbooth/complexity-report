@@ -7,7 +7,7 @@
 (function () {
     'use strict';
 
-    var check, esprima, syntaxHandlers, settings, report, operators;
+    var check, esprima, syntaxHandlers, settings, report, operators, operands;
 
     exports.run = run;
 
@@ -64,6 +64,7 @@
 
         report = createReport();
         operators = {};
+        operands = {};
 
         ast = esprima.parse(source, {
             loc: true
@@ -133,7 +134,7 @@
 
     function processCondition (condition, currentReport, currentOperators, currentOperands) {
         incrementComplexity(currentReport);
-        operatorEncountered(condition.type, currentReport, currentOperators);
+        operatorEncountered(condition.type, currentOperators, currentReport);
 
         processNode(condition.test, currentReport, currentOperators, currentOperands);
         processNode(condition.consequent, currentReport, currentOperators, currentOperands);
@@ -148,51 +149,33 @@
         }
     }
 
-    function operatorEncountered (operator, currentReport, currentOperators) {
-        incrementTotalOperators(report.aggregate);
-        incrementDistinctOperators(operator, operators, report.aggregate);
-
-        incrementTotalOperators(currentReport);
-        incrementDistinctOperators(operator, currentOperators, currentReport);
+    function operatorEncountered (operator, currentOperators, currentReport) {
+        halsteadItemEncountered(operator, currentOperators, operators, currentReport, 'operators');
     }
 
-    function incrementTotalOperators (baseReport) {
-        incrementOperators(baseReport, 'total');
+    function operandEncountered (operand, currentOperands, currentReport) {
+        halsteadItemEncountered(operand, currentOperands, operands, currentReport, 'operands');
     }
 
-    function incrementDistinctOperators (operator, existingOperators, baseReport) {
-        // TODO: Consider what to do if operator is undefined
-        if (!existingOperators[operator]) {
-            incrementOperators(baseReport, 'distinct');
-            existingOperators[operator] = true;
+    function halsteadItemEncountered (item, currentItems, items, currentReport, metric) {
+        incrementHalsteadItems(item, currentItems, currentReport, metric);
+        incrementHalsteadItems(item, items, report.aggregate, metric);
+    }
+
+    function incrementHalsteadItems (item, currentItems, baseReport, metric) {
+        incrementDistinctHalsteadItems(item, currentItems, baseReport, metric);
+        incrementTotalHalsteadItems(baseReport, metric);
+    }
+
+    function incrementDistinctHalsteadItems (item, currentItems, baseReport, metric) {
+        if (!currentItems[item]) {
+            incrementHalsteadMetric(baseReport, metric, 'distinct');
+            currentItems[item] = true;
         }
     }
 
-    function incrementOperators (baseReport, type) {
-        incrementHalsteadMetric(baseReport, 'operators', type);
-    }
-
-    function operandEncountered (operand, currentReport, currentOperands) {
-        incrementTotalOperands(report.aggregate);
-        incrementTotalOperands(currentReport);
-        incrementDistinctOperands(operand, currentOperands);
-    }
-
-    function incrementTotalOperands (baseReport) {
-        incrementOperands(baseReport, 'total');
-    }
-
-    function incrementDistinctOperands(operand, currentOperands) {
-        // The operand should be considered distinct if it is in a
-        // var declaration, listed as the argument for a function
-        // body, first usage of a literal, first usage of a global
-        // or first call to a function. Because of closures, nested
-        // functions should of course inherit the operand lists of
-        // their parents.
-    }
-
-    function incrementOperands (baseReport, type) {
-        incrementHalsteadMetric(baseReport, 'operands', type);
+    function incrementTotalHalsteadItems (baseReport, metric) {
+        incrementHalsteadMetric(baseReport, metric, 'total');
     }
 
     function incrementHalsteadMetric (baseReport, metric, type) {
@@ -213,18 +196,18 @@
                 alternate: logical.right
             }, currentReport, currentOperators, currentOperands);
         } else {
-            operatorEncountered(logical.operator, currentReport, currentOperators);
+            operatorEncountered(logical.operator, currentOperators, currentReport);
         }
     }
 
     function processSwitch (s, currentReport, currentOperators, currentOperands) {
-        operatorEncountered(s.type, currentReport, currentOperators);
+        operatorEncountered(s.type, currentOperators, currentReport);
 
         processTree(s.cases, currentReport, currentOperators, currentOperands);
     }
 
     function processCase (c, currentReport, currentOperators, currentOperands) {
-        operatorEncountered(c.type, currentReport, currentOperators);
+        operatorEncountered(c.type, currentOperators, currentReport);
 
         if (settings.switchcase && c.test) {
             processCondition({
@@ -239,7 +222,7 @@
     }
 
     function processLoop (loop, currentReport, currentOperators, currentOperands) {
-        operatorEncountered(loop.type, currentReport, currentOperators);
+        operatorEncountered(loop.type, currentOperators, currentReport);
 
         if (loop.test) {
             processCondition({
@@ -249,7 +232,7 @@
     }
 
     function processForIn (forIn, currentReport, currentOperators, currentOperands) {
-        operatorEncountered(forIn.type, currentReport, currentOperators);
+        operatorEncountered(forIn.type, currentOperators, currentReport);
 
         if (settings.forin) {
             incrementComplexity(currentReport);
@@ -315,14 +298,14 @@
     function processLiteral (literal, currentReport, currentOperators, currentOperands) {
         var value;
 
-        if (check.isString(literal)) {
+        if (check.isString(literal.value)) {
             // Avoid conflicts between string literals and identifiers.
             value = '"' + literal.value + '"';
         } else {
             value = literal.value;
         }
 
-        operandEncountered(value, currentReport, currentOperands);
+        operandEncountered(value, currentOperands, currentReport);
     }
 
     function processReturn (rtn, currentReport, currentOperators, currentOperands) {
@@ -334,8 +317,8 @@
     }
 
     function processCall (call, currentReport, currentOperators, currentOperands) {
-        operatorEncountered(call.type, currentReport, currentOperators);
-        operandEncountered(call.callee.name, currentReport, currentOperands);
+        operatorEncountered(call.type, currentOperators, currentReport);
+        operandEncountered(call.callee, currentOperands, currentReport);
 
         processTree(call['arguments'], currentReport, currentOperators, currentOperands);
         processNode(call.callee, currentReport, currentOperators, currentOperands);
@@ -343,7 +326,6 @@
 
     function processMember (member, currentReport, currentOperators, currentOperands) {
         processNode(member.object, currentReport, currentOperators, currentOperands);
-        // TODO: Use member.property for operand count
     }
 
     function processAssignment (assignment, currentReport, currentOperators, currentOperands) {
