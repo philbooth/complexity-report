@@ -276,7 +276,11 @@
             name = fn.id.name;
         }
 
-        processFunctionBody(name, fn.body);
+        processFunctionBody(safeName(name), fn.body);
+    }
+
+    function safeName (name) {
+        return name || '<anonymous>';
     }
 
     function processFunctionBody (name, body) {
@@ -349,7 +353,8 @@
         ) {
             if (assignment.left.type === 'MemberExpression') {
                 processFunctionBody(
-                    assignment.left.object.name + '.' + assignment.left.property.name,
+                    safeName(assignment.left.object.name) +
+                        '.' + assignment.left.property.name,
                     assignment.right.body
                 );
             } else {

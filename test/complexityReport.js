@@ -693,7 +693,7 @@
                 });
 
                 test('second function is anonymous', function () {
-                    assert.isUndefined(report.functions[1].name);
+                    assert.strictEqual(report.functions[1].name, '<anonymous>');
                 });
             });
 
@@ -761,7 +761,7 @@
                 });
 
                 test('function is anonymous', function () {
-                    assert.isUndefined(report.functions[0].name);
+                    assert.strictEqual(report.functions[0].name, '<anonymous>');
                 });
             });
 
@@ -909,7 +909,7 @@
                 });
             });
 
-            suite('run against anonymous function assigned to property', function () {
+            suite('run against anonymous function assigned to property:', function () {
                 var report;
 
                 setup(function () {
@@ -926,6 +926,26 @@
 
                 test('function has correct name', function () {
                     assert.strictEqual(report.functions[0].name, 'foo.bar');
+                });
+            });
+
+            suite('run against anonymous function assigned to property of literal:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('"".bar = function () { "bar"; };');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('functions has correct length', function () {
+                    assert.lengthOf(report.functions, 1);
+                });
+
+                test('function has correct name', function () {
+                    assert.strictEqual(report.functions[0].name, '<anonymous>.bar');
                 });
             });
         });
