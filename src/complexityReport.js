@@ -105,9 +105,7 @@
     }
 
     function processNode (node, currentReport) {
-        check.verifyObject(node, 'Invalid syntax node');
-
-        if (check.isFunction(syntaxHandlers[node.type])) {
+        if (check.isObject(node) && check.isFunction(syntaxHandlers[node.type])) {
             syntaxHandlers[node.type](node, currentReport);
         }
     }
@@ -115,13 +113,8 @@
     function processCondition (condition, currentReport) {
         incrementComplexity(currentReport);
 
-        if (condition.consequent) {
-            processNode(condition.consequent, currentReport);
-        }
-
-        if (condition.alternate) {
-            processNode(condition.alternate, currentReport);
-        }
+        processNode(condition.consequent, currentReport);
+        processNode(condition.alternate, currentReport);
     }
 
     function incrementComplexity (currentReport) {
