@@ -33,7 +33,7 @@ cr [options] <file...>
 
 * `-o <file>`: Specify an output file for the report,
   defaults to `stdout`.
-* `-f <format`: Specify an output format for the report,
+* `-f <format>`: Specify an output format for the report,
   defaults to `plain`.
 * `-t <threshold>`: Specify the per-function complexity threshold
   (beyond which, will cause the process to fail when exiting).
