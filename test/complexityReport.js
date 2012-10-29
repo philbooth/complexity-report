@@ -948,6 +948,82 @@
                     assert.strictEqual(report.functions[0].name, '<anonymous>.bar');
                 });
             });
+
+            suite('run against empty object literal:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('var foo = {};');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
+                });
+
+                test('functions has correct length', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+            });
+
+            suite('run against function property of literal object:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('var foo = { bar: "bar", baz: function () { "baz"; } };');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('functions has correct length', function () {
+                    assert.lengthOf(report.functions, 1);
+                });
+
+                test('function has correct name', function () {
+                    assert.strictEqual(report.functions[0].name, 'baz');
+                });
+            });
+
+            suite('run against duplicate function properties of literal object:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('var foo = { bar: function () { if (true) { "bar"; } }, bar: function () { "bar"; } };');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('functions has correct length', function () {
+                    assert.lengthOf(report.functions, 2);
+                });
+
+                test('first function has correct name', function () {
+                    assert.strictEqual(report.functions[0].name, 'bar');
+                });
+
+                test('second function has correct name', function () {
+                    assert.strictEqual(report.functions[1].name, 'bar');
+                });
+
+                test('first function has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.functions[0].complexity.cyclomatic, 2);
+                });
+
+                test('second function has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.functions[1].complexity.cyclomatic, 1);
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
+                });
+            });
         });
     });
 }());
