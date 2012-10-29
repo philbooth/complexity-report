@@ -35,7 +35,8 @@
         ReturnStatement: processReturn,
         ExpressionStatement: processExpression,
         CallExpression: processCall,
-        MemberExpression: processProperty
+        MemberExpression: processProperty,
+        AssignmentExpression: processAssignment
     };
 
     /**
@@ -337,6 +338,26 @@
     function processProperty (property, currentReport, currentOperators, currentOperands) {
         processNode(property.object, currentReport, currentOperators, currentOperands);
         // TODO: Use process.property for operand count
+    }
+
+    function processAssignment (assignment, currentReport, currentOperators, currentOperands) {
+        //console.dir(assignment);
+        processNode(assignment.left, currentReport, currentOperators, currentOperands);
+        if (
+            assignment.right.type === 'FunctionExpression' &&
+            check.isObject(assignment.right.id) === false
+        ) {
+            if (assignment.left.type === 'MemberExpression') {
+                processFunctionBody(
+                    assignment.left.object.name + '.' + assignment.left.property.name,
+                    assignment.right.body
+                );
+            } else {
+                processNode(assignment.right, currentReport, currentOperators, currentOperands);
+            }
+        } else {
+            processNode(assignment.right, currentReport, currentOperators, currentOperands);
+        }
     }
 }());
 

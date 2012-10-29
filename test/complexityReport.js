@@ -892,6 +892,42 @@
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
                 });
             });
+
+            suite('run against call on function object', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('(function () { "foo"; }).call(this);');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('functions has correct length', function () {
+                    assert.lengthOf(report.functions, 1);
+                });
+            });
+
+            suite('run against anonymous function assigned to property', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('var foo = {}; foo.bar = function () { "foobar"; };');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('functions has correct length', function () {
+                    assert.lengthOf(report.functions, 1);
+                });
+
+                test('function has correct name', function () {
+                    assert.strictEqual(report.functions[0].name, 'foo.bar');
+                });
+            });
         });
     });
 }());
