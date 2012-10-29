@@ -34,7 +34,8 @@
         Literal: processLiteral,
         ReturnStatement: processReturn,
         ExpressionStatement: processExpression,
-        CallExpression: processCall
+        CallExpression: processCall,
+        MemberExpression: processProperty
     };
 
     /**
@@ -331,6 +332,11 @@
 
         processTree(call['arguments'], currentReport, currentOperators, currentOperands);
         processNode(call.callee, currentReport, currentOperators, currentOperands);
+    }
+
+    function processProperty (property, currentReport, currentOperators, currentOperands) {
+        processNode(property.object, currentReport, currentOperators, currentOperands);
+        // TODO: Use process.property for operand count
     }
 }());
 
