@@ -134,7 +134,11 @@
 
     function processCondition (condition, currentReport, currentOperators, currentOperands) {
         incrementComplexity(currentReport);
+
         operatorEncountered(condition.type, currentOperators, currentReport);
+        if (condition.alternate) {
+            operatorEncountered(condition.alternate, currentOperators, currentReport);
+        }
 
         processNode(condition.test, currentReport, currentOperators, currentOperands);
         processNode(condition.consequent, currentReport, currentOperators, currentOperands);
