@@ -90,6 +90,10 @@
                 error('readSourceFile', err);
             }
 
+            if (beginsWithShebang(source)) {
+                source = commentFirstLine(source);
+            }
+
             getReport(path, source);
 
             finish();
@@ -103,6 +107,14 @@
     function fail (message) {
         console.log(message);
         process.exit(1);
+    }
+
+    function beginsWithShebang (source) {
+        return source[0] === '#' && source[1] === '!';
+    }
+
+    function commentFirstLine (source) {
+        return '//' + source;
     }
 
     function getReport (path, source) {

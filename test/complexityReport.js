@@ -857,7 +857,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('(function (foo) { if (foo === "foo") { console.log(foo); } }("foo"));');
+                    report = cr.run('(function (foo) { if (foo === "foo") { console.log(foo); return; } "bar"; }("foo"));');
                 });
 
                 teardown(function () {

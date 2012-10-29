@@ -122,9 +122,7 @@
     }
 
     function processNode (node, currentReport, currentOperators, currentOperands) {
-        check.verifyObject(node, 'Invalid syntax node');
-
-        if (check.isFunction(syntaxHandlers[node.type])) {
+        if (check.isObject(node) && check.isFunction(syntaxHandlers[node.type])) {
             syntaxHandlers[node.type](node, currentReport, currentOperators, currentOperands);
         }
     }
@@ -133,17 +131,9 @@
         incrementComplexity(currentReport);
         operatorEncountered(condition.type, currentReport, currentOperators);
 
-        if (condition.test) {
-            processNode(condition.test, currentReport, currentOperators, currentOperands);
-        }
-
-        if (condition.consequent) {
-            processNode(condition.consequent, currentReport, currentOperators, currentOperands);
-        }
-
-        if (condition.alternate) {
-            processNode(condition.alternate, currentReport, currentOperators, currentOperands);
-        }
+        processNode(condition.test, currentReport, currentOperators, currentOperands);
+        processNode(condition.consequent, currentReport, currentOperators, currentOperands);
+        processNode(condition.alternate, currentReport, currentOperators, currentOperands);
     }
 
     function incrementComplexity (currentReport) {
