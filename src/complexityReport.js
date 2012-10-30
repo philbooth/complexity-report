@@ -21,6 +21,7 @@
         LogicalExpression: processLogical,
         SwitchStatement: processSwitch,
         SwitchCase: processCase,
+        BreakStatement: processBreak,
         ForStatement: processLoop,
         ForInStatement: processForIn,
         WhileStatement: processLoop,
@@ -207,22 +208,31 @@
     function processSwitch (s, currentReport, currentOperators, currentOperands) {
         operatorEncountered(s.type, currentOperators, currentReport);
 
+        processNode(s.discriminant, currentReport, currentOperators, currentOperands);
         processTree(s.cases, currentReport, currentOperators, currentOperands);
     }
 
     function processCase (c, currentReport, currentOperators, currentOperands) {
-        operatorEncountered(c.type, currentOperators, currentReport);
+        operatorEncountered(getCaseType(c), currentOperators, currentReport);
 
         if (settings.switchcase && c.test) {
-            processCondition({
-                consequent: {
-                    type: 'BlockStatement',
-                    body: c.consequent
-                }
-            }, currentReport, currentOperators, currentOperands);
-        } else {
-            processTree(c.consequent, currentReport, currentOperators, currentOperands);
+            incrementComplexity(currentReport);
         }
+
+        processNode(c.test, currentReport, currentOperators, currentOperands);
+        processTree(c.consequent, currentReport, currentOperators, currentOperands);
+    }
+
+    function getCaseType (c) {
+        if (c.test) {
+            return 'case';
+        }
+
+        return 'default';
+    }
+
+    function processBreak (b, currentReport, currentOperators, currentOperands) {
+        operatorEncountered(b.type, currentOperators, currentReport);
     }
 
     function processLoop (loop, currentReport, currentOperators, currentOperands) {
@@ -322,7 +332,10 @@
 
     function processCall (call, currentReport, currentOperators, currentOperands) {
         operatorEncountered(call.type, currentOperators, currentReport);
-        operandEncountered(call.callee, currentOperands, currentReport);
+        // TODO: Check the following
+        if (call.callee.type === 'Identifier') {
+            operandEncountered(call.callee.name, currentOperands, currentReport);
+        }
 
         processTree(call['arguments'], currentReport, currentOperators, currentOperands);
         processNode(call.callee, currentReport, currentOperators, currentOperands);
