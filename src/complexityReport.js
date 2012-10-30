@@ -37,6 +37,7 @@
         ExpressionStatement: processExpression,
         CallExpression: processCall,
         MemberExpression: processMember,
+        Identifier: processIdentifier,
         AssignmentExpression: processAssignment,
         ObjectExpression: processObject,
         Property: processProperty
@@ -269,17 +270,15 @@
     }
 
     function processFunction (fn, currentReport, currentOperators, currentOperands) {
-        var name;
-
-        if (check.isObject(fn.id)) {
-            name = fn.id.name;
-        }
-
-        processFunctionBody(safeName(name), fn.body);
+        processFunctionBody(safeName(fn.id), fn.body);
     }
 
-    function safeName (name) {
-        return name || '<anonymous>';
+    function safeName (object) {
+        if (check.isObject(object) && check.isUnemptyString(object.name)) {
+            return object.name;
+        }
+
+        return '<anonymous>';
     }
 
     function processFunctionBody (name, body) {
@@ -332,17 +331,19 @@
 
     function processCall (call, currentReport, currentOperators, currentOperands) {
         operatorEncountered(call.type, currentOperators, currentReport);
-        // TODO: Check the following
-        if (call.callee.type === 'Identifier') {
-            operandEncountered(call.callee.name, currentOperands, currentReport);
-        }
 
         processTree(call['arguments'], currentReport, currentOperators, currentOperands);
         processNode(call.callee, currentReport, currentOperators, currentOperands);
     }
 
     function processMember (member, currentReport, currentOperators, currentOperands) {
+        operatorEncountered(member.type, currentOperators, currentReport);
         processNode(member.object, currentReport, currentOperators, currentOperands);
+        processNode(member.property, currentReport, currentOperators, currentOperands);
+    }
+
+    function processIdentifier (identifier, currentReport, currentOperators, currentOperands) {
+        operandEncountered(identifier.name, currentOperands, currentReport);
     }
 
     function processAssignment (assignment, currentReport, currentOperators, currentOperands) {
@@ -354,7 +355,7 @@
         ) {
             if (assignment.left.type === 'MemberExpression') {
                 processFunctionBody(
-                    safeName(assignment.left.object.name) +
+                    safeName(assignment.left.object) +
                         '.' + assignment.left.property.name,
                     assignment.right.body
                 );
