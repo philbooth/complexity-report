@@ -36,7 +36,7 @@ cr [options] <file...>
 * `-f <format>`: Specify an output format for the report,
   defaults to `plain`.
 * `-t <threshold>`: Specify the per-function complexity threshold
-  (beyond which, will cause the process to fail when exiting).
+  (beyond which, the process will fail when exiting).
 * `-l`: Disregards operator `||` as a source of cyclomatic complexity.
 * `-s`: Disregards `switch` statements as a source of cyclomatic complexity.
 * `-i`: Treats `for`...`in` loops as a source of cyclomatic complexity.
