@@ -7,7 +7,7 @@
 (function () {
     'use strict';
 
-    var check, esprima, syntaxHandlers, settings, report, operators, operands;
+    var check, esprima, syntax, settings, report, operators, operands;
 
     exports.run = run;
 
@@ -42,6 +42,134 @@
         ObjectExpression: processObject,
         Property: processProperty
     };
+
+    function getSyntaxDefinitions (settings) {
+        return {
+            IfStatement: {
+                complexity: true, // incrementComplexity
+                operators: [ // operatorEncountered
+                    { name: 'if' },
+                    {
+                        name: 'else',
+                        optional: function (node) {
+                            return !!node.alternate;
+                        }
+                    }
+                ],
+                children: [ 'test', 'consequent', 'alternate' ] // processTree / processNode
+            ],
+            ConditionalExpression: {
+                complexity: true,
+                operators: [
+                    { name: ':?' }
+                ],
+                children: [ 'test', 'consequent', 'alternate' ]
+            },
+            BlockStatement: {
+                children: [ 'body' ]
+            },
+            LogicalExpression: {
+                complexity: function (node) {
+                    return settings.logicalor && node.operator === '||';
+                },
+                operators: [
+                    {
+                        name: function (node) {
+                            return node.operator;
+                        }
+                    }
+                ],
+                children: [ 'left', 'right' ]
+            },
+            SwitchStatement: {
+                operators: [
+                    { name: 'switch' }
+                ],
+                children: [ 'discriminant', 'cases' ]
+            },
+            SwitchCase: {
+                complexity: function (node) {
+                    return settings.switchcase && node.test;
+                },
+                operators: [
+                    {
+                        name: function (node) {
+                            return node.test ? 'case' : 'default';
+                        }
+                    }
+                ],
+                children: [ 'test', 'consequent' ]
+            },
+            BreakStatement: {
+                operators: [
+                    { name: 'break' }
+                ]
+            },
+            ForStatement: getLoopSyntaxDefinition(),
+            ForInStatement: {
+                complexity: function (node) {
+                    return settings.forin;
+                },
+                operators: [
+                    { name: 'forin' }
+                ],
+                children: [ 'body' ]
+            },
+            WhileStatement: getLoopSyntaxDefinition(),
+            DoWhileStatement: getLoopSyntaxDefinition(),
+            TryStatement: {
+                children: [ 'block', 'handlers' ]
+            },
+            CatchClause: {
+                complexity: function (node) {
+                    return settings.trycatch;
+                },
+                children: [ 'body' ]
+            },
+            FunctionDeclaration: {
+            },
+            FunctionExpression: {
+            },
+            VariableDeclaration: {
+            },
+            VariableDeclarator: {
+            },
+            Literal: {
+            },
+            ReturnStatement: {
+            },
+            ExpressionStatement: {
+            },
+            CallExpression: {
+            },
+            MemberExpression: {
+            },
+            Identifier: {
+            },
+            AssignmentExpression: {
+            },
+            ObjectExpression: {
+            },
+            Property: {
+            }
+        };
+    }
+
+    function getLoopSyntaxDefinition () {
+        return {
+            complexity: function (node) {
+                return !!node.test;
+            },
+            operators: [
+                { name: 'for' }
+            ],
+            children: [ 'body' ]
+        };
+    }
+
+    function processFunction (fn, currentReport, currentOperators, currentOperands) {
+        processFunctionBody(safeName(fn.id), fn.body);
+    }
 
     /**
      * Public function `run`.
@@ -134,19 +262,6 @@
         }
     }
 
-    function processCondition (condition, currentReport, currentOperators, currentOperands) {
-        incrementComplexity(currentReport);
-
-        operatorEncountered(condition.type, currentOperators, currentReport);
-        if (condition.alternate) {
-            operatorEncountered(condition.alternate, currentOperators, currentReport);
-        }
-
-        processNode(condition.test, currentReport, currentOperators, currentOperands);
-        processNode(condition.consequent, currentReport, currentOperators, currentOperands);
-        processNode(condition.alternate, currentReport, currentOperators, currentOperands);
-    }
-
     function incrementComplexity (currentReport) {
         report.aggregate.complexity.cyclomatic += 1;
 
@@ -188,89 +303,6 @@
         if (baseReport) {
             baseReport.complexity.halstead[metric][type] += 1;
         }
-    }
-
-    function processBlock (block, currentReport, currentOperators, currentOperands) {
-        processTree(block.body, currentReport, currentOperators, currentOperands);
-    }
-
-    function processLogical (logical, currentReport, currentOperators, currentOperands) {
-        if (settings.logicalor && logical.operator === '||') {
-            processCondition({
-                type: logical.operator,
-                consequent: logical.left,
-                alternate: logical.right
-            }, currentReport, currentOperators, currentOperands);
-        } else {
-            operatorEncountered(logical.operator, currentOperators, currentReport);
-        }
-    }
-
-    function processSwitch (s, currentReport, currentOperators, currentOperands) {
-        operatorEncountered(s.type, currentOperators, currentReport);
-
-        processNode(s.discriminant, currentReport, currentOperators, currentOperands);
-        processTree(s.cases, currentReport, currentOperators, currentOperands);
-    }
-
-    function processCase (c, currentReport, currentOperators, currentOperands) {
-        operatorEncountered(getCaseType(c), currentOperators, currentReport);
-
-        if (settings.switchcase && c.test) {
-            incrementComplexity(currentReport);
-        }
-
-        processNode(c.test, currentReport, currentOperators, currentOperands);
-        processTree(c.consequent, currentReport, currentOperators, currentOperands);
-    }
-
-    function getCaseType (c) {
-        if (c.test) {
-            return 'case';
-        }
-
-        return 'default';
-    }
-
-    function processBreak (b, currentReport, currentOperators, currentOperands) {
-        operatorEncountered(b.type, currentOperators, currentReport);
-    }
-
-    function processLoop (loop, currentReport, currentOperators, currentOperands) {
-        operatorEncountered(loop.type, currentOperators, currentReport);
-
-        if (loop.test) {
-            processCondition({
-                consequent: loop.body
-            }, currentReport, currentOperators, currentOperands);
-        }
-    }
-
-    function processForIn (forIn, currentReport, currentOperators, currentOperands) {
-        operatorEncountered(forIn.type, currentOperators, currentReport);
-
-        if (settings.forin) {
-            incrementComplexity(currentReport);
-        }
-
-        processNode(forIn.body, currentReport, currentOperators, currentOperands);
-    }
-
-    function processTry (t, currentReport, currentOperators, currentOperands) {
-        processNode(t.block, currentReport, currentOperators, currentOperands);
-        processTree(t.handlers, currentReport, currentOperators, currentOperands);
-    }
-
-    function processCatch (c, currentReport, currentOperators, currentOperands) {
-        if (settings.trycatch) {
-            incrementComplexity(currentReport);
-        }
-
-        processNode(c.body, currentReport, currentOperators, currentOperands);
-    }
-
-    function processFunction (fn, currentReport, currentOperators, currentOperands) {
-        processFunctionBody(safeName(fn.id), fn.body);
     }
 
     function safeName (object) {
