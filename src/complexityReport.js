@@ -279,8 +279,37 @@
     }
 
     function processNode (node, currentReport, currentOperators, currentOperands) {
-        if (check.isObject(node) && check.isFunction(syntaxHandlers[node.type])) {
-            syntaxHandlers[node.type](node, currentReport, currentOperators, currentOperands);
+        if (check.isObject(node)) {
+            if (check.isFunction(syntax[node.type])) {
+                syntax[node.type](node, currentReport, currentOperators, currentOperands);
+            } else {
+                processSyntax(node, currentReport, currentOperators, currentOperands);
+            }
+        }
+    }
+
+    function processSyntax (node, currentReport, currentOperators, currentOperands) {
+        var current = syntax[node.type];
+
+        if (check.isObject(current)) {
+            processComplexity(node, currentReport);
+            processOperators(node, currentOperators, currentReport);
+            processOperands(node, currentOperands, currentReport);
+            processChildren(node, currentReport, currentOperators, currentOperands);
+        }
+    }
+
+    function processComplexity (node, currentReport) {
+        var currentSyntax = syntax[node.type];
+
+        if (
+            currentSyntax.complexity === true ||
+            (
+                check.isFunction(currentSyntax.complexity) &&
+                currentSyntax.complexity(node)
+            )
+        ) {
+            incrementComplexity(currentReport);
         }
     }
 
@@ -292,28 +321,49 @@
         }
     }
 
-    function operatorEncountered (operator, currentOperators, currentReport) {
-        halsteadItemEncountered(operator, currentOperators, operators, currentReport, 'operators');
+    function processOperators (node, currentOperators, currentReport) {
+        processHalsteadItem(node, 'operators', operators, currentOperators, currentReport);
     }
 
-    function operandEncountered (operand, currentOperands, currentReport) {
-        halsteadItemEncountered(operand, currentOperands, operands, currentReport, 'operands');
+    function processOperands (node, currentOperands, currentReport) {
+        processHalsteadMetric(node, 'operands', operands, currentOperators, currentReport);
     }
 
-    function halsteadItemEncountered (item, currentItems, items, currentReport, metric) {
-        incrementHalsteadItems(item, currentItems, currentReport, metric);
-        incrementHalsteadItems(item, items, report.aggregate, metric);
+    function processHalsteadMetric (node, metric, items, currentItems, currentReport) {
+        var currentSyntax = syntax[node.type], i, name;
+
+        if (check.isArray(currentSyntax[metric])) {
+            for (i = 0; i < currentSyntax[metric].length; i += 1) {
+                if (check.isFunction(currentSyntax[metric][i].name)) {
+                    name = currentSyntax[metric][i].name(node);
+                } else {
+                    name = currentSyntax[metric][i].name;
+                }
+
+                if (
+                    check.isFunction(currentSyntax[metric][i].optional) === false ||
+                    currentSyntax[metric][i].optional(node) === true
+                ) {
+                    halsteadItemEncountered(name, currentItems, items, currentReport, metric);
+                }
+            }
+        }
     }
 
-    function incrementHalsteadItems (item, currentItems, baseReport, metric) {
-        incrementDistinctHalsteadItems(item, currentItems, baseReport, metric);
+    function halsteadItemEncountered (name, currentItems, items, currentReport, metric) {
+        incrementHalsteadItems(name, currentItems, currentReport, metric);
+        incrementHalsteadItems(name, items, report.aggregate, metric);
+    }
+
+    function incrementHalsteadItems (name, currentItems, baseReport, metric) {
+        incrementDistinctHalsteadItems(name, currentItems, baseReport, metric);
         incrementTotalHalsteadItems(baseReport, metric);
     }
 
-    function incrementDistinctHalsteadItems (item, currentItems, baseReport, metric) {
-        if (!currentItems[item]) {
+    function incrementDistinctHalsteadItems (name, currentItems, baseReport, metric) {
+        if (!currentItems[name]) {
             incrementHalsteadMetric(baseReport, metric, 'distinct');
-            currentItems[item] = true;
+            currentItems[name] = true;
         }
     }
 
@@ -327,16 +377,28 @@
         }
     }
 
+    function processChildren (node, currentReport, currentOperators, currentOperands) {
+        var currentSyntax = syntax[node.type], i, child, fn;
+
+        if (check.isArray(currentSyntax.children)) {
+            for (i = 0; i < currentSyntax.children.length; i += 1) {
+                child = node[currentSyntax.children[i]];
+                fn = check.isArray(child) ? processTree : processNode;
+                fn(child, currentReport, currentOperators, currentOperands);
+            }
+        }
+    }
+
+    function processFunction (fn, currentReport, currentOperators, currentOperands) {
+        processFunctionBody(safeName(fn.id), fn.body);
+    }
+
     function safeName (object) {
         if (check.isObject(object) && check.isUnemptyString(object.name)) {
             return object.name;
         }
 
         return '<anonymous>';
-    }
-
-    function processFunction (fn, currentReport, currentOperators, currentOperands) {
-        processFunctionBody(safeName(fn.id), fn.body);
     }
 
     function processFunctionBody (name, body) {
