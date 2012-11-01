@@ -7,41 +7,88 @@
 (function () {
     'use strict';
 
-    var check, esprima, syntax, settings, report, operators, operands;
+    var check, esprima, syntax, report, operators, operands;
 
     exports.run = run;
 
     check = require('check-types');
     esprima = require('esprima');
 
-    syntaxHandlers = {
-        IfStatement: processCondition,
-        ConditionalExpression: processCondition,
-        BlockStatement: processBlock,
-        LogicalExpression: processLogical,
-        SwitchStatement: processSwitch,
-        SwitchCase: processCase,
-        BreakStatement: processBreak,
-        ForStatement: processLoop,
-        ForInStatement: processForIn,
-        WhileStatement: processLoop,
-        DoWhileStatement: processLoop,
-        TryStatement: processTry,
-        CatchClause: processCatch,
-        FunctionDeclaration: processFunction,
-        FunctionExpression: processFunction,
-        VariableDeclaration: processVariables,
-        VariableDeclarator: processVariable,
-        Literal: processLiteral,
-        ReturnStatement: processReturn,
-        ExpressionStatement: processExpression,
-        CallExpression: processCall,
-        MemberExpression: processMember,
-        Identifier: processIdentifier,
-        AssignmentExpression: processAssignment,
-        ObjectExpression: processObject,
-        Property: processProperty
-    };
+    /**
+     * Public function `run`.
+     *
+     * Returns a an object detailing the complexity of the code in the
+     * source argument.
+     *
+     * @param source {string}    The source code to analyse for complexity.
+     * @param [options] {object} Options to modify the complexity calculation.
+     *
+     */
+    function run (source, options) {
+        var settings, ast;
+
+        check.verifyUnemptyString(source, 'Invalid source');
+
+        if (check.isObject(options)) {
+            settings = options;
+        } else {
+            settings = getDefaultSettings();
+        }
+
+        report = createReport();
+        syntax = getSyntaxDefinitions(settings);
+        operators = {};
+        operands = {};
+
+        ast = esprima.parse(source, {
+            loc: true
+        });
+
+        processTree(ast.body, undefined, {}, {});
+
+        return report;
+    }
+
+    function getDefaultSettings () {
+        return {
+            logicalor: true,
+            switchcase: true,
+            forin: false,
+            trycatch: false
+        };
+    }
+
+    function createReport () {
+        return {
+            aggregate: createFunctionReport(),
+            functions: []
+        };
+    }
+
+    function createFunctionReport (name, lines) {
+        return {
+            name: name,
+            lines: lines,
+            complexity: {
+                cyclomatic: 1,
+                halstead: createInitialHalsteadState()
+            }
+        };
+    }
+
+    function createInitialHalsteadState () {
+        return {
+            operators: createInitialHalsteadItemState(),
+            operands: createInitialHalsteadItemState()
+        };
+    }
+
+    function createInitialHalsteadItemState () {
+        return {
+            distinct: 0,
+            total: 0
+        };
+    }
 
     function getSyntaxDefinitions (settings) {
         return {
@@ -57,7 +104,7 @@
                     }
                 ],
                 children: [ 'test', 'consequent', 'alternate' ] // processTree / processNode
-            ],
+            },
             ConditionalExpression: {
                 complexity: true,
                 operators: [
@@ -136,12 +183,12 @@
                 operands: [
                     {
                         name: function (node) {
-                            if (check.isString(literal.value)) {
+                            if (check.isString(node.value)) {
                                 // Avoid conflicts between string literals and identifiers.
-                                return '"' + literal.value + '"';
+                                return '"' + node.value + '"';
                             }
 
-                            return literal.value;
+                            return node.value;
                         }
                     }
                 ]
@@ -190,81 +237,6 @@
                 { name: 'for' }
             ],
             children: [ 'body' ]
-        };
-    }
-
-    /**
-     * Public function `run`.
-     *
-     * Returns a an object detailing the complexity of the code in the
-     * source argument.
-     *
-     * @param source {string}    The source code to analyse for complexity.
-     * @param [options] {object} Options to modify the complexity calculation.
-     *
-     */
-    function run (source, options) {
-        var ast;
-
-        check.verifyUnemptyString(source, 'Invalid source');
-
-        if (check.isObject(options)) {
-            settings = options;
-        } else {
-            settings = getDefaultSettings();
-        }
-
-        report = createReport();
-        operators = {};
-        operands = {};
-
-        ast = esprima.parse(source, {
-            loc: true
-        });
-
-        processTree(ast.body, undefined, {}, {});
-
-        return report;
-    }
-
-    function getDefaultSettings () {
-        return {
-            logicalor: true,
-            switchcase: true,
-            forin: false,
-            trycatch: false
-        };
-    }
-
-    function createReport () {
-        return {
-            aggregate: createFunctionReport(),
-            functions: []
-        };
-    }
-
-    function createFunctionReport (name, lines) {
-        return {
-            name: name,
-            lines: lines,
-            complexity: {
-                cyclomatic: 1,
-                halstead: createInitialHalsteadState()
-            }
-        };
-    }
-
-    function createInitialHalsteadState () {
-        return {
-            operators: createInitialOperatorOperandState(),
-            operands: createInitialOperatorOperandState()
-        };
-    }
-
-    function createInitialOperatorOperandState () {
-        return {
-            distinct: 0,
-            total: 0
         };
     }
 
@@ -322,11 +294,11 @@
     }
 
     function processOperators (node, currentOperators, currentReport) {
-        processHalsteadItem(node, 'operators', operators, currentOperators, currentReport);
+        processHalsteadMetric(node, 'operators', operators, currentOperators, currentReport);
     }
 
     function processOperands (node, currentOperands, currentReport) {
-        processHalsteadMetric(node, 'operands', operands, currentOperators, currentReport);
+        processHalsteadMetric(node, 'operands', operands, currentOperands, currentReport);
     }
 
     function processHalsteadMetric (node, metric, items, currentItems, currentReport) {
