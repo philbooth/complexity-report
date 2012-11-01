@@ -126,32 +126,58 @@
                 },
                 children: [ 'body' ]
             },
-            FunctionDeclaration: {
-            },
-            FunctionExpression: {
-            },
+            FunctionDeclaration: processFunction,
+            FunctionExpression: processFunction,
             VariableDeclaration: {
+                children: [ 'declarations' ]
             },
-            VariableDeclarator: {
-            },
+            VariableDeclarator: processVariable,
             Literal: {
+                operands: [
+                    {
+                        name: function (node) {
+                            if (check.isString(literal.value)) {
+                                // Avoid conflicts between string literals and identifiers.
+                                return '"' + literal.value + '"';
+                            }
+
+                            return literal.value;
+                        }
+                    }
+                ]
             },
             ReturnStatement: {
+                children: [ 'argument' ]
             },
             ExpressionStatement: {
+                children: [ 'expression' ]
             },
             CallExpression: {
+                operators: [
+                    { name: 'function call' }
+                ],
+                children: [ 'arguments', 'callee' ]
             },
             MemberExpression: {
+                operators: [
+                    { name: 'object member' }
+                ],
+                children: [ 'object', 'property' ]
             },
             Identifier: {
+                operands: [
+                    {
+                        name: function (node) {
+                            return node.name;
+                        }
+                    }
+                ]
             },
-            AssignmentExpression: {
-            },
+            AssignmentExpression: processAssignment,
             ObjectExpression: {
+                children: [ 'properties' ]
             },
-            Property: {
-            }
+            Property: processVariable
         };
     }
 
@@ -165,10 +191,6 @@
             ],
             children: [ 'body' ]
         };
-    }
-
-    function processFunction (fn, currentReport, currentOperators, currentOperands) {
-        processFunctionBody(safeName(fn.id), fn.body);
     }
 
     /**
@@ -313,6 +335,10 @@
         return '<anonymous>';
     }
 
+    function processFunction (fn, currentReport, currentOperators, currentOperands) {
+        processFunctionBody(safeName(fn.id), fn.body);
+    }
+
     function processFunctionBody (name, body) {
         var currentReport = createFunctionReport(name, body.loc),
             currentOperators = {},
@@ -321,10 +347,6 @@
         report.functions.push(currentReport);
 
         processNode(body, currentReport, currentOperators, currentOperands);
-    }
-
-    function processVariables (variables, currentReport, currentOperators, currentOperands) {
-        processTree(variables.declarations, currentReport, currentOperators, currentOperands);
     }
 
     function processVariable (variable, currentReport, currentOperators, currentOperands) {
@@ -338,44 +360,6 @@
                 processNode(variable.init, currentReport, currentOperators, currentOperands);
             }
         }
-    }
-
-    function processLiteral (literal, currentReport, currentOperators, currentOperands) {
-        var value;
-
-        if (check.isString(literal.value)) {
-            // Avoid conflicts between string literals and identifiers.
-            value = '"' + literal.value + '"';
-        } else {
-            value = literal.value;
-        }
-
-        operandEncountered(value, currentOperands, currentReport);
-    }
-
-    function processReturn (rtn, currentReport, currentOperators, currentOperands) {
-        processNode(rtn.argument, currentReport, currentOperators, currentOperands);
-    }
-
-    function processExpression (expression, currentReport, currentOperators, currentOperands) {
-        processNode(expression.expression, currentReport, currentOperators, currentOperands);
-    }
-
-    function processCall (call, currentReport, currentOperators, currentOperands) {
-        operatorEncountered(call.type, currentOperators, currentReport);
-
-        processTree(call['arguments'], currentReport, currentOperators, currentOperands);
-        processNode(call.callee, currentReport, currentOperators, currentOperands);
-    }
-
-    function processMember (member, currentReport, currentOperators, currentOperands) {
-        operatorEncountered(member.type, currentOperators, currentReport);
-        processNode(member.object, currentReport, currentOperators, currentOperands);
-        processNode(member.property, currentReport, currentOperators, currentOperands);
-    }
-
-    function processIdentifier (identifier, currentReport, currentOperators, currentOperands) {
-        operandEncountered(identifier.name, currentOperands, currentReport);
     }
 
     function processAssignment (assignment, currentReport, currentOperators, currentOperands) {
@@ -397,10 +381,6 @@
         } else {
             processNode(assignment.right, currentReport, currentOperators, currentOperands);
         }
-    }
-
-    function processObject (object, currentReport, currentOperators, currentOperands) {
-        processTree(object.properties, currentReport, currentOperators, currentOperands);
     }
 
     function processProperty (property, currentReport, currentOperators, currentOperands) {
