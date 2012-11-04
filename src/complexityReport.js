@@ -128,7 +128,7 @@
                 operators: [
                     { name: 'forin' }
                 ],
-                children: [ 'body' ]
+                children: [ 'left', 'right', 'body' ]
             },
             WhileStatement: getLoopSyntaxDefinition('while'),
             DoWhileStatement: getLoopSyntaxDefinition('dowhile'),
@@ -181,7 +181,7 @@
             },
             MemberExpression: {
                 operators: [
-                    { name: 'object member' }
+                    { name: '.' }
                 ],
                 children: [ 'object', 'property' ]
             },
@@ -206,6 +206,9 @@
                 children: [ 'left', 'right' ]
             },
             ObjectExpression: {
+                operands: [
+                    { name: safeName }
+                ],
                 children: [ 'properties' ]
             },
             Property: processProperty
@@ -440,6 +443,8 @@
     }
 
     function processProperty (property, currentReport, currentOperators, currentOperands) {
+        operatorEncountered(':', currentOperators, currentReport);
+
         processVariable({
             init: property.value,
             id: property.key

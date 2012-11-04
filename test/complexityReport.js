@@ -415,6 +415,22 @@
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 3);
                 });
+
+                test('aggregate has correct Halstead total operators', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 6);
+                });
+
+                test('aggregate has correct Halstead distinct operators', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.distinct, 6);
+                });
+
+                test('aggregate has correct Halstead total operands', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.total, 9);
+                });
+
+                test('aggregate has correct Halstead distinct operands', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 6);
+                });
             });
 
             suite('for...in loop:', function () {
@@ -434,6 +450,22 @@
 
                 test('functions is empty', function () {
                     assert.lengthOf(report.functions, 0);
+                });
+
+                test('aggregate has correct Halstead total operators', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 4);
+                });
+
+                test('aggregate has correct Halstead distinct operators', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.distinct, 3);
+                });
+
+                test('aggregate has correct Halstead total operands', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.total, 8);
+                });
+
+                test('aggregate has correct Halstead distinct operands', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 7);
                 });
             });
 
