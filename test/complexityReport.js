@@ -65,6 +65,46 @@
                 assert.isObject(cr.run('"foo"').aggregate.complexity);
             });
 
+            test('run returns aggregate cyclomatic complexity property', function () {
+                assert.isNumber(cr.run('"foo"').aggregate.complexity.cyclomatic);
+            });
+
+            test('run returns aggregate halstead property', function () {
+                assert.isObject(cr.run('"foo"').aggregate.complexity.halstead);
+            });
+
+            test('run returns aggregate halstead operators property', function () {
+                assert.isObject(cr.run('"foo"').aggregate.complexity.halstead.operators);
+            });
+
+            test('run returns aggregate halstead total operators property', function () {
+                assert.isNumber(cr.run('"foo"').aggregate.complexity.halstead.operators.total);
+            });
+
+            test('run returns aggregate halstead distinct operators property', function () {
+                assert.isNumber(cr.run('"foo"').aggregate.complexity.halstead.operators.distinct);
+            });
+
+            test('run returns aggregate halstead operator identifiers property', function () {
+                assert.isArray(cr.run('"foo"').aggregate.complexity.halstead.operators.identifiers);
+            });
+
+            test('run returns aggregate halstead operands property', function () {
+                assert.isObject(cr.run('"foo"').aggregate.complexity.halstead.operands);
+            });
+
+            test('run returns aggregate halstead total operands property', function () {
+                assert.isNumber(cr.run('"foo"').aggregate.complexity.halstead.operands.total);
+            });
+
+            test('run returns aggregate halstead distinct operands property', function () {
+                assert.isNumber(cr.run('"foo"').aggregate.complexity.halstead.operands.distinct);
+            });
+
+            test('run returns aggregate halstead operand identifiers property', function () {
+                assert.isArray(cr.run('"foo"').aggregate.complexity.halstead.operands.identifiers);
+            });
+
             test('run returns functions property', function () {
                 assert.isArray(cr.run('"foo"').functions);
             });
@@ -103,6 +143,20 @@
                 test('aggregate has correct Halstead distinct operands', function () {
                     assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 3);
                 });
+
+                test('aggregate has correct Halstead operator identifier length', function () {
+                    assert.lengthOf(
+                        report.aggregate.complexity.halstead.operators.identifiers,
+                        report.aggregate.complexity.halstead.operators.distinct
+                    );
+                });
+
+                test('aggregate has correct Halstead operand identifier length', function () {
+                    assert.lengthOf(
+                        report.aggregate.complexity.halstead.operands.identifiers,
+                        report.aggregate.complexity.halstead.operands.distinct
+                    );
+                });
             });
 
             suite('condition:', function () {
@@ -138,6 +192,20 @@
 
                 test('aggregate has correct Halstead distinct operands', function () {
                     assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 2);
+                });
+
+                test('aggregate has correct Halstead operator identifier length', function () {
+                    assert.lengthOf(
+                        report.aggregate.complexity.halstead.operators.identifiers,
+                        report.aggregate.complexity.halstead.operators.distinct
+                    );
+                });
+
+                test('aggregate has correct Halstead operand identifier length', function () {
+                    assert.lengthOf(
+                        report.aggregate.complexity.halstead.operands.identifiers,
+                        report.aggregate.complexity.halstead.operands.distinct
+                    );
                 });
             });
 
@@ -175,6 +243,20 @@
                 test('aggregate has correct Halstead distinct operands', function () {
                     assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 3);
                 });
+
+                test('aggregate has correct Halstead operator identifier length', function () {
+                    assert.lengthOf(
+                        report.aggregate.complexity.halstead.operators.identifiers,
+                        report.aggregate.complexity.halstead.operators.distinct
+                    );
+                });
+
+                test('aggregate has correct Halstead operand identifier length', function () {
+                    assert.lengthOf(
+                        report.aggregate.complexity.halstead.operands.identifiers,
+                        report.aggregate.complexity.halstead.operands.distinct
+                    );
+                });
             });
 
             suite('dual condition:', function () {
@@ -207,6 +289,20 @@
                 test('aggregate has correct Halstead distinct operands', function () {
                     assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 4);
                 });
+
+                test('aggregate has correct Halstead operator identifier length', function () {
+                    assert.lengthOf(
+                        report.aggregate.complexity.halstead.operators.identifiers,
+                        report.aggregate.complexity.halstead.operators.distinct
+                    );
+                });
+
+                test('aggregate has correct Halstead operand identifier length', function () {
+                    assert.lengthOf(
+                        report.aggregate.complexity.halstead.operands.identifiers,
+                        report.aggregate.complexity.halstead.operands.distinct
+                    );
+                });
             });
 
             suite('alternate dual condition:', function () {
@@ -238,6 +334,20 @@
 
                 test('aggregate has correct Halstead distinct operands', function () {
                     assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 4);
+                });
+
+                test('aggregate has correct Halstead operator identifier length', function () {
+                    assert.lengthOf(
+                        report.aggregate.complexity.halstead.operators.identifiers,
+                        report.aggregate.complexity.halstead.operators.distinct
+                    );
+                });
+
+                test('aggregate has correct Halstead operand identifier length', function () {
+                    assert.lengthOf(
+                        report.aggregate.complexity.halstead.operands.identifiers,
+                        report.aggregate.complexity.halstead.operands.distinct
+                    );
                 });
             });
 
