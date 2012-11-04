@@ -37,8 +37,9 @@ function formatFunctions (report) {
 function formatFunction (report) {
     return [
         '  Function: ', report.name, '\n',
-        '  Lines: ', report.lines.start.line, '-', report.lines.end.line, '\n',
-        '  Cyclomatic complexity: ', report.complexity.cyclomatic
+        '    Line No.: ', report.lines.start.line, '\n',
+        '    Length: ', report.lines.end.line - report.lines.start.line + 1, ' lines\n',
+        '    Cyclomatic complexity: ', report.complexity.cyclomatic
     ].join('');
 }
 
