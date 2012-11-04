@@ -176,6 +176,9 @@
                 ]
             },
             ReturnStatement: {
+                operators: [
+                    { name: 'return' }
+                ],
                 children: [ 'argument' ]
             },
             ExpressionStatement: {
