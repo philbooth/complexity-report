@@ -69,7 +69,7 @@
                 assert.isArray(cr.run('"foo"').functions);
             });
 
-            suite('run against function call:', function () {
+            suite('function call:', function () {
                 var report;
 
                 setup(function () {
@@ -105,7 +105,7 @@
                 });
             });
 
-            suite('run against condition:', function () {
+            suite('condition:', function () {
                 var report;
 
                 setup(function () {
@@ -141,7 +141,7 @@
                 });
             });
 
-            suite('run against condition with alternate:', function () {
+            suite('condition with alternate:', function () {
                 var report;
 
                 setup(function () {
@@ -177,7 +177,7 @@
                 });
             });
 
-            suite('run against dual condition:', function () {
+            suite('dual condition:', function () {
                 var report;
 
                 setup(function () {
@@ -209,7 +209,7 @@
                 });
             });
 
-            suite('run against alternate dual condition:', function () {
+            suite('alternate dual condition:', function () {
                 var report;
 
                 setup(function () {
@@ -241,7 +241,7 @@
                 });
             });
 
-            suite('run against nested condition:', function () {
+            suite('nested condition:', function () {
                 var report;
 
                 setup(function () {
@@ -257,7 +257,7 @@
                 });
             });
 
-            suite('run against switch statement:', function () {
+            suite('switch statement:', function () {
                 var report;
 
                 setup(function () {
@@ -293,7 +293,7 @@
                 });
             });
 
-            suite('run against switch statement with fall-through case:', function () {
+            suite('switch statement with fall-through case:', function () {
                 var report;
 
                 setup(function () {
@@ -321,15 +321,15 @@
                 });
 
                 test('aggregate has correct Halstead total operands', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.operands.total, 7);
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.total, 6);
                 });
 
                 test('aggregate has correct Halstead distinct operands', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 7);
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 6);
                 });
             });
 
-            suite('run against switch statement containing condition:', function () {
+            suite('switch statement containing condition:', function () {
                 var report;
 
                 setup(function () {
@@ -349,7 +349,7 @@
                 });
             });
 
-            suite('run against for loop:', function () {
+            suite('for loop:', function () {
                 var report;
 
                 setup(function () {
@@ -369,7 +369,7 @@
                 });
             });
 
-            suite('run against for loop containing condition:', function () {
+            suite('for loop containing condition:', function () {
                 var report;
 
                 setup(function () {
@@ -385,7 +385,7 @@
                 });
             });
 
-            suite('run against for...in loop:', function () {
+            suite('for...in loop:', function () {
                 var report;
 
                 setup(function () {
@@ -405,7 +405,7 @@
                 });
             });
 
-            suite('run against for...in loop containing condition:', function () {
+            suite('for...in loop containing condition:', function () {
                 var report;
 
                 setup(function () {
@@ -421,7 +421,7 @@
                 });
             });
 
-            suite('run against while loop:', function () {
+            suite('while loop:', function () {
                 var report;
 
                 setup(function () {
@@ -441,7 +441,7 @@
                 });
             });
 
-            suite('run against while loop containing condition:', function () {
+            suite('while loop containing condition:', function () {
                 var report;
 
                 setup(function () {
@@ -457,7 +457,7 @@
                 });
             });
 
-            suite('run against do...while loop:', function () {
+            suite('do...while loop:', function () {
                 var report;
 
                 setup(function () {
@@ -477,7 +477,7 @@
                 });
             });
 
-            suite('run against do...while loop containing condition:', function () {
+            suite('do...while loop containing condition:', function () {
                 var report;
 
                 setup(function () {
@@ -493,7 +493,7 @@
                 });
             });
 
-            suite('run against try...catch', function () {
+            suite('try...catch', function () {
                 var report;
 
                 setup(function () {
@@ -513,7 +513,7 @@
                 });
             });
 
-            suite('run against try containing condition', function () {
+            suite('try containing condition', function () {
                 var report;
 
                 setup(function () {
@@ -529,7 +529,7 @@
                 });
             });
 
-            suite('run against catch containing condition', function () {
+            suite('catch containing condition', function () {
                 var report;
 
                 setup(function () {
@@ -545,7 +545,7 @@
                 });
             });
 
-            suite('run against function declaration:', function () {
+            suite('function declaration:', function () {
                 var report;
 
                 setup(function () {
@@ -577,7 +577,7 @@
                 });
             });
 
-            suite('run against nested function declaration:', function () {
+            suite('nested function declaration:', function () {
                 var report;
 
                 setup(function () {
@@ -601,7 +601,7 @@
                 });
             });
 
-            suite('run against function declaration containing condition:', function () {
+            suite('function declaration containing condition:', function () {
                 var report;
 
                 setup(function () {
@@ -621,7 +621,7 @@
                 });
             });
 
-            suite('run against assignment expression', function () {
+            suite('assignment expression', function () {
                 var report;
 
                 setup(function () {
@@ -641,7 +641,7 @@
                 });
             });
 
-            suite('run against ternary condtional expression assigned to variable:', function () {
+            suite('ternary condtional expression assigned to variable:', function () {
                 var report;
 
                 setup(function () {
@@ -657,7 +657,7 @@
                 });
             });
 
-            suite('run against logical or expression assigned to variable:', function () {
+            suite('logical or expression assigned to variable:', function () {
                 var report;
 
                 setup(function () {
@@ -673,7 +673,7 @@
                 });
             });
 
-            suite('run against anonymous function assigned to variable:', function () {
+            suite('anonymous function assigned to variable:', function () {
                 var report;
 
                 setup(function () {
@@ -693,7 +693,7 @@
                 });
             });
 
-            suite('run against named function assigned to variable:', function () {
+            suite('named function assigned to variable:', function () {
                 var report;
 
                 setup(function () {
@@ -709,7 +709,7 @@
                 });
             });
 
-            suite('run against ternary condtional expression returned from function:', function () {
+            suite('ternary condtional expression returned from function:', function () {
                 var report;
 
                 setup(function () {
@@ -729,7 +729,7 @@
                 });
             });
 
-            suite('run against logical or expression returned from function:', function () {
+            suite('logical or expression returned from function:', function () {
                 var report;
 
                 setup(function () {
@@ -749,7 +749,7 @@
                 });
             });
 
-            suite('run against anonymous function returned from function:', function () {
+            suite('anonymous function returned from function:', function () {
                 var report;
 
                 setup(function () {
@@ -773,7 +773,7 @@
                 });
             });
 
-            suite('run against named function returned from function:', function () {
+            suite('named function returned from function:', function () {
                 var report;
 
                 setup(function () {
@@ -789,7 +789,7 @@
                 });
             });
 
-            suite('run against ternary condtional expression passed as argument:', function () {
+            suite('ternary condtional expression passed as argument:', function () {
                 var report;
 
                 setup(function () {
@@ -805,7 +805,7 @@
                 });
             });
 
-            suite('run against logical or expression passed as argument:', function () {
+            suite('logical or expression passed as argument:', function () {
                 var report;
 
                 setup(function () {
@@ -821,7 +821,7 @@
                 });
             });
 
-            suite('run against anonymous function passed as argument:', function () {
+            suite('anonymous function passed as argument:', function () {
                 var report;
 
                 setup(function () {
@@ -841,7 +841,7 @@
                 });
             });
 
-            suite('run against named function passed as argument:', function () {
+            suite('named function passed as argument:', function () {
                 var report;
 
                 setup(function () {
@@ -857,7 +857,7 @@
                 });
             });
 
-            suite('run against logical or expression with logicalor false:', function () {
+            suite('logical or expression with logicalor false:', function () {
                 var report;
 
                 setup(function () {
@@ -875,7 +875,7 @@
                 });
             });
 
-            suite('run against switch statement with switchcase false:', function () {
+            suite('switch statement with switchcase false:', function () {
                 var report;
 
                 setup(function () {
@@ -893,7 +893,7 @@
                 });
             });
 
-            suite('run against for...in loop with forin true:', function () {
+            suite('for...in loop with forin true:', function () {
                 var report;
 
                 setup(function () {
@@ -911,7 +911,7 @@
                 });
             });
 
-            suite('run against try...catch with trycatch true:', function () {
+            suite('try...catch with trycatch true:', function () {
                 var report;
 
                 setup(function () {
@@ -929,7 +929,7 @@
                 });
             });
 
-            suite('run against IIFE:', function () {
+            suite('IIFE:', function () {
                 var report;
 
                 setup(function () {
@@ -953,7 +953,7 @@
                 });
             });
 
-            suite('run against logical and condition:', function () {
+            suite('logical and condition:', function () {
                 var report;
 
                 setup(function () {
@@ -969,7 +969,7 @@
                 });
             });
 
-            suite('run against call on function object', function () {
+            suite('call on function object', function () {
                 var report;
 
                 setup(function () {
@@ -985,7 +985,7 @@
                 });
             });
 
-            suite('run against anonymous function assigned to property:', function () {
+            suite('anonymous function assigned to property:', function () {
                 var report;
 
                 setup(function () {
@@ -1005,7 +1005,7 @@
                 });
             });
 
-            suite('run against anonymous function assigned to property of literal:', function () {
+            suite('anonymous function assigned to property of literal:', function () {
                 var report;
 
                 setup(function () {
@@ -1025,7 +1025,7 @@
                 });
             });
 
-            suite('run against empty object literal:', function () {
+            suite('empty object literal:', function () {
                 var report;
 
                 setup(function () {
@@ -1045,7 +1045,7 @@
                 });
             });
 
-            suite('run against function property of literal object:', function () {
+            suite('function property of literal object:', function () {
                 var report;
 
                 setup(function () {
@@ -1065,7 +1065,7 @@
                 });
             });
 
-            suite('run against duplicate function properties of literal object:', function () {
+            suite('duplicate function properties of literal object:', function () {
                 var report;
 
                 setup(function () {

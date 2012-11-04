@@ -35,8 +35,8 @@
             settings = getDefaultSettings();
         }
 
-        report = createReport();
         syntax = getSyntaxDefinitions(settings);
+        report = createReport();
         operators = {};
         operands = {};
 
@@ -55,38 +55,6 @@
             switchcase: true,
             forin: false,
             trycatch: false
-        };
-    }
-
-    function createReport () {
-        return {
-            aggregate: createFunctionReport(),
-            functions: []
-        };
-    }
-
-    function createFunctionReport (name, lines) {
-        return {
-            name: name,
-            lines: lines,
-            complexity: {
-                cyclomatic: 1,
-                halstead: createInitialHalsteadState()
-            }
-        };
-    }
-
-    function createInitialHalsteadState () {
-        return {
-            operators: createInitialHalsteadItemState(),
-            operands: createInitialHalsteadItemState()
-        };
-    }
-
-    function createInitialHalsteadItemState () {
-        return {
-            distinct: 0,
-            total: 0
         };
     }
 
@@ -224,7 +192,7 @@
             ObjectExpression: {
                 children: [ 'properties' ]
             },
-            Property: processVariable
+            Property: processProperty
         };
     }
 
@@ -237,6 +205,38 @@
                 { name: 'for' }
             ],
             children: [ 'body' ]
+        };
+    }
+
+    function createReport () {
+        return {
+            aggregate: createFunctionReport(),
+            functions: []
+        };
+    }
+
+    function createFunctionReport (name, lines) {
+        return {
+            name: name,
+            lines: lines,
+            complexity: {
+                cyclomatic: 1,
+                halstead: createInitialHalsteadState()
+            }
+        };
+    }
+
+    function createInitialHalsteadState () {
+        return {
+            operators: createInitialHalsteadItemState(),
+            operands: createInitialHalsteadItemState()
+        };
+    }
+
+    function createInitialHalsteadItemState () {
+        return {
+            distinct: 0,
+            total: 0
         };
     }
 
