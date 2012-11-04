@@ -46,10 +46,6 @@
 
         processTree(ast.body, undefined, {}, {});
 
-        console.log('\n');
-        console.dir(operators);
-        console.dir(operands);
-
         return report;
     }
 
