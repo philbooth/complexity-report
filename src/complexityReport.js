@@ -120,7 +120,7 @@
                     { name: 'break' }
                 ]
             },
-            ForStatement: getLoopSyntaxDefinition(),
+            ForStatement: getLoopSyntaxDefinition('for'),
             ForInStatement: {
                 complexity: function (node) {
                     return settings.forin;
@@ -130,8 +130,8 @@
                 ],
                 children: [ 'body' ]
             },
-            WhileStatement: getLoopSyntaxDefinition(),
-            DoWhileStatement: getLoopSyntaxDefinition(),
+            WhileStatement: getLoopSyntaxDefinition('while'),
+            DoWhileStatement: getLoopSyntaxDefinition('dowhile'),
             TryStatement: {
                 children: [ 'block', 'handlers' ]
             },
@@ -139,11 +139,17 @@
                 complexity: function (node) {
                     return settings.trycatch;
                 },
+                operators: [
+                    { name: 'catch' }
+                ],
                 children: [ 'body' ]
             },
             FunctionDeclaration: processFunction,
             FunctionExpression: processFunction,
             VariableDeclaration: {
+                operators: [
+                    { name: 'var' }
+                ],
                 children: [ 'declarations' ]
             },
             VariableDeclarator: processVariable,
@@ -189,6 +195,16 @@
                 ]
             },
             AssignmentExpression: processAssignment,
+            BinaryExpression: {
+                operators: [
+                    {
+                        name: function (node) {
+                            return node.operator;
+                        }
+                    }
+                ],
+                children: [ 'left', 'right' ]
+            },
             ObjectExpression: {
                 children: [ 'properties' ]
             },
@@ -196,15 +212,15 @@
         };
     }
 
-    function getLoopSyntaxDefinition () {
+    function getLoopSyntaxDefinition (type) {
         return {
             complexity: function (node) {
                 return !!node.test;
             },
             operators: [
-                { name: 'for' }
+                { name: type }
             ],
-            children: [ 'body' ]
+            children: [ 'init', 'test', 'update', 'body' ]
         };
     }
 
@@ -384,19 +400,21 @@
     }
 
     function processVariable (variable, currentReport, currentOperators, currentOperands) {
-        if (variable.init) {
-            if (
-                variable.init.type === 'FunctionExpression' &&
-                check.isObject(variable.init.id) === false
-            ) {
-                processFunctionBody(variable.id.name, variable.init.body);
-            } else {
-                processNode(variable.init, currentReport, currentOperators, currentOperands);
-            }
+        processNode(variable.id, currentReport, currentOperators, currentOperands);
+        if (
+            variable.init &&
+            variable.init.type === 'FunctionExpression' &&
+            check.isObject(variable.init.id) === false
+        ) {
+            processFunctionBody(variable.id.name, variable.init.body);
+        } else {
+            processNode(variable.init, currentReport, currentOperators, currentOperands);
         }
     }
 
     function processAssignment (assignment, currentReport, currentOperators, currentOperands) {
+        operatorEncountered(assignment.operator, currentOperators, currentReport);
+
         processNode(assignment.left, currentReport, currentOperators, currentOperands);
 
         if (
@@ -415,6 +433,10 @@
         } else {
             processNode(assignment.right, currentReport, currentOperators, currentOperands);
         }
+    }
+
+    function operatorEncountered (name, currentOperators, currentReport) {
+        halsteadItemEncountered (name, currentOperators, operators, currentReport, 'operators')
     }
 
     function processProperty (property, currentReport, currentOperators, currentOperands) {
