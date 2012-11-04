@@ -206,7 +206,7 @@
                     }
                 ]
             },
-            AssignmentExpression: processAssignmentExpression,
+            AssignmentExpression: processAssignment,
             BinaryExpression: {
                 operators: [
                     {
@@ -396,7 +396,7 @@
     }
 
     function processFunction (fn, currentReport, currentOperators, currentOperands) {
-        processFunctionBody(safeName(fn.id), fn.body);
+        processFunctionWithName(fn, safeName(fn.id));
     }
 
     function safeName (object) {
@@ -407,19 +407,21 @@
         return '<anonymous>';
     }
 
-    function processFunctionBody (name, body) {
-        var currentReport = createFunctionReport(name, body.loc),
+    function processFunctionWithName (fn, name) {
+        var currentReport = createFunctionReport(name, fn.loc),
             currentOperators = {},
             currentOperands = {};
 
         report.functions.push(currentReport);
 
-        processNode(body, currentReport, currentOperators, currentOperands);
+        processNode(fn.id, currentReport, currentOperators, currentOperands);
+        processTree(fn.params, currentReport, currentOperators, currentOperands);
+        processNode(fn.body, currentReport, currentOperators, currentOperands);
     }
 
     function processVariable (variable, currentReport, currentOperators, currentOperands) {
         if (variable.init) {
-            processAssignment({
+            processAssignmentWithFName({
                 operator: '=',
                 left: variable.id,
                 right: variable.init
@@ -429,7 +431,7 @@
         }
     }
 
-    function processAssignment (assignment, fname, currentReport, currentOperators, currentOperands) {
+    function processAssignmentWithFName (assignment, fname, currentReport, currentOperators, currentOperands) {
         operatorEncountered(assignment.operator, currentOperators, currentReport);
 
         processNode(assignment.left, currentReport, currentOperators, currentOperands);
@@ -438,13 +440,13 @@
             assignment.right.type === 'FunctionExpression' &&
             check.isObject(assignment.right.id) === false
         ) {
-            processFunctionBody(fname, assignment.right.body);
+            processFunctionWithName(assignment.right, fname);
         } else {
             processNode(assignment.right, currentReport, currentOperators, currentOperands);
         }
     }
 
-    function processAssignmentExpression (expression, currentReport, currentOperators, currentOperands) {
+    function processAssignment (expression, currentReport, currentOperators, currentOperands) {
         var fname;
 
         if (expression.left.type === 'MemberExpression') {
@@ -453,7 +455,7 @@
             fname = safeName(expression.left.id);
         }
 
-        processAssignment(expression, fname, currentReport, currentOperators, currentOperands);
+        processAssignmentWithFName(expression, fname, currentReport, currentOperators, currentOperands);
     }
 
     function operatorEncountered (name, currentOperators, currentReport) {
@@ -461,7 +463,7 @@
     }
 
     function processProperty (property, currentReport, currentOperators, currentOperands) {
-        processAssignment({
+        processAssignmentWithFName({
             operator: ':',
             left: property.key,
             right: property.value
