@@ -7,18 +7,10 @@
     var exec = require('child_process').exec,
 
     commands = {
-        minify: './node_modules/.bin/uglifyjs --no-copyright --lift-vars --output ./src/complexityReport.min.js ./src/complexityReport.js',
         test: './node_modules/.bin/mocha --ui tdd --reporter spec --colors --slow 50 ./test/complexityReport.js',
         lint: './node_modules/.bin/jshint ./src/complexityReport.js --config config/jshint.json',
         prepare: 'npm install'
     };
-
-    desc('Minify the source code for deployment.');
-    task('minify', [ 'prepare', 'lint', 'test' ], function () {
-        runTask(minify, 'Minifying...');
-    }, {
-        async: true
-    });
 
     desc('Run the unit tests.');
     task('test', [ 'prepare' ], function () {
@@ -44,10 +36,6 @@
     function runTask (operation, message) {
         console.log(message);
         operation();
-    }
-
-    function minify () {
-        runCommand(commands.minify);
     }
 
     function test () {
