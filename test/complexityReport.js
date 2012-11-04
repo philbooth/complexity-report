@@ -1021,11 +1021,11 @@
                 });
 
                 test('aggregate has correct Halstead total operands', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.operands.total, 2);
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.total, 3);
                 });
 
                 test('aggregate has correct Halstead distinct operands', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 2);
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 3);
                 });
             });
 
@@ -1130,6 +1130,22 @@
 
                 test('second function is anonymous', function () {
                     assert.strictEqual(report.functions[1].name, '<anonymous>');
+                });
+
+                test('aggregate has correct Halstead total operators', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 1);
+                });
+
+                test('aggregate has correct Halstead distinct operators', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.distinct, 1);
+                });
+
+                test('aggregate has correct Halstead total operands', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.total, 3);
+                });
+
+                test('aggregate has correct Halstead distinct operands', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 3);
                 });
             });
 

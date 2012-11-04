@@ -399,7 +399,7 @@
     }
 
     function processFunction (fn, currentReport, currentOperators, currentOperands) {
-        processFunctionWithName(fn, safeName(fn.id));
+        processFunctionWithName(fn, safeName(fn.id), currentReport, currentOperands);
     }
 
     function safeName (object) {
@@ -410,16 +410,21 @@
         return '<anonymous>';
     }
 
-    function processFunctionWithName (fn, name) {
-        var currentReport = createFunctionReport(name, fn.loc),
-            currentOperators = {},
-            currentOperands = {};
+    function processFunctionWithName (fn, name, currentReport, currentOperands) {
+        var functionReport = createFunctionReport(name, fn.loc),
+            functionOperators = {},
+            functionOperands = {};
 
-        report.functions.push(currentReport);
+        operandEncountered(safeName(fn.id), currentOperands, currentReport);
 
-        processNode(fn.id, currentReport, currentOperators, currentOperands);
-        processTree(fn.params, currentReport, currentOperators, currentOperands);
-        processNode(fn.body, currentReport, currentOperators, currentOperands);
+        report.functions.push(functionReport);
+
+        processTree(fn.params, functionReport, functionOperators, functionOperands);
+        processNode(fn.body, functionReport, functionOperators, functionOperands);
+    }
+
+    function operandEncountered (name, currentOperands, currentReport) {
+        halsteadItemEncountered (name, currentOperands, operands, currentReport, 'operands')
     }
 
     function processVariable (variable, currentReport, currentOperators, currentOperands) {
@@ -443,10 +448,14 @@
             assignment.right.type === 'FunctionExpression' &&
             check.isObject(assignment.right.id) === false
         ) {
-            processFunctionWithName(assignment.right, fname);
+            processFunctionWithName(assignment.right, fname, currentReport, currentOperands);
         } else {
             processNode(assignment.right, currentReport, currentOperators, currentOperands);
         }
+    }
+
+    function operatorEncountered (name, currentOperators, currentReport) {
+        halsteadItemEncountered (name, currentOperators, operators, currentReport, 'operators')
     }
 
     function processAssignment (expression, currentReport, currentOperators, currentOperands) {
@@ -459,10 +468,6 @@
         }
 
         processAssignmentWithFName(expression, fname, currentReport, currentOperators, currentOperands);
-    }
-
-    function operatorEncountered (name, currentOperators, currentReport) {
-        halsteadItemEncountered (name, currentOperators, operators, currentReport, 'operators')
     }
 
     function processProperty (property, currentReport, currentOperators, currentOperands) {
