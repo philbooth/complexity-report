@@ -46,6 +46,10 @@
 
         processTree(ast.body, undefined, {}, {});
 
+        console.log('\n');
+        console.dir(operators);
+        console.dir(operands);
+
         return report;
     }
 
@@ -148,7 +152,11 @@
             FunctionExpression: processFunction,
             VariableDeclaration: {
                 operators: [
-                    { name: 'var' }
+                    {
+                        name: function (node) {
+                            return node.kind;
+                        }
+                    }
                 ],
                 children: [ 'declarations' ]
             },
@@ -175,13 +183,17 @@
             },
             CallExpression: {
                 operators: [
-                    { name: 'function call' }
+                    { name: '()' }
                 ],
                 children: [ 'arguments', 'callee' ]
             },
             MemberExpression: {
                 operators: [
-                    { name: '.' }
+                    {
+                        name: function (node) {
+                            return '.';
+                        }
+                    }
                 ],
                 children: [ 'object', 'property' ]
             },
@@ -194,7 +206,7 @@
                     }
                 ]
             },
-            AssignmentExpression: processAssignment,
+            AssignmentExpression: processAssignmentExpression,
             BinaryExpression: {
                 operators: [
                     {
@@ -352,7 +364,10 @@
     }
 
     function incrementDistinctHalsteadItems (name, currentItems, baseReport, metric) {
-        if (!currentItems[name]) {
+        if (Object.prototype.hasOwnProperty(name)) {
+            // HACK: Avoid clashes with built-in property names.
+            incrementDistinctHalsteadItems('_' + name, currentItems, baseReport, metric);
+        } else if (!currentItems[name]) {
             incrementHalsteadMetric(baseReport, metric, 'distinct');
             currentItems[name] = true;
         }
@@ -403,39 +418,42 @@
     }
 
     function processVariable (variable, currentReport, currentOperators, currentOperands) {
-        processNode(variable.id, currentReport, currentOperators, currentOperands);
-        if (
-            variable.init &&
-            variable.init.type === 'FunctionExpression' &&
-            check.isObject(variable.init.id) === false
-        ) {
-            processFunctionBody(variable.id.name, variable.init.body);
+        if (variable.init) {
+            processAssignment({
+                operator: '=',
+                left: variable.id,
+                right: variable.init
+            }, safeName(variable.id), currentReport, currentOperators, currentOperands);
         } else {
-            processNode(variable.init, currentReport, currentOperators, currentOperands);
+            processNode(variable.id, currentReport, currentOperators, currentOperands);
         }
     }
 
-    function processAssignment (assignment, currentReport, currentOperators, currentOperands) {
+    function processAssignment (assignment, fname, currentReport, currentOperators, currentOperands) {
         operatorEncountered(assignment.operator, currentOperators, currentReport);
 
         processNode(assignment.left, currentReport, currentOperators, currentOperands);
-
+        
         if (
             assignment.right.type === 'FunctionExpression' &&
             check.isObject(assignment.right.id) === false
         ) {
-            if (assignment.left.type === 'MemberExpression') {
-                processFunctionBody(
-                    safeName(assignment.left.object) +
-                        '.' + assignment.left.property.name,
-                    assignment.right.body
-                );
-            } else {
-                processNode(assignment.right, currentReport, currentOperators, currentOperands);
-            }
+            processFunctionBody(fname, assignment.right.body);
         } else {
             processNode(assignment.right, currentReport, currentOperators, currentOperands);
         }
+    }
+
+    function processAssignmentExpression (expression, currentReport, currentOperators, currentOperands) {
+        var fname;
+
+        if (expression.left.type === 'MemberExpression') {
+            fname = safeName(expression.left.object) + '.' + expression.left.property.name;
+        } else {
+            fname = safeName(expression.left.id);
+        }
+
+        processAssignment(expression, fname, currentReport, currentOperators, currentOperands);
     }
 
     function operatorEncountered (name, currentOperators, currentReport) {
@@ -443,12 +461,11 @@
     }
 
     function processProperty (property, currentReport, currentOperators, currentOperands) {
-        operatorEncountered(':', currentOperators, currentReport);
-
-        processVariable({
-            init: property.value,
-            id: property.key
-        }, currentReport, currentOperators, currentOperands);
+        processAssignment({
+            operator: ':',
+            left: property.key,
+            right: property.value
+        }, safeName(property.key), currentReport, currentOperators, currentOperands);
     }
 }());
 
