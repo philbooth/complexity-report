@@ -61,8 +61,8 @@
     function getSyntaxDefinitions (settings) {
         return {
             IfStatement: {
-                complexity: true, // incrementComplexity
-                operators: [ // operatorEncountered
+                complexity: true,
+                operators: [
                     { name: 'if' },
                     {
                         name: 'else',
@@ -71,7 +71,7 @@
                         }
                     }
                 ],
-                children: [ 'test', 'consequent', 'alternate' ] // processTree / processNode
+                children: [ 'test', 'consequent', 'alternate' ]
             },
             ConditionalExpression: {
                 complexity: true,
@@ -369,7 +369,7 @@
 
     function incrementDistinctHalsteadItems (name, currentItems, baseReport, metric) {
         if (Object.prototype.hasOwnProperty(name)) {
-            // HACK: Avoid clashes with built-in property names.
+            // Avoid clashes with built-in property names.
             incrementDistinctHalsteadItems('_' + name, currentItems, baseReport, metric);
         } else if (!currentItems[name]) {
             incrementHalsteadMetric(baseReport, metric, 'distinct');
