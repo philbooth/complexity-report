@@ -1620,6 +1620,38 @@
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
                 });
             });
+
+            suite('throw exception:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('try { throw new Error("foo"); } catch (e) { alert(error.message); }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('functions has correct length', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+
+                test('aggregate has correct Halstead total operators', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 5);
+                });
+
+                test('aggregate has correct Halstead distinct operators', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.distinct, 5);
+                });
+
+                test('aggregate has correct Halstead total operands', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.total, 6);
+                });
+
+                test('aggregate has correct Halstead distinct operands', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 6);
+                });
+            });
         });
     });
 }());

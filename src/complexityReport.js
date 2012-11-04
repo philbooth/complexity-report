@@ -95,10 +95,8 @@
                 operators: [ { name: function (node) { return '.'; } } ],
                 children: [ 'object', 'property' ]
             },
-            CallExpression: {
-                operators: [ { name: '()' } ],
-                children: [ 'arguments', 'callee' ]
-            },
+            CallExpression: getFunctionCallSyntaxDefinition('()'),
+            NewExpression: getFunctionCallSyntaxDefinition('new'),
             ExpressionStatement: {
                 children: [ 'expression' ]
             },
@@ -135,12 +133,7 @@
                 complexity: true,
                 operators: [
                     { name: 'if' },
-                    {
-                        name: 'else',
-                        optional: function (node) {
-                            return !!node.alternate;
-                        }
-                    }
+                    { name: 'else', optional: function (node) { return !!node.alternate; } }
                 ],
                 children: [ 'test', 'consequent', 'alternate' ]
             },
@@ -182,7 +175,30 @@
                 complexity: function (node) { return settings.trycatch; },
                 operators: [ { name: 'catch' } ],
                 children: [ 'param', 'body' ]
+            },
+            ThrowStatement: {
+                operators: [ { name: 'throw' } ],
+                children: [ 'argument' ]
             }
+        };
+    }
+
+    function safeName (object, defaultName) {
+        if (check.isObject(object) && check.isUnemptyString(object.name)) {
+            return object.name;
+        }
+
+        if (check.isUnemptyString(defaultName)) {
+            return defaultName;
+        }
+
+        return '<anonymous>';
+    }
+
+    function getFunctionCallSyntaxDefinition (type) {
+        return {
+            operators: [ { name: type } ],
+            children: [ 'arguments', 'callee' ]
         };
     }
 
@@ -201,18 +217,6 @@
             children: [ 'params', 'body' ],
             isFunction: true
         };
-    }
-
-    function safeName (object, defaultName) {
-        if (check.isObject(object) && check.isUnemptyString(object.name)) {
-            return object.name;
-        }
-
-        if (check.isUnemptyString(defaultName)) {
-            return defaultName;
-        }
-
-        return '<anonymous>';
     }
 
     function createReport () {
