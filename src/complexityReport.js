@@ -146,7 +146,7 @@
                 operators: [
                     { name: 'catch' }
                 ],
-                children: [ 'body' ]
+                children: [ 'param', 'body' ]
             },
             FunctionDeclaration: processFunction,
             FunctionExpression: processFunction,
