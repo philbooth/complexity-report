@@ -7,7 +7,7 @@
 (function () {
     'use strict';
 
-    var check, esprima, syntax, report, operators, operands;
+    var check, esprima, syntaxDefinitions, report, operators, operands;
 
     exports.run = run;
 
@@ -35,7 +35,7 @@
             settings = getDefaultSettings();
         }
 
-        syntax = getSyntaxDefinitions(settings);
+        syntaxDefinitions = getSyntaxDefinitions(settings);
         report = createReport();
         operators = {};
         operands = {};
@@ -44,7 +44,7 @@
             loc: true
         });
 
-        processTree(ast.body, undefined, {}, {});
+        processTree(ast.body, undefined, undefined, {}, {});
 
         return report;
     }
@@ -59,7 +59,78 @@
     }
 
     function getSyntaxDefinitions (settings) {
+        // TODO: Refactor to traits.
         return {
+            Literal: {
+                operands: [ {
+                    name: function (node) {
+                        if (check.isString(node.value)) {
+                            // Avoid conflicts between string literals and identifiers.
+                            return '"' + node.value + '"';
+                        }
+
+                        return node.value;
+                    }
+                } ]
+            },
+            Identifier: {
+                operands: [ { name: function (node) { return node.name; } } ]
+            },
+            BlockStatement: {
+                children: [ 'body' ]
+            },
+            ObjectExpression: {
+                operands: [ { name: safeName } ],
+                children: [ 'properties' ]
+            },
+            Property: {
+                operators: [ { name: ':' } ],
+                children: [ 'key', 'value' ],
+                getAssignedName: function (node) { return safeName(node.key); }
+            },
+            ThisExpression: {
+                operands: [ { name: 'this' } ]
+            },
+            MemberExpression: {
+                operators: [ { name: function (node) { return '.'; } } ],
+                children: [ 'object', 'property' ]
+            },
+            CallExpression: {
+                operators: [ { name: '()' } ],
+                children: [ 'arguments', 'callee' ]
+            },
+            ExpressionStatement: {
+                children: [ 'expression' ]
+            },
+            VariableDeclaration: {
+                operators: [ { name: function (node) { return node.kind; } } ],
+                children: [ 'declarations' ]
+            },
+            VariableDeclarator: {
+                operators: [ { name: '=', optional: function (node) { return !!node.init; } } ],
+                children: [ 'id', 'init' ],
+                getAssignedName: function (node) { return safeName(node.id); }
+            },
+            AssignmentExpression: {
+                operators: [ { name: function (node) { return node.operator; } } ],
+                children: [ 'left', 'right' ],
+                getAssignedName: function (node) {
+                    if (node.left.type === 'MemberExpression') {
+                        return safeName(node.left.object) + '.' + node.left.property.name;
+                    }
+                            
+                    return safeName(node.left.id);
+                }
+            },
+            BinaryExpression: {
+                operators: [ { name: function (node) { return node.operator; } } ],
+                children: [ 'left', 'right' ]
+            },
+            LogicalExpression: {
+                complexity: function (node) { return settings.logicalor && node.operator === '||'; },
+                operators: [ { name: function (node) { return node.operator; } } ],
+                children: [ 'left', 'right' ]
+            },
             IfStatement: {
                 complexity: true,
                 operators: [
@@ -75,172 +146,73 @@
             },
             ConditionalExpression: {
                 complexity: true,
-                operators: [
-                    { name: ':?' }
-                ],
+                operators: [ { name: ':?' } ],
                 children: [ 'test', 'consequent', 'alternate' ]
             },
-            BlockStatement: {
-                children: [ 'body' ]
-            },
-            LogicalExpression: {
-                complexity: function (node) {
-                    return settings.logicalor && node.operator === '||';
-                },
-                operators: [
-                    {
-                        name: function (node) {
-                            return node.operator;
-                        }
-                    }
-                ],
-                children: [ 'left', 'right' ]
-            },
             SwitchStatement: {
-                operators: [
-                    { name: 'switch' }
-                ],
+                operators: [ { name: 'switch' } ],
                 children: [ 'discriminant', 'cases' ]
             },
             SwitchCase: {
-                complexity: function (node) {
-                    return settings.switchcase && node.test;
-                },
-                operators: [
-                    {
-                        name: function (node) {
-                            return node.test ? 'case' : 'default';
-                        }
-                    }
-                ],
+                complexity: function (node) { return settings.switchcase && node.test; },
+                operators: [ { name: function (node) { return node.test ? 'case' : 'default'; } } ],
                 children: [ 'test', 'consequent' ]
             },
             BreakStatement: {
-                operators: [
-                    { name: 'break' }
-                ]
+                operators: [ { name: 'break' } ]
             },
             ForStatement: getLoopSyntaxDefinition('for'),
             ForInStatement: {
-                complexity: function (node) {
-                    return settings.forin;
-                },
-                operators: [
-                    { name: 'forin' }
-                ],
+                complexity: function (node) { return settings.forin; },
+                operators: [ { name: 'forin' } ],
                 children: [ 'left', 'right', 'body' ]
             },
             WhileStatement: getLoopSyntaxDefinition('while'),
             DoWhileStatement: getLoopSyntaxDefinition('dowhile'),
+            FunctionDeclaration: getFunctionSyntaxDefinition(),
+            FunctionExpression: getFunctionSyntaxDefinition(),
+            ReturnStatement: {
+                operators: [ { name: 'return' } ],
+                children: [ 'argument' ]
+            },
             TryStatement: {
                 children: [ 'block', 'handlers' ]
             },
             CatchClause: {
-                complexity: function (node) {
-                    return settings.trycatch;
-                },
-                operators: [
-                    { name: 'catch' }
-                ],
+                complexity: function (node) { return settings.trycatch; },
+                operators: [ { name: 'catch' } ],
                 children: [ 'param', 'body' ]
-            },
-            FunctionDeclaration: processFunction,
-            FunctionExpression: processFunction,
-            VariableDeclaration: {
-                operators: [
-                    {
-                        name: function (node) {
-                            return node.kind;
-                        }
-                    }
-                ],
-                children: [ 'declarations' ]
-            },
-            VariableDeclarator: processVariable,
-            Literal: {
-                operands: [
-                    {
-                        name: function (node) {
-                            if (check.isString(node.value)) {
-                                // Avoid conflicts between string literals and identifiers.
-                                return '"' + node.value + '"';
-                            }
-
-                            return node.value;
-                        }
-                    }
-                ]
-            },
-            ReturnStatement: {
-                operators: [
-                    { name: 'return' }
-                ],
-                children: [ 'argument' ]
-            },
-            ExpressionStatement: {
-                children: [ 'expression' ]
-            },
-            CallExpression: {
-                operators: [
-                    { name: '()' }
-                ],
-                children: [ 'arguments', 'callee' ]
-            },
-            MemberExpression: {
-                operators: [
-                    {
-                        name: function (node) {
-                            return '.';
-                        }
-                    }
-                ],
-                children: [ 'object', 'property' ]
-            },
-            Identifier: {
-                operands: [
-                    {
-                        name: function (node) {
-                            return node.name;
-                        }
-                    }
-                ]
-            },
-            AssignmentExpression: processAssignment,
-            BinaryExpression: {
-                operators: [
-                    {
-                        name: function (node) {
-                            return node.operator;
-                        }
-                    }
-                ],
-                children: [ 'left', 'right' ]
-            },
-            ObjectExpression: {
-                operands: [
-                    { name: safeName }
-                ],
-                children: [ 'properties' ]
-            },
-            Property: processProperty,
-            ThisExpression: {
-                operands: [
-                    { name: 'this' }
-                ]
             }
         };
     }
 
     function getLoopSyntaxDefinition (type) {
         return {
-            complexity: function (node) {
-                return !!node.test;
-            },
-            operators: [
-                { name: type }
-            ],
+            complexity: function (node) { return !!node.test; },
+            operators: [ { name: type } ],
             children: [ 'init', 'test', 'update', 'body' ]
         };
+    }
+
+    function getFunctionSyntaxDefinition () {
+        return {
+            operators: [ { name: 'function' } ],
+            operands: [ { name: function (node) { return safeName(node.id); } } ],
+            children: [ 'params', 'body' ],
+            isFunction: true
+        };
+    }
+
+    function safeName (object, defaultName) {
+        if (check.isObject(object) && check.isUnemptyString(object.name)) {
+            return object.name;
+        }
+
+        if (check.isUnemptyString(defaultName)) {
+            return defaultName;
+        }
+
+        return '<anonymous>';
     }
 
     function createReport () {
@@ -275,45 +247,44 @@
         };
     }
 
-    function processTree (tree, currentReport, currentOperators, currentOperands) {
+    function processTree (tree, assignedName, currentReport, currentOperators, currentOperands) {
         var i;
 
         check.verifyArray(tree, 'Invalid syntax tree');
 
         for (i = 0; i < tree.length; i += 1) {
-            processNode(tree[i], currentReport, currentOperators, currentOperands);
+            processNode(tree[i], assignedName, currentReport, currentOperators, currentOperands);
         }
     }
 
-    function processNode (node, currentReport, currentOperators, currentOperands) {
+    function processNode (node, assignedName, currentReport, currentOperators, currentOperands) {
+        var def;
+
         if (check.isObject(node)) {
-            if (check.isFunction(syntax[node.type])) {
-                syntax[node.type](node, currentReport, currentOperators, currentOperands);
-            } else {
-                processSyntax(node, currentReport, currentOperators, currentOperands);
+            def = syntaxDefinitions[node.type];
+            
+            if (check.isObject(syntaxDefinitions[node.type])) {
+                processComplexity(node, currentReport);
+                processOperators(node, currentOperators, currentReport);
+                processOperands(node, currentOperands, currentReport);
+                
+                if (def.isFunction) {
+                    processChildrenInNewScope(node, assignedName);
+                } else {
+                    processChildren(node, currentReport, currentOperators, currentOperands);
+                }
             }
         }
     }
 
-    function processSyntax (node, currentReport, currentOperators, currentOperands) {
-        var current = syntax[node.type];
-
-        if (check.isObject(current)) {
-            processComplexity(node, currentReport);
-            processOperators(node, currentOperators, currentReport);
-            processOperands(node, currentOperands, currentReport);
-            processChildren(node, currentReport, currentOperators, currentOperands);
-        }
-    }
-
     function processComplexity (node, currentReport) {
-        var currentSyntax = syntax[node.type];
+        var def = syntaxDefinitions[node.type];
 
         if (
-            currentSyntax.complexity === true ||
+            def.complexity === true ||
             (
-                check.isFunction(currentSyntax.complexity) &&
-                currentSyntax.complexity(node)
+                check.isFunction(def.complexity) &&
+                def.complexity(node)
             )
         ) {
             incrementComplexity(currentReport);
@@ -337,19 +308,19 @@
     }
 
     function processHalsteadMetric (node, metric, items, currentItems, currentReport) {
-        var currentSyntax = syntax[node.type], i, name;
+        var def = syntaxDefinitions[node.type], i, name;
 
-        if (check.isArray(currentSyntax[metric])) {
-            for (i = 0; i < currentSyntax[metric].length; i += 1) {
-                if (check.isFunction(currentSyntax[metric][i].name)) {
-                    name = currentSyntax[metric][i].name(node);
+        if (check.isArray(def[metric])) {
+            for (i = 0; i < def[metric].length; i += 1) {
+                if (check.isFunction(def[metric][i].name)) {
+                    name = def[metric][i].name(node);
                 } else {
-                    name = currentSyntax[metric][i].name;
+                    name = def[metric][i].name;
                 }
 
                 if (
-                    check.isFunction(currentSyntax[metric][i].optional) === false ||
-                    currentSyntax[metric][i].optional(node) === true
+                    check.isFunction(def[metric][i].optional) === false ||
+                    def[metric][i].optional(node) === true
                 ) {
                     halsteadItemEncountered(name, currentItems, items, currentReport, metric);
                 }
@@ -387,97 +358,33 @@
         }
     }
 
-    function processChildren (node, currentReport, currentOperators, currentOperands) {
-        var currentSyntax = syntax[node.type], i, child, fn;
+    function processChildrenInNewScope (node, assignedName) {
+        var newReport = createFunctionReport(safeName(node.id, assignedName), node.loc);
 
-        if (check.isArray(currentSyntax.children)) {
-            for (i = 0; i < currentSyntax.children.length; i += 1) {
-                child = node[currentSyntax.children[i]];
-                fn = check.isArray(child) ? processTree : processNode;
-                fn(child, currentReport, currentOperators, currentOperands);
+        report.functions.push(newReport);
+
+        processChildren(node, newReport, {}, {});
+    }
+
+    function processChildren (node, currentReport, currentOperators, currentOperands) {
+        var def = syntaxDefinitions[node.type], i;
+
+        if (check.isArray(def.children)) {
+            for (i = 0; i < def.children.length; i += 1) {
+                processChild(
+                    node[def.children[i]],
+                    check.isFunction(def.getAssignedName) ? def.getAssignedName(node) : '',
+                    currentReport,
+                    currentOperators,
+                    currentOperands
+                );
             }
         }
     }
 
-    function processFunction (fn, currentReport, currentOperators, currentOperands) {
-        processFunctionWithName(fn, safeName(fn.id), currentReport, currentOperators, currentOperands);
-    }
-
-    function safeName (object) {
-        if (check.isObject(object) && check.isUnemptyString(object.name)) {
-            return object.name;
-        }
-
-        return '<anonymous>';
-    }
-
-    function processFunctionWithName (fn, name, currentReport, currentOperators, currentOperands) {
-        var functionReport = createFunctionReport(name, fn.loc),
-            functionOperators = {},
-            functionOperands = {};
-
-        operatorEncountered('function', currentOperators, currentReport);
-        operandEncountered(safeName(fn.id), currentOperands, currentReport);
-
-        report.functions.push(functionReport);
-
-        processTree(fn.params, functionReport, functionOperators, functionOperands);
-        processNode(fn.body, functionReport, functionOperators, functionOperands);
-    }
-
-    function operatorEncountered (name, currentOperators, currentReport) {
-        halsteadItemEncountered (name, currentOperators, operators, currentReport, 'operators')
-    }
-
-    function operandEncountered (name, currentOperands, currentReport) {
-        halsteadItemEncountered (name, currentOperands, operands, currentReport, 'operands')
-    }
-
-    function processVariable (variable, currentReport, currentOperators, currentOperands) {
-        if (variable.init) {
-            processAssignmentWithFName({
-                operator: '=',
-                left: variable.id,
-                right: variable.init
-            }, safeName(variable.id), currentReport, currentOperators, currentOperands);
-        } else {
-            processNode(variable.id, currentReport, currentOperators, currentOperands);
-        }
-    }
-
-    function processAssignmentWithFName (assignment, fname, currentReport, currentOperators, currentOperands) {
-        operatorEncountered(assignment.operator, currentOperators, currentReport);
-
-        processNode(assignment.left, currentReport, currentOperators, currentOperands);
-        
-        if (
-            assignment.right.type === 'FunctionExpression' &&
-            check.isObject(assignment.right.id) === false
-        ) {
-            processFunctionWithName(assignment.right, fname, currentReport, currentOperators, currentOperands);
-        } else {
-            processNode(assignment.right, currentReport, currentOperators, currentOperands);
-        }
-    }
-
-    function processAssignment (expression, currentReport, currentOperators, currentOperands) {
-        var fname;
-
-        if (expression.left.type === 'MemberExpression') {
-            fname = safeName(expression.left.object) + '.' + expression.left.property.name;
-        } else {
-            fname = safeName(expression.left.id);
-        }
-
-        processAssignmentWithFName(expression, fname, currentReport, currentOperators, currentOperands);
-    }
-
-    function processProperty (property, currentReport, currentOperators, currentOperands) {
-        processAssignmentWithFName({
-            operator: ':',
-            left: property.key,
-            right: property.value
-        }, safeName(property.key), currentReport, currentOperators, currentOperands);
+    function processChild (child, assignedName, currentReport, currentOperators, currentOperands) {
+        var fn = check.isArray(child) ? processTree : processNode;
+        fn(child, assignedName, currentReport, currentOperators, currentOperands);
     }
 }());
 
