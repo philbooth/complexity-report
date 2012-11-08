@@ -90,7 +90,7 @@ function getSyntaxDefinitions (settings) {
             operands: [ { identifier: 'this' } ]
         },
         MemberExpression: {
-            operators: [ { identifier: function (node) { return '.'; } } ],
+            operators: [ { identifier: '.' } ],
             children: [ 'object', 'property' ]
         },
         CallExpression: getFunctionCallSyntaxDefinition('()'),
