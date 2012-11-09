@@ -44,6 +44,8 @@ function run (source, options) {
 
     processTree(ast.body, undefined, undefined);
 
+    calculateHalsteadMetrics();
+
     return report;
 }
 
@@ -103,7 +105,12 @@ function getSyntaxDefinitions (settings) {
             children: [ 'declarations' ]
         },
         VariableDeclarator: {
-            operators: [ { identifier: '=', optional: function (node) { return !!node.init; } } ],
+            operators: [ {
+                identifier: '=',
+                optional: function (node) {
+                    return !!node.init;
+                }
+            } ],
             children: [ 'id', 'init' ],
             getAssignedName: function (node) { return safeName(node.id); }
         },
@@ -123,16 +130,20 @@ function getSyntaxDefinitions (settings) {
             children: [ 'left', 'right' ]
         },
         LogicalExpression: {
-            complexity: function (node) { return settings.logicalor && node.operator === '||'; },
+            complexity: function (node) {
+                return settings.logicalor && node.operator === '||';
+            },
             operators: [ { identifier: function (node) { return node.operator; } } ],
             children: [ 'left', 'right' ]
         },
         IfStatement: {
             complexity: true,
-            operators: [
-                { identifier: 'if' },
-                { identifier: 'else', optional: function (node) { return !!node.alternate; } }
-            ],
+            operators: [ {
+                identifier: 'if'
+            }, {
+                identifier: 'else',
+                optional: function (node) { return !!node.alternate; }
+            } ],
             children: [ 'test', 'consequent', 'alternate' ]
         },
         ConditionalExpression: {
@@ -146,7 +157,11 @@ function getSyntaxDefinitions (settings) {
         },
         SwitchCase: {
             complexity: function (node) { return settings.switchcase && node.test; },
-            operators: [ { identifier: function (node) { return node.test ? 'case' : 'default'; } } ],
+            operators: [ {
+                identifier: function (node) {
+                    return node.test ? 'case' : 'default';
+                }
+            } ],
             children: [ 'test', 'consequent' ]
         },
         BreakStatement: {
@@ -397,5 +412,25 @@ function processChildren (node, currentReport) {
 function processChild (child, assignedName, currentReport) {
     var fn = check.isArray(child) ? processTree : processNode;
     fn(child, assignedName, currentReport);
+}
+
+function calculateHalsteadMetrics () {
+    var i;
+
+    for (i = 0; i < report.functions.length; i += 1) {
+        calculateHalsteadFunctionMetrics(report.functions[i].complexity.halstead);
+    }
+
+    calculateHalsteadFunctionMetrics(report.aggregate.complexity.halstead);
+}
+
+function calculateHalsteadFunctionMetrics (fn) {
+    fn.length = fn.operators.total + fn.operands.total;
+    fn.vocabulary = fn.operators.distinct + fn.operands.distinct;
+    fn.difficulty = (fn.operators.distinct / 2) * (fn.operands.total / fn.operands.distinct);
+    fn.volume = fn.length * (Math.log(fn.vocabulary) / Math.log(2));
+    fn.effort = fn.difficulty * fn.volume;
+    fn.bugs = fn.volume / 3000;
+    fn.time = fn.effort / 18;
 }
 

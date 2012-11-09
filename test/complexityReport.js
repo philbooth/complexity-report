@@ -157,6 +157,36 @@
                         report.aggregate.complexity.halstead.operands.distinct
                     );
                 });
+
+                test('aggregate has correct Halstead length', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.length, 4);
+                });
+
+                test('aggregate has correct Halstead vocabulary', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.vocabulary, 4);
+                });
+
+                test('aggregate has correct Halstead difficulty', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.difficulty, 0.5);
+                });
+
+                test('aggregate has correct Halstead volume', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.volume, 8);
+                });
+
+                test('aggregate has correct Halstead effort', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.effort, 4);
+                });
+
+                test('aggregate has correct Halstead bugs', function () {
+                    assert.isTrue(report.aggregate.complexity.halstead.bugs > 0.00266);
+                    assert.isTrue(report.aggregate.complexity.halstead.bugs < 0.00267);
+                });
+
+                test('aggregate has correct Halstead time', function () {
+                    assert.isTrue(report.aggregate.complexity.halstead.time > 0.22);
+                    assert.isTrue(report.aggregate.complexity.halstead.time < 0.23);
+                });
             });
 
             suite('condition:', function () {
@@ -206,6 +236,38 @@
                         report.aggregate.complexity.halstead.operands.identifiers,
                         report.aggregate.complexity.halstead.operands.distinct
                     );
+                });
+
+                test('aggregate has correct Halstead length', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.length, 3);
+                });
+
+                test('aggregate has correct Halstead vocabulary', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.vocabulary, 3);
+                });
+
+                test('aggregate has correct Halstead difficulty', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.difficulty, 0.5);
+                });
+
+                test('aggregate has correct Halstead volume', function () {
+                    assert.isTrue(report.aggregate.complexity.halstead.volume > 4.7);
+                    assert.isTrue(report.aggregate.complexity.halstead.volume < 4.8);
+                });
+
+                test('aggregate has correct Halstead effort', function () {
+                    assert.isTrue(report.aggregate.complexity.halstead.effort > 2.3);
+                    assert.isTrue(report.aggregate.complexity.halstead.effort < 2.4);
+                });
+
+                test('aggregate has correct Halstead bugs', function () {
+                    assert.isTrue(report.aggregate.complexity.halstead.bugs > 0.001);
+                    assert.isTrue(report.aggregate.complexity.halstead.bugs < 0.002);
+                });
+
+                test('aggregate has correct Halstead time', function () {
+                    assert.isTrue(report.aggregate.complexity.halstead.time > 0.1);
+                    assert.isTrue(report.aggregate.complexity.halstead.time < 0.2);
                 });
             });
 
@@ -257,6 +319,38 @@
                         report.aggregate.complexity.halstead.operands.distinct
                     );
                 });
+
+                test('aggregate has correct Halstead length', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.length, 5);
+                });
+
+                test('aggregate has correct Halstead vocabulary', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.vocabulary, 5);
+                });
+
+                test('aggregate has correct Halstead difficulty', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.difficulty, 1);
+                });
+
+                test('aggregate has correct Halstead volume', function () {
+                    assert.isTrue(report.aggregate.complexity.halstead.volume > 11.6);
+                    assert.isTrue(report.aggregate.complexity.halstead.volume < 11.7);
+                });
+
+                test('aggregate has correct Halstead effort', function () {
+                    assert.isTrue(report.aggregate.complexity.halstead.effort > 11.6);
+                    assert.isTrue(report.aggregate.complexity.halstead.effort < 11.7);
+                });
+
+                test('aggregate has correct Halstead bugs', function () {
+                    assert.isTrue(report.aggregate.complexity.halstead.bugs > 0.003);
+                    assert.isTrue(report.aggregate.complexity.halstead.bugs < 0.004);
+                });
+
+                test('aggregate has correct Halstead time', function () {
+                    assert.isTrue(report.aggregate.complexity.halstead.time > 0.6);
+                    assert.isTrue(report.aggregate.complexity.halstead.time < 0.7);
+                });
             });
 
             suite('dual condition:', function () {
@@ -302,6 +396,18 @@
                         report.aggregate.complexity.halstead.operands.identifiers,
                         report.aggregate.complexity.halstead.operands.distinct
                     );
+                });
+
+                test('aggregate has correct Halstead length', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.length, 6);
+                });
+
+                test('aggregate has correct Halstead vocabulary', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.vocabulary, 5);
+                });
+
+                test('aggregate has correct Halstead difficulty', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.difficulty, 0.5);
                 });
             });
 
@@ -509,6 +615,18 @@
                 test('aggregate has correct Halstead distinct operands', function () {
                     assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 5);
                 });
+
+                test('aggregate has correct Halstead length', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.length, 13);
+                });
+
+                test('aggregate has correct Halstead vocabulary', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.vocabulary, 10);
+                });
+
+                test('aggregate has correct Halstead difficulty', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.difficulty, 4);
+                });
             });
 
             suite('for loop containing condition:', function () {
@@ -576,6 +694,19 @@
 
                 test('aggregate has correct Halstead distinct operands', function () {
                     assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 7);
+                });
+
+                test('aggregate has correct Halstead length', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.length, 12);
+                });
+
+                test('aggregate has correct Halstead vocabulary', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.vocabulary, 10);
+                });
+
+                test('aggregate has correct Halstead difficulty', function () {
+                    assert.isTrue(report.aggregate.complexity.halstead.difficulty > 1.7);
+                    assert.isTrue(report.aggregate.complexity.halstead.difficulty < 1.8);
                 });
             });
 
@@ -892,6 +1023,46 @@
 
                 test('aggregate has correct Halstead distinct operands', function () {
                     assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 2);
+                });
+
+                test('aggregate has correct Halstead length', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.length, 3);
+                });
+
+                test('aggregate has correct Halstead vocabulary', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.vocabulary, 3);
+                });
+
+                test('aggregate has correct Halstead difficulty', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.difficulty, 0.5);
+                });
+
+                test('function has correct Halstead length', function () {
+                    assert.strictEqual(report.functions[0].complexity.halstead.length, 1);
+                });
+
+                test('function has correct Halstead vocabulary', function () {
+                    assert.strictEqual(report.functions[0].complexity.halstead.vocabulary, 1);
+                });
+
+                test('function has correct Halstead difficulty', function () {
+                    assert.strictEqual(report.functions[0].complexity.halstead.difficulty, 0);
+                });
+
+                test('function has correct Halstead volume', function () {
+                    assert.strictEqual(report.functions[0].complexity.halstead.volume, 0);
+                });
+
+                test('function has correct Halstead effort', function () {
+                    assert.strictEqual(report.functions[0].complexity.halstead.effort, 0);
+                });
+
+                test('function has correct Halstead bugs', function () {
+                    assert.strictEqual(report.functions[0].complexity.halstead.bugs, 0);
+                });
+
+                test('function has correct Halstead time', function () {
+                    assert.strictEqual(report.functions[0].complexity.halstead.time, 0);
                 });
             });
 
