@@ -39,7 +39,12 @@ function formatFunction (report) {
         '  Function: ', report.name, '\n',
         '    Line No.: ', report.lines.start.line, '\n',
         '    Length: ', report.lines.end.line - report.lines.start.line + 1, ' lines\n',
-        '    Cyclomatic complexity: ', report.complexity.cyclomatic
+        '    Cyclomatic complexity: ', report.complexity.cyclomatic, '\n',
+        '    Halstead length: ', report.complexity.halstead.length, '\n',
+        '    Halstead vocabulary: ', report.complexity.halstead.vocabulary, '\n',
+        '    Halstead difficulty: ', report.complexity.halstead.difficulty, '\n',
+        '    Halstead volume: ', report.complexity.halstead.volume, '\n',
+        '    Halstead effort: ', report.complexity.halstead.effort
     ].join('');
 }
 
