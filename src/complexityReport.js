@@ -488,15 +488,39 @@ function processChild (child, assignedName, currentReport) {
 }
 
 function calculateMetrics () {
-    var i;
+    var i, data,
+    
+    metrics = {
+        indices: {
+            loc: 0,
+            complexity: 1,
+            effort: 2
+        },
+        sums: [ 0, 0, 0 ]
+    };
 
     for (i = 0; i < report.functions.length; i += 1) {
-        calculateHalsteadMetrics(report.functions[i].complexity.halstead);
-        calculateMaintainabilityIndex(report.functions[i]);
+        data = report.functions[i].complexity;
+        
+        calculateHalsteadMetrics(data.halstead);
+        sumMaintainabilityMetrics(metrics, data);
     }
 
     calculateHalsteadMetrics(report.aggregate.complexity.halstead);
-    calculateMaintainabilityIndex(report.aggregate);
+    if (i === 0) {
+        // Sane handling of modules that contain no functions.
+        sumMaintainabilityMetrics(metrics, report.aggregate.complexity);
+        i = 1;
+    }
+
+    calculateMaintainabilityIndex(
+        metrics.sums.map(
+            function (sum) {
+                return sum / i;
+            }
+        ),
+        metrics.indices
+    );
 }
 
 function calculateHalsteadMetrics (data) {
@@ -511,12 +535,17 @@ function calculateHalsteadMetrics (data) {
     data.time = data.effort / 18;
 }
 
-function calculateMaintainabilityIndex (data) {
-    // TODO: sloc
-    //data.maintainability =
-    //    171 -
-    //    (3.42 * Math.log(data.complexity.halstead.effort)) -
-    //    (0.23 * Math.log(data.complexity.cyclomatic)) -
-    //    (16.2 * Math.log(data.complexity.sloc.logical));
+function sumMaintainabilityMetrics (metrics, data) {
+    metrics.sums[metrics.indices.loc] += data.sloc.logical;
+    metrics.sums[metrics.indices.complexity] += data.cyclomatic;
+    metrics.sums[metrics.indices.effort] += data.halstead.effort;
+}
+
+function calculateMaintainabilityIndex (averages, indices) {
+    report.maintainability =
+        171 -
+        (3.42 * Math.log(averages[indices.effort])) -
+        (0.23 * Math.log(averages[indices.complexity])) -
+        (16.2 * Math.log(averages[indices.loc]));
 }
 

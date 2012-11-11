@@ -117,6 +117,10 @@
                 assert.isArray(cr.run('"foo"').aggregate.complexity.halstead.operands.identifiers);
             });
 
+            test('run returns maintainability property', function () {
+                assert.isNumber(cr.run('"foo"').maintainability);
+            });
+
             test('run returns functions property', function () {
                 assert.isArray(cr.run('"foo"').functions);
             });
@@ -199,13 +203,15 @@
                 });
 
                 test('aggregate has correct Halstead bugs', function () {
-                    assert.isTrue(report.aggregate.complexity.halstead.bugs > 0.00266);
-                    assert.isTrue(report.aggregate.complexity.halstead.bugs < 0.00267);
+                    assert.strictEqual(Math.round(report.aggregate.complexity.halstead.bugs), 0);
                 });
 
                 test('aggregate has correct Halstead time', function () {
-                    assert.isTrue(report.aggregate.complexity.halstead.time > 0.22);
-                    assert.isTrue(report.aggregate.complexity.halstead.time < 0.23);
+                    assert.strictEqual(Math.round(report.aggregate.complexity.halstead.time), 0);
+                });
+
+                test('maintainability index is correct', function () {
+                    assert.strictEqual(Math.round(report.maintainability), 166);
                 });
             });
 
@@ -279,23 +285,23 @@
                 });
 
                 test('aggregate has correct Halstead volume', function () {
-                    assert.isTrue(report.aggregate.complexity.halstead.volume > 4.7);
-                    assert.isTrue(report.aggregate.complexity.halstead.volume < 4.8);
+                    assert.strictEqual(Math.round(report.aggregate.complexity.halstead.volume), 5);
                 });
 
                 test('aggregate has correct Halstead effort', function () {
-                    assert.isTrue(report.aggregate.complexity.halstead.effort > 2.3);
-                    assert.isTrue(report.aggregate.complexity.halstead.effort < 2.4);
+                    assert.strictEqual(Math.round(report.aggregate.complexity.halstead.effort), 2);
                 });
 
                 test('aggregate has correct Halstead bugs', function () {
-                    assert.isTrue(report.aggregate.complexity.halstead.bugs > 0.001);
-                    assert.isTrue(report.aggregate.complexity.halstead.bugs < 0.002);
+                    assert.strictEqual(Math.round(report.aggregate.complexity.halstead.bugs), 0);
                 });
 
                 test('aggregate has correct Halstead time', function () {
-                    assert.isTrue(report.aggregate.complexity.halstead.time > 0.1);
-                    assert.isTrue(report.aggregate.complexity.halstead.time < 0.2);
+                    assert.strictEqual(Math.round(report.aggregate.complexity.halstead.time), 0);
+                });
+
+                test('maintainability index is correct', function () {
+                    assert.strictEqual(Math.round(report.maintainability), 157);
                 });
             });
 
@@ -369,23 +375,19 @@
                 });
 
                 test('aggregate has correct Halstead volume', function () {
-                    assert.isTrue(report.aggregate.complexity.halstead.volume > 11.6);
-                    assert.isTrue(report.aggregate.complexity.halstead.volume < 11.7);
+                    assert.strictEqual(Math.round(report.aggregate.complexity.halstead.volume), 12);
                 });
 
                 test('aggregate has correct Halstead effort', function () {
-                    assert.isTrue(report.aggregate.complexity.halstead.effort > 11.6);
-                    assert.isTrue(report.aggregate.complexity.halstead.effort < 11.7);
+                    assert.strictEqual(Math.round(report.aggregate.complexity.halstead.effort), 12);
                 });
 
                 test('aggregate has correct Halstead bugs', function () {
-                    assert.isTrue(report.aggregate.complexity.halstead.bugs > 0.003);
-                    assert.isTrue(report.aggregate.complexity.halstead.bugs < 0.004);
+                    assert.strictEqual(Math.round(report.aggregate.complexity.halstead.bugs), 0);
                 });
 
                 test('aggregate has correct Halstead time', function () {
-                    assert.isTrue(report.aggregate.complexity.halstead.time > 0.6);
-                    assert.isTrue(report.aggregate.complexity.halstead.time < 0.7);
+                    assert.strictEqual(Math.round(report.aggregate.complexity.halstead.time), 1);
                 });
             });
 
@@ -1154,6 +1156,10 @@
 
                 test('function has correct Halstead time', function () {
                     assert.strictEqual(report.functions[0].complexity.halstead.time, 0);
+                });
+
+                test('maintainability index is correct', function () {
+                    assert.strictEqual(report.maintainability, Number.POSITIVE_INFINITY);
                 });
             });
 
@@ -2193,7 +2199,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('// This is a\n// multi-line\n// comment.\nparseInt(\n\t(function () {\n\t\t// Moar\n\t\t// commentz!\n\t\treturn [\n\t\t\t"1",\n\t\t\t"0"\n\t\t].join("");\n\t}()),\n\t10\n);', { debug: true });
+                    report = cr.run('// This is a\n// multi-line\n// comment.\nparseInt(\n\t(function () {\n\t\t// Moar\n\t\t// commentz!\n\t\treturn [\n\t\t\t"1",\n\t\t\t"0"\n\t\t].join("");\n\t}()),\n\t10\n);');
                 });
 
                 teardown(function () {
@@ -2218,6 +2224,26 @@
 
                 test('function has correct logical lines of code', function () {
                     assert.strictEqual(report.functions[0].complexity.sloc.logical, 2);
+                });
+
+                test('maintainability index is correct', function () {
+                    assert.strictEqual(Math.round(report.maintainability), 146);
+                });
+            });
+
+            suite('multiple functions:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('function foo (a, b) { if (a) { b(a); } else { a(b); } } function bar (c, d) { var i; for (i = 0; i < c.length; i += 1) { d += 1; } console.log(d); }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('maintainability index is correct', function () {
+                    assert.strictEqual(Math.round(report.maintainability), 128);
                 });
             });
         });
