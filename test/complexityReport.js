@@ -65,6 +65,18 @@
                 assert.isObject(cr.run('"foo"').aggregate.complexity);
             });
 
+            test('run returns aggregate lines of code property', function () {
+                assert.isObject(cr.run('"foo"').aggregate.complexity.sloc);
+            });
+
+            test('run returns aggregate physical lines of code property', function () {
+                assert.isNumber(cr.run('"foo"').aggregate.complexity.sloc.physical);
+            });
+
+            test('run returns aggregate logical lines of code property', function () {
+                assert.isNumber(cr.run('"foo"').aggregate.complexity.sloc.logical);
+            });
+
             test('run returns aggregate cyclomatic complexity property', function () {
                 assert.isNumber(cr.run('"foo"').aggregate.complexity.cyclomatic);
             });
@@ -118,6 +130,14 @@
 
                 teardown(function () {
                     report = undefined;
+                });
+
+                test('aggregate has correct physical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.physical, 1);
+                });
+
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 1);
                 });
 
                 test('aggregate has correct cyclomatic complexity', function () {
@@ -198,6 +218,14 @@
 
                 teardown(function () {
                     report = undefined;
+                });
+
+                test('aggregate has correct physical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.physical, 1);
+                });
+
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 2);
                 });
 
                 test('aggregate has correct cyclomatic complexity', function () {
@@ -282,6 +310,14 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct physical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.physical, 1);
+                });
+
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 4);
+                });
+
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
                 });
@@ -364,6 +400,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 4);
+                });
+
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 3);
                 });
@@ -422,6 +462,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 5);
+                });
+
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 3);
                 });
@@ -468,6 +512,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 4);
+                });
+
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 3);
                 });
@@ -482,6 +530,10 @@
 
                 teardown(function () {
                     report = undefined;
+                });
+
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 9);
                 });
 
                 test('aggregate has correct cyclomatic complexity', function () {
@@ -520,6 +572,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 7);
+                });
+
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 3);
                 });
@@ -556,6 +612,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 10);
+                });
+
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 4);
                 });
@@ -590,6 +650,10 @@
 
                 teardown(function () {
                     report = undefined;
+                });
+
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 3);
                 });
 
                 test('aggregate has correct cyclomatic complexity', function () {
@@ -672,6 +736,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 5);
+                });
+
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
                 });
@@ -681,11 +749,11 @@
                 });
 
                 test('aggregate has correct Halstead total operators', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 4);
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 5);
                 });
 
                 test('aggregate has correct Halstead distinct operators', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.operators.distinct, 3);
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.distinct, 4);
                 });
 
                 test('aggregate has correct Halstead total operands', function () {
@@ -697,16 +765,15 @@
                 });
 
                 test('aggregate has correct Halstead length', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.length, 12);
+                    assert.strictEqual(report.aggregate.complexity.halstead.length, 13);
                 });
 
                 test('aggregate has correct Halstead vocabulary', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.vocabulary, 10);
+                    assert.strictEqual(report.aggregate.complexity.halstead.vocabulary, 11);
                 });
 
                 test('aggregate has correct Halstead difficulty', function () {
-                    assert.isTrue(report.aggregate.complexity.halstead.difficulty > 1.7);
-                    assert.isTrue(report.aggregate.complexity.halstead.difficulty < 1.8);
+                    assert.strictEqual(Math.round(report.aggregate.complexity.halstead.difficulty), 2);
                 });
             });
 
@@ -726,11 +793,11 @@
                 });
 
                 test('aggregate has correct Halstead total operators', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 8);
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 9);
                 });
 
                 test('aggregate has correct Halstead distinct operators', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.operators.distinct, 7);
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.distinct, 8);
                 });
 
                 test('aggregate has correct Halstead total operands', function () {
@@ -751,6 +818,10 @@
 
                 teardown(function () {
                     report = undefined;
+                });
+
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 2);
                 });
 
                 test('aggregate has correct cyclomatic complexity', function () {
@@ -821,6 +892,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 3);
+                });
+
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
                 });
@@ -878,7 +953,7 @@
                 });
             });
 
-            suite('try...catch', function () {
+            suite('try...catch:', function () {
                 var report;
 
                 setup(function () {
@@ -887,6 +962,10 @@
 
                 teardown(function () {
                     report = undefined;
+                });
+
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 4);
                 });
 
                 test('aggregate has correct cyclomatic complexity', function () {
@@ -989,6 +1068,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 2);
+                });
+
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
                 });
@@ -1003,6 +1086,14 @@
 
                 test('function has complexity property', function () {
                     assert.isObject(report.functions[0].complexity);
+                });
+
+                test('function has correct physical lines of code', function () {
+                    assert.strictEqual(report.functions[0].complexity.sloc.physical, 1);
+                });
+
+                test('function has correct logical lines of code', function () {
+                    assert.strictEqual(report.functions[0].complexity.sloc.logical, 1);
                 });
 
                 test('function has correct cyclomatic complexity', function () {
@@ -1077,8 +1168,20 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 4);
+                });
+
                 test('functions has correct length', function () {
                     assert.lengthOf(report.functions, 2);
+                });
+
+                test('first function has correct logical lines of code', function () {
+                    assert.strictEqual(report.functions[0].complexity.sloc.logical, 2);
+                });
+
+                test('second function has correct logical lines of code', function () {
+                    assert.strictEqual(report.functions[1].complexity.sloc.logical, 1);
                 });
 
                 test('first function has correct name', function () {
@@ -1153,6 +1256,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 1);
+                });
+
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
                 });
@@ -1189,6 +1296,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 1);
+                });
+
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
                 });
@@ -1219,6 +1330,10 @@
 
                 teardown(function () {
                     report = undefined;
+                });
+
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 1);
                 });
 
                 test('aggregate has correct cyclomatic complexity', function () {
@@ -1253,6 +1368,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 1);
+                });
+
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
                 });
@@ -1283,6 +1402,10 @@
 
                 teardown(function () {
                     report = undefined;
+                });
+
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 2);
                 });
 
                 test('functions has correct length', function () {
@@ -1321,6 +1444,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 2);
+                });
+
                 test('function has correct name', function () {
                     assert.strictEqual(report.functions[0].name, 'bar');
                 });
@@ -1343,6 +1470,10 @@
 
                 teardown(function () {
                     report = undefined;
+                });
+
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 2);
                 });
 
                 test('aggregate has correct cyclomatic complexity', function () {
@@ -1381,6 +1512,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 2);
+                });
+
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
                 });
@@ -1407,6 +1542,10 @@
 
                 teardown(function () {
                     report = undefined;
+                });
+
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 3);
                 });
 
                 test('functions has correct length', function () {
@@ -1519,6 +1658,10 @@
 
                 teardown(function () {
                     report = undefined;
+                });
+
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 2);
                 });
 
                 test('functions has correct length', function () {
@@ -1645,6 +1788,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 6);
+                });
+
                 test('functions has correct length', function () {
                     assert.lengthOf(report.functions, 1);
                 });
@@ -1685,6 +1832,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 2);
+                });
+
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
                 });
@@ -1706,7 +1857,7 @@
                 });
             });
 
-            suite('call on function object', function () {
+            suite('call on function object:', function () {
                 var report;
 
                 setup(function () {
@@ -1715,6 +1866,10 @@
 
                 teardown(function () {
                     report = undefined;
+                });
+
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 3);
                 });
 
                 test('functions has correct length', function () {
@@ -1749,6 +1904,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 3);
+                });
+
                 test('functions has correct length', function () {
                     assert.lengthOf(report.functions, 1);
                 });
@@ -1758,11 +1917,11 @@
                 });
 
                 test('aggregate has correct Halstead total operators', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 5);
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 6);
                 });
 
                 test('aggregate has correct Halstead distinct operators', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.operators.distinct, 4);
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.distinct, 5);
                 });
 
                 test('aggregate has correct Halstead total operands', function () {
@@ -1785,6 +1944,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 2);
+                });
+
                 test('functions has correct length', function () {
                     assert.lengthOf(report.functions, 1);
                 });
@@ -1805,6 +1968,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 1);
+                });
+
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
                 });
@@ -1814,11 +1981,11 @@
                 });
 
                 test('aggregate has correct Halstead total operators', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 2);
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 3);
                 });
 
                 test('aggregate has correct Halstead distinct operators', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.operators.distinct, 2);
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.distinct, 3);
                 });
 
                 test('aggregate has correct Halstead total operands', function () {
@@ -1841,6 +2008,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 4);
+                });
+
                 test('functions has correct length', function () {
                     assert.lengthOf(report.functions, 1);
                 });
@@ -1850,11 +2021,11 @@
                 });
 
                 test('aggregate has correct Halstead total operators', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 5);
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 6);
                 });
 
                 test('aggregate has correct Halstead distinct operators', function () {
-                    assert.strictEqual(report.aggregate.complexity.halstead.operators.distinct, 4);
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.distinct, 5);
                 });
 
                 test('aggregate has correct Halstead total operands', function () {
@@ -1913,6 +2084,10 @@
                     report = undefined;
                 });
 
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 4);
+                });
+
                 test('functions has correct length', function () {
                     assert.lengthOf(report.functions, 0);
                 });
@@ -1931,6 +2106,118 @@
 
                 test('aggregate has correct Halstead distinct operands', function () {
                     assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 6);
+                });
+            });
+
+            suite('prefix and postfix increment:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('var a = 0; ++a; a++;');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 3);
+                });
+
+                test('functions has correct length', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
+                });
+
+                test('aggregate has correct Halstead total operators', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 4);
+                });
+
+                test('aggregate has correct Halstead distinct operators', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.distinct, 4);
+                });
+
+                test('aggregate has correct Halstead total operands', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.total, 4);
+                });
+
+                test('aggregate has correct Halstead distinct operands', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 2);
+                });
+            });
+
+            suite('array literal:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('[ "foo", "bar" ];');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 1);
+                });
+
+                test('functions has correct length', function () {
+                    assert.lengthOf(report.functions, 0);
+                });
+
+                test('aggregate has correct cyclomatic complexity', function () {
+                    assert.strictEqual(report.aggregate.complexity.cyclomatic, 1);
+                });
+
+                test('aggregate has correct Halstead total operators', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 1);
+                });
+
+                test('aggregate has correct Halstead distinct operators', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.distinct, 1);
+                });
+
+                test('aggregate has correct Halstead total operands', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.total, 3);
+                });
+
+                test('aggregate has correct Halstead distinct operands', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 3);
+                });
+            });
+
+            suite('multiple physical lines:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('// This is a\n// multi-line\n// comment.\nparseInt(\n\t(function () {\n\t\t// Moar\n\t\t// commentz!\n\t\treturn [\n\t\t\t"1",\n\t\t\t"0"\n\t\t].join("");\n\t}()),\n\t10\n);', { debug: true });
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct physical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.physical, 11);
+                });
+
+                test('aggregate has correct logical lines of code', function () {
+                    assert.strictEqual(report.aggregate.complexity.sloc.logical, 4);
+                });
+
+                test('functions has correct length', function () {
+                    assert.lengthOf(report.functions, 1);
+                });
+
+                test('function has correct physical lines of code', function () {
+                    assert.strictEqual(report.functions[0].complexity.sloc.physical, 8);
+                });
+
+                test('function has correct logical lines of code', function () {
+                    assert.strictEqual(report.functions[0].complexity.sloc.logical, 2);
                 });
             });
         });

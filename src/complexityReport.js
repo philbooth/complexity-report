@@ -35,12 +35,12 @@ function run (source, options) {
         settings = getDefaultSettings();
     }
 
-    syntaxDefinitions = getSyntaxDefinitions(settings);
-    report = createReport();
-
     ast = esprima.parse(source, {
         loc: true
     });
+
+    syntaxDefinitions = getSyntaxDefinitions(settings);
+    report = createReport(ast.loc);
 
     processTree(ast.body, undefined, undefined);
 
@@ -80,10 +80,12 @@ function getSyntaxDefinitions (settings) {
             children: [ 'body' ]
         },
         ObjectExpression: {
+            operators: [ { identifier: '{}' } ],
             operands: [ { identifier: safeName } ],
             children: [ 'properties' ]
         },
         Property: {
+            lloc: 1,
             operators: [ { identifier: ':' } ],
             children: [ 'key', 'value' ],
             getAssignedName: function (node) { return safeName(node.key); }
@@ -91,13 +93,26 @@ function getSyntaxDefinitions (settings) {
         ThisExpression: {
             operands: [ { identifier: 'this' } ]
         },
+        ArrayExpression: {
+            operators: [ { identifier: '[]' } ],
+            operands: [ { identifier: safeName } ],
+            children: [ 'elements' ]
+        },
         MemberExpression: {
+            lloc: function (node) {
+                return [
+                    'ObjectExpression',
+                    'ArrayExpression',
+                    'FunctionExpression'
+                ].indexOf(node.object.type) === -1 ? 0 : 1;
+            },
             operators: [ { identifier: '.' } ],
             children: [ 'object', 'property' ]
         },
         CallExpression: getFunctionCallSyntaxDefinition('()'),
         NewExpression: getFunctionCallSyntaxDefinition('new'),
         ExpressionStatement: {
+            lloc: 1,
             children: [ 'expression' ]
         },
         VariableDeclaration: {
@@ -105,6 +120,7 @@ function getSyntaxDefinitions (settings) {
             children: [ 'declarations' ]
         },
         VariableDeclarator: {
+            lloc: 1,
             operators: [ {
                 identifier: '=',
                 optional: function (node) {
@@ -125,19 +141,37 @@ function getSyntaxDefinitions (settings) {
                 return safeName(node.left.id);
             }
         },
+        UnaryExpression: {
+            operators: [ {
+                identifier: function (node) {
+                    return node.operator + ' (' + (node.prefix ? 'pre' : 'post') + 'fix)';
+                }
+            } ],
+            children: [ 'argument' ]
+        },
+        UpdateExpression: {
+            operators: [ {
+                identifier: function (node) {
+                    return node.operator + ' (' + (node.prefix ? 'pre' : 'post') + 'fix)';
+                }
+            } ],
+            children: [ 'argument' ]
+        },
         BinaryExpression: {
             operators: [ { identifier: function (node) { return node.operator; } } ],
             children: [ 'left', 'right' ]
         },
         LogicalExpression: {
-            complexity: function (node) {
-                return settings.logicalor && node.operator === '||';
-            },
+            complexity: function (node) { return settings.logicalor && node.operator === '||' ? 1 : 0; },
             operators: [ { identifier: function (node) { return node.operator; } } ],
             children: [ 'left', 'right' ]
         },
+        SequenceExpression: {
+            children: [ 'expressions' ]
+        },
         IfStatement: {
-            complexity: true,
+            lloc: function (node) { return node.alternate ? 2 : 1; },
+            complexity: 1,
             operators: [ {
                 identifier: 'if'
             }, {
@@ -147,16 +181,18 @@ function getSyntaxDefinitions (settings) {
             children: [ 'test', 'consequent', 'alternate' ]
         },
         ConditionalExpression: {
-            complexity: true,
+            complexity: 1,
             operators: [ { identifier: ':?' } ],
             children: [ 'test', 'consequent', 'alternate' ]
         },
         SwitchStatement: {
+            lloc: 1,
             operators: [ { identifier: 'switch' } ],
             children: [ 'discriminant', 'cases' ]
         },
         SwitchCase: {
-            complexity: function (node) { return settings.switchcase && node.test; },
+            lloc: 1,
+            complexity: function (node) { return settings.switchcase && node.test ? 1 : 0; },
             operators: [ {
                 identifier: function (node) {
                     return node.test ? 'case' : 'default';
@@ -164,34 +200,43 @@ function getSyntaxDefinitions (settings) {
             } ],
             children: [ 'test', 'consequent' ]
         },
-        BreakStatement: {
-            operators: [ { identifier: 'break' } ]
-        },
-        ForStatement: getLoopSyntaxDefinition('for'),
+        BreakStatement: getBreakContinueSyntaxDefinition('break'),
+        ContinueStatement: getBreakContinueSyntaxDefinition('continue'),
+        ForStatement: getLoopSyntaxDefinition('for', 1),
         ForInStatement: {
-            complexity: function (node) { return settings.forin; },
+            lloc: 1,
+            complexity: function (node) { return settings.forin ? 1 : 0; },
             operators: [ { identifier: 'forin' } ],
             children: [ 'left', 'right', 'body' ]
         },
-        WhileStatement: getLoopSyntaxDefinition('while'),
-        DoWhileStatement: getLoopSyntaxDefinition('dowhile'),
-        FunctionDeclaration: getFunctionSyntaxDefinition(),
-        FunctionExpression: getFunctionSyntaxDefinition(),
+        WhileStatement: getLoopSyntaxDefinition('while', 1),
+        DoWhileStatement: getLoopSyntaxDefinition('dowhile', 2),
+        FunctionDeclaration: getFunctionSyntaxDefinition(1),
+        FunctionExpression: getFunctionSyntaxDefinition(0),
         ReturnStatement: {
+            lloc: 1,
             operators: [ { identifier: 'return' } ],
             children: [ 'argument' ]
         },
         TryStatement: {
+            lloc: 1,
             children: [ 'block', 'handlers' ]
         },
         CatchClause: {
-            complexity: function (node) { return settings.trycatch; },
+            lloc: 1,
+            complexity: function (node) { return settings.trycatch ? 1 : 0; },
             operators: [ { identifier: 'catch' } ],
             children: [ 'param', 'body' ]
         },
         ThrowStatement: {
+            lloc: 1,
             operators: [ { identifier: 'throw' } ],
             children: [ 'argument' ]
+        },
+        WithStatement: {
+            lloc: 1,
+            operators: [ { identifier: 'with' } ],
+            children: [ 'object', 'body' ]
         }
     };
 }
@@ -210,21 +255,32 @@ function safeName (object, defaultName) {
 
 function getFunctionCallSyntaxDefinition (type) {
     return {
+        lloc: function (node) { return node.callee.type === 'FunctionExpression' ? 1 : 0; },
         operators: [ { identifier: type } ],
         children: [ 'arguments', 'callee' ]
     };
 }
 
-function getLoopSyntaxDefinition (type) {
+function getBreakContinueSyntaxDefinition (type) {
     return {
-        complexity: function (node) { return !!node.test; },
+        lloc: 1,
+        operators: [ { identifier: true } ],
+        children: [ 'label' ]
+    };
+}
+
+function getLoopSyntaxDefinition (type, lloc) {
+    return {
+        lloc: lloc,
+        complexity: function (node) { return node.test ? 1 : 0; },
         operators: [ { identifier: type } ],
         children: [ 'init', 'test', 'update', 'body' ]
     };
 }
 
-function getFunctionSyntaxDefinition () {
+function getFunctionSyntaxDefinition (lloc) {
     return {
+        lloc: lloc,
         operators: [ { identifier: 'function' } ],
         operands: [ { identifier: function (node) { return safeName(node.id); } } ],
         children: [ 'params', 'body' ],
@@ -232,9 +288,9 @@ function getFunctionSyntaxDefinition () {
     };
 }
 
-function createReport () {
+function createReport (lines) {
     return {
-        aggregate: createFunctionReport(),
+        aggregate: createFunctionReport(undefined, lines),
         functions: []
     };
 }
@@ -244,6 +300,10 @@ function createFunctionReport (name, lines) {
         name: name,
         lines: lines,
         complexity: {
+            sloc: {
+                physical: lines.end.line - lines.start.line + 1,
+                logical: 0
+            },
             cyclomatic: 1,
             halstead: createInitialHalsteadState()
         }
@@ -282,6 +342,7 @@ function processNode (node, assignedName, currentReport) {
         def = syntaxDefinitions[node.type];
         
         if (check.isObject(syntaxDefinitions[node.type])) {
+            processLloc(node, currentReport);
             processComplexity(node, currentReport);
             processOperators(node, currentReport);
             processOperands(node, currentReport);
@@ -295,25 +356,37 @@ function processNode (node, assignedName, currentReport) {
     }
 }
 
-function processComplexity (node, currentReport) {
-    var def = syntaxDefinitions[node.type];
+function processLloc (node, currentReport) {
+    incrementCounter(node, 'lloc', incrementLogicalSloc, currentReport);
+}
 
-    if (
-        def.complexity === true ||
-        (
-            check.isFunction(def.complexity) &&
-            def.complexity(node)
-        )
-    ) {
-        incrementComplexity(currentReport);
+function incrementCounter (node, name, incrementFn, currentReport) {
+    var amount = syntaxDefinitions[node.type][name];
+
+    if (check.isNumber(amount)) {
+        incrementFn(currentReport, amount);
+    } else if (check.isFunction(amount)) {
+        incrementFn(currentReport, amount(node));
     }
 }
 
-function incrementComplexity (currentReport) {
-    report.aggregate.complexity.cyclomatic += 1;
+function incrementLogicalSloc (currentReport, amount) {
+    report.aggregate.complexity.sloc.logical += amount;
 
     if (currentReport) {
-        currentReport.complexity.cyclomatic += 1;
+        currentReport.complexity.sloc.logical += amount;
+    }
+}
+
+function processComplexity (node, currentReport) {
+    incrementCounter(node, 'complexity', incrementComplexity, currentReport);
+}
+
+function incrementComplexity (currentReport, amount) {
+    report.aggregate.complexity.cyclomatic += amount;
+
+    if (currentReport) {
+        currentReport.complexity.cyclomatic += amount;
     }
 }
 
