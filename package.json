@@ -1,6 +1,6 @@
 {
     "name": "complexity-report",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "author": "Phil Booth <pmbooth@gmail.com>",
     "description": "A tool for reporting code complexity metrics in JavaScript projects.",
     "contributors": {
@@ -18,11 +18,13 @@
     "keywords": [
         "complexity",
         "simplicity",
-        "cyclomatic complexity",
-        "code complexity",
-        "conditional complexity",
-        "complexity analysis",
-        "static analysis"
+        "cyclomatic",
+        "halstead",
+        "maintainability",
+        "static",
+        "analysis",
+        "metrics",
+        "esprima"
     ],
     "dependencies": {
         "check-types": "0.2.x",
