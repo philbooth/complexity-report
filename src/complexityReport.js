@@ -44,7 +44,7 @@ function run (source, options) {
 
     processTree(ast.body, undefined, undefined);
 
-    calculateHalsteadMetrics();
+    calculateMetrics();
 
     return report;
 }
@@ -414,23 +414,36 @@ function processChild (child, assignedName, currentReport) {
     fn(child, assignedName, currentReport);
 }
 
-function calculateHalsteadMetrics () {
+function calculateMetrics () {
     var i;
 
     for (i = 0; i < report.functions.length; i += 1) {
-        calculateHalsteadFunctionMetrics(report.functions[i].complexity.halstead);
+        calculateHalsteadMetrics(report.functions[i].complexity.halstead);
+        calculateMaintainabilityIndex(report.functions[i]);
     }
 
-    calculateHalsteadFunctionMetrics(report.aggregate.complexity.halstead);
+    calculateHalsteadMetrics(report.aggregate.complexity.halstead);
+    calculateMaintainabilityIndex(report.aggregate);
 }
 
-function calculateHalsteadFunctionMetrics (fn) {
-    fn.length = fn.operators.total + fn.operands.total;
-    fn.vocabulary = fn.operators.distinct + fn.operands.distinct;
-    fn.difficulty = (fn.operators.distinct / 2) * (fn.operands.total / fn.operands.distinct);
-    fn.volume = fn.length * (Math.log(fn.vocabulary) / Math.log(2));
-    fn.effort = fn.difficulty * fn.volume;
-    fn.bugs = fn.volume / 3000;
-    fn.time = fn.effort / 18;
+function calculateHalsteadMetrics (data) {
+    data.length = data.operators.total + data.operands.total;
+    data.vocabulary = data.operators.distinct + data.operands.distinct;
+    data.difficulty =
+        (data.operators.distinct / 2) *
+        (data.operands.total / data.operands.distinct);
+    data.volume = data.length * (Math.log(data.vocabulary) / Math.log(2));
+    data.effort = data.difficulty * data.volume;
+    data.bugs = data.volume / 3000;
+    data.time = data.effort / 18;
+}
+
+function calculateMaintainabilityIndex (data) {
+    // TODO: sloc
+    //data.maintainability =
+    //    171 -
+    //    (3.42 * Math.log(data.complexity.halstead.effort)) -
+    //    (0.23 * Math.log(data.complexity.cyclomatic)) -
+    //    (16.2 * Math.log(data.complexity.sloc.logical));
 }
 
