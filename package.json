@@ -27,7 +27,7 @@
         "esprima"
     ],
     "dependencies": {
-        "check-types": "0.2.x",
+        "check-types": "0.3.x",
         "esprima": "1.0.x",
         "commander": "1.0.x"
     },
