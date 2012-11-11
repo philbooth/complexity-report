@@ -96,8 +96,9 @@ for the source in its entirety.
 ### Roadmap
 
 The current plan is
-to add Halstead complexity measures
-and the Maintainability Index,
+to write heaps more different output formats,
+including CI-compatible ones
+and maybe visualisation-compatible ones,
 then just focus on improving the calculations
 by throwing more and more test cases together.
 If you think there's anything else I should look at,
