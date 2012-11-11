@@ -18,8 +18,8 @@ function formatModule (report) {
     return [
         report.module,
         '\n\n',
-        '  Aggregate cyclomatic complexity: ',
-        report.aggregate.complexity.cyclomatic,
+        '  Maintainability index: ', Math.round(report.maintainability), '\n',
+        '  Aggregate cyclomatic complexity: ', report.aggregate.complexity.cyclomatic,
         formatFunctions(report.functions)
     ].join('');
 }
@@ -37,14 +37,13 @@ function formatFunctions (report) {
 function formatFunction (report) {
     return [
         '  Function: ', report.name, '\n',
-        '    Line No.: ', report.lines.start.line, '\n',
-        '    Length: ', report.lines.end.line - report.lines.start.line + 1, ' lines\n',
+        '    Line No.: ', report.line, '\n',
+        '    Physical SLOC: ', report.complexity.sloc.physical, '\n',
+        '    Logical SLOC: ', report.complexity.sloc.logical, '\n',
         '    Cyclomatic complexity: ', report.complexity.cyclomatic, '\n',
-        '    Halstead length: ', report.complexity.halstead.length, '\n',
-        '    Halstead vocabulary: ', report.complexity.halstead.vocabulary, '\n',
-        '    Halstead difficulty: ', report.complexity.halstead.difficulty, '\n',
-        '    Halstead volume: ', report.complexity.halstead.volume, '\n',
-        '    Halstead effort: ', report.complexity.halstead.effort
+        '    Halstead difficulty: ', Math.round(report.complexity.halstead.difficulty), '\n',
+        '    Halstead volume: ', Math.round(report.complexity.halstead.volume), '\n',
+        '    Halstead effort: ', Math.round(report.complexity.halstead.effort)
     ].join('');
 }
 

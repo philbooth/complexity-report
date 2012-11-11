@@ -298,7 +298,7 @@ function createReport (lines) {
 function createFunctionReport (name, lines) {
     return {
         name: name,
-        lines: lines,
+        line: lines.start.line,
         complexity: {
             sloc: {
                 physical: lines.end.line - lines.start.line + 1,
