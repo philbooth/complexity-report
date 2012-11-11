@@ -101,6 +101,8 @@ including CI-compatible ones
 and maybe visualisation-compatible ones,
 then just focus on improving the calculations
 by throwing more and more test cases together.
+I also need to look at opening more options up
+for external configuration.
 If you think there's anything else I should look at,
 please raise an issue or,
 even better, implement it and submit a pull request! :)
