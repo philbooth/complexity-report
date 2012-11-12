@@ -44,9 +44,14 @@ cr [options] <file...>
 
 #### Output formats
 
-These are loaded with `require` from the `src/formats` subdirectory.
-Adding new formats is easy,
-each module must export a function `format`
+Currently there are three output formats supported:
+`plain`,
+`json`
+and `xml`.
+These are loaded with `require`
+from the `src/formats` subdirectory.
+and adding new formats is really easy.
+Each module must export a function `format`
 that takes a report object as its only argument
 and returns a string representation of the report.
 See `src/formats/plain.js` for an example format.
