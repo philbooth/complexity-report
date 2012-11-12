@@ -100,17 +100,26 @@ for the source in its entirety.
 
 ### Roadmap
 
-The current plan is
-to write heaps more different output formats,
-including CI-compatible ones
-and maybe visualisation-compatible ones,
-then just focus on improving the calculations
-by throwing more and more test cases together.
-I also need to look at opening more options up
-for external configuration.
+The short-term plan is
+to write more output formats
+and open up lots more options
+for external configuration of the analysis.
+
+I also need to spend some time
+throwing more complex test cases at it,
+to flush out all of the edge cases
+that I'm probably not yet handling.
+To this end,
+it would be great to hear from people
+that have run the tool
+against their own codebases.
+The bigger and uglier, the better! `:)`
+If you spot any issues,
+please raise them in the [tracker].
+
 If you think there's anything else I should look at,
-please raise an issue or,
-even better, implement it and submit a pull request! :)
+please raise an issue or, even better,
+feel free to implement it and submit a pull request! `:)`
 
 ### Dependencies
 
@@ -134,6 +143,7 @@ command `npm test` or `jake test`.
 [ci-image]: https://secure.travis-ci.org/philbooth/complexityReport.js.png?branch=master
 [ci-status]: http://travis-ci.org/#!/philbooth/complexityReport.js
 [esprima]: http://esprima.org/
+[tracker]: https://github.com/philbooth/complexityReport.js/issues
 [node]: http://nodejs.org/
 [npm]: https://npmjs.org/
 [jake]: https://github.com/mde/jake
