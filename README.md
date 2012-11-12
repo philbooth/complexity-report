@@ -61,8 +61,8 @@ Currently there are three output formats supported:
 `json`
 and `xml`.
 These are loaded with `require`
-from the `src/formats` subdirectory.
-and adding new formats is really easy
+from the `src/formats` subdirectory
+and adding new formats is really easy.
 Each format module must export a function `format`,
 which takes a report object as its only argument
 and returns its string representation of the report.
