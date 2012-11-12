@@ -5,6 +5,6 @@
 exports.format = format;
 
 function format (reports) {
-    return JSON.stringify(reports, undefined, 4);
+    return JSON.stringify(reports, undefined, 2);
 }
 
