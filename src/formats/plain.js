@@ -18,7 +18,7 @@ function formatModule (report) {
     return [
         report.module,
         '\n\n',
-        '  Maintainability index: ', Math.round(report.maintainability), '\n',
+        '  Maintainability index: ', report.maintainability, '\n',
         '  Aggregate cyclomatic complexity: ', report.aggregate.complexity.cyclomatic,
         formatFunctions(report.functions)
     ].join('');
@@ -41,9 +41,9 @@ function formatFunction (report) {
         '    Physical SLOC: ', report.complexity.sloc.physical, '\n',
         '    Logical SLOC: ', report.complexity.sloc.logical, '\n',
         '    Cyclomatic complexity: ', report.complexity.cyclomatic, '\n',
-        '    Halstead difficulty: ', Math.round(report.complexity.halstead.difficulty), '\n',
-        '    Halstead volume: ', Math.round(report.complexity.halstead.volume), '\n',
-        '    Halstead effort: ', Math.round(report.complexity.halstead.effort)
+        '    Halstead difficulty: ', report.complexity.halstead.difficulty, '\n',
+        '    Halstead volume: ', report.complexity.halstead.volume, '\n',
+        '    Halstead effort: ', report.complexity.halstead.effort
     ].join('');
 }
 
