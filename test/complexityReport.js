@@ -1159,7 +1159,7 @@
                 });
 
                 test('maintainability index is correct', function () {
-                    assert.strictEqual(report.maintainability, Number.POSITIVE_INFINITY);
+                    assert.strictEqual(report.maintainability, 171);
                 });
             });
 
@@ -2244,6 +2244,22 @@
 
                 test('maintainability index is correct', function () {
                     assert.strictEqual(Math.round(report.maintainability), 128);
+                });
+            });
+
+            suite('issue 1 / reddit.ISV_Damocles:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('var callback = arguments[arguments.length-1] instanceof Function ? arguments[arguments.length-1] : function() {};');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('maintainability index is correct', function () {
+                    assert.strictEqual(report.maintainability, 171);
                 });
             });
         });

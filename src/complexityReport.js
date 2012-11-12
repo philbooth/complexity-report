@@ -488,64 +488,84 @@ function processChild (child, assignedName, currentReport) {
 }
 
 function calculateMetrics () {
-    var i, data,
+    var i, data, averages,
     
-    metrics = {
-        indices: {
-            loc: 0,
-            complexity: 1,
-            effort: 2
-        },
-        sums: [ 0, 0, 0 ]
+    sums = [ 0, 0, 0 ],
+    
+    indices = {
+        loc: 0,
+        complexity: 1,
+        effort: 2
     };
 
     for (i = 0; i < report.functions.length; i += 1) {
         data = report.functions[i].complexity;
         
         calculateHalsteadMetrics(data.halstead);
-        sumMaintainabilityMetrics(metrics, data);
+        sumMaintainabilityMetrics(sums, indices, data);
     }
 
     calculateHalsteadMetrics(report.aggregate.complexity.halstead);
     if (i === 0) {
         // Sane handling of modules that contain no functions.
-        sumMaintainabilityMetrics(metrics, report.aggregate.complexity);
+        sumMaintainabilityMetrics(sums, indices, report.aggregate.complexity);
         i = 1;
     }
 
+    averages = sums.map(function (sum) { return sum / i; });
+
     calculateMaintainabilityIndex(
-        metrics.sums.map(
-            function (sum) {
-                return sum / i;
-            }
-        ),
-        metrics.indices
+        averages[indices.effort],
+        averages[indices.complexity],
+        averages[indices.loc]
     );
 }
 
 function calculateHalsteadMetrics (data) {
     data.length = data.operators.total + data.operands.total;
-    data.vocabulary = data.operators.distinct + data.operands.distinct;
-    data.difficulty =
-        (data.operators.distinct / 2) *
-        (data.operands.total / data.operands.distinct);
-    data.volume = data.length * (Math.log(data.vocabulary) / Math.log(2));
-    data.effort = data.difficulty * data.volume;
-    data.bugs = data.volume / 3000;
-    data.time = data.effort / 18;
+    if (data.length === 0) {
+        nilHalsteadMetrics(data);
+    } else {
+        data.vocabulary = data.operators.distinct + data.operands.distinct;
+        data.difficulty =
+            (data.operators.distinct / 2) *
+            (data.operands.total / data.operands.distinct);
+        data.volume = data.length * (Math.log(data.vocabulary) / Math.log(2));
+        data.effort = data.difficulty * data.volume;
+        data.bugs = data.volume / 3000;
+        data.time = data.effort / 18;
+    }
 }
 
-function sumMaintainabilityMetrics (metrics, data) {
-    metrics.sums[metrics.indices.loc] += data.sloc.logical;
-    metrics.sums[metrics.indices.complexity] += data.cyclomatic;
-    metrics.sums[metrics.indices.effort] += data.halstead.effort;
+function nilHalsteadMetrics (data) {
+    data.vocabulary =
+        data.difficulty =
+        data.volume =
+        data.effort =
+        data.bugs =
+        data.time =
+            0;
 }
 
-function calculateMaintainabilityIndex (averages, indices) {
-    report.maintainability =
-        171 -
-        (3.42 * Math.log(averages[indices.effort])) -
-        (0.23 * Math.log(averages[indices.complexity])) -
-        (16.2 * Math.log(averages[indices.loc]));
+function sumMaintainabilityMetrics (sums, indices, data) {
+    sums[indices.loc] += data.sloc.logical;
+    sums[indices.complexity] += data.cyclomatic;
+    sums[indices.effort] += data.halstead.effort;
+}
+
+function calculateMaintainabilityIndex (averageEffort, averageComplexity, averageLoc) {
+    if (averageComplexity === 0) {
+        throw new Error('Encountered function with cyclomatic complexity zero!');
+    }
+
+    if (averageEffort === 0 || averageLoc === 0) {
+        report.maintainability = 171;
+    } else {
+        report.maintainability =
+            171 -
+            (3.42 * Math.log(averageEffort)) -
+            (0.23 * Math.log(averageComplexity)) -
+            (16.2 * Math.log(averageLoc));
+    }
 }
 
