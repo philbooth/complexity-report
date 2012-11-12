@@ -127,7 +127,7 @@ To this end,
 it would be great to hear from people
 that have run the tool
 against their own codebases.
-The bigger and uglier, the better! `:)`
+The bigger and uglier, the better!
 If you spot any issues,
 please raise them in the [tracker].
 
