@@ -62,10 +62,10 @@ Currently there are three output formats supported:
 and `xml`.
 These are loaded with `require`
 from the `src/formats` subdirectory.
-and adding new formats is really easy.
-Each module must export a function `format`
-that takes a report object as its only argument
-and returns a string representation of the report.
+and adding new formats is really easy
+Each format module must export a function `format`,
+which takes a report object as its only argument
+and returns its string representation of the report.
 See `src/formats/plain.js` for an example format.
 
 ### From code
@@ -105,7 +105,9 @@ The following options are available:
 The returned report is an object
 that contains properties detailing the complexity
 of each function from the source code.
-There is also an aggregate complexity score
+There is also
+a maintainability index
+as well as aggregate complexity metrics
 for the source in its entirety.
 
 ## Development
