@@ -2247,7 +2247,7 @@
                 });
             });
 
-            suite('issue 1 / reddit.ISV_Damocles:', function () {
+            suite('issue 3 / reddit.ISV_Damocles:', function () {
                 var report;
 
                 setup(function () {
