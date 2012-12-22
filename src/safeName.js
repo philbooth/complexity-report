@@ -1,5 +1,4 @@
 /*globals require, module */
-/*jshint globalstrict:true */
 
 'use strict';
 
