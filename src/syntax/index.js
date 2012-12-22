@@ -1,10 +1,10 @@
-/*globals require, exports */
+/*jshint nomen:false */
+/*globals require, __dirname, exports */
 
 'use strict';
 
 var fs = require('fs'),
-    fsDirectory = './src/syntax',
-    requireDirectory = '.';
+    path = require('path');
 
 exports.get = getSyntax;
 
@@ -26,7 +26,7 @@ function getSyntax (settings) {
 }
 
 function getSyntaxFileNames () {
-    return fs.readdirSync(fsDirectory);
+    return fs.readdirSync(__dirname);
 }
 
 function splitFileName (fileName) {
@@ -34,18 +34,18 @@ function splitFileName (fileName) {
 }
 
 function isSyntaxDefinition (fileName, components) {
-    if (fs.statSync(pathify(fsDirectory, fileName)).isFile()) {
+    if (fs.statSync(pathify(__dirname, fileName)).isFile()) {
         return components.length === 2 && components[0] !== 'index' && components[1] === 'js';
     }
 
     return false;
 }
 
-function pathify (path, fileName) {
-    return path + '/' + fileName;
+function pathify (directory, fileName) {
+    return directory + '/' + fileName;
 }
 
 function setSyntax (syntax, name, settings) {
-    syntax[name] = require(pathify(requireDirectory, name)).get(settings);
+    syntax[name] = require(pathify('.', name)).get(settings);
 }
 

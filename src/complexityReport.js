@@ -2,7 +2,6 @@
  * Complexity reporting tool for JavaScript.
  */
 
-/*jshint globalstrict:true */
 /*globals exports, require */
 
 'use strict';
