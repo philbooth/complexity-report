@@ -56,8 +56,9 @@ cr [options] <file...>
   defaults to `plain`.
 * `-t <threshold>`: Specify the per-function complexity threshold
   (beyond which, the process will fail when exiting).
+* `-s`: Silences the console output.
 * `-l`: Disregards operator `||` as a source of cyclomatic complexity.
-* `-s`: Disregards `switch` statements as a source of cyclomatic complexity.
+* `-w`: Disregards `switch` statements as a source of cyclomatic complexity.
 * `-i`: Treats `for`...`in` loops as a source of cyclomatic complexity.
 * `-c`: Treats `catch` clauses as a source of cyclomatic complexity.
 
