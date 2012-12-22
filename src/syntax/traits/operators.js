@@ -2,15 +2,23 @@
 
 'use strict';
 
-var operand = require('./operand');
+var check = require('check-types');
 
 exports.actualise = actualiseOperators;
 
 function actualiseOperators (properties) {
-    var i, operators = [];
+    var operators = [], i, property;
 
     for (i = 0; i < properties.length; i += 1) {
-        operators.push(operator.actualise(properties[i].identifier, properties[i].filter));
+        property = properties[i];
+
+        if (check.isObject(property) && typeof property.identifier !== 'undefined') {
+            operators.push(property);
+        } else {
+            operators.push({
+                identifier: property
+            });
+        }
     }
 
     return operators;

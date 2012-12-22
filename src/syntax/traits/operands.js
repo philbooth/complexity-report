@@ -2,15 +2,15 @@
 
 'use strict';
 
-var operand = require('./operand');
-
 exports.actualise = actualiseOperands;
 
 function actualiseOperands (identifiers) {
-    var i, operands = [];
+    var operands = [], i;
 
     for (i = 0; i < identifiers.length; i += 1) {
-        operands.push(operand.actualise(identifiers[i]));
+        operands.push({
+            identifier: identifiers[i]
+        });
     }
 
     return operands;

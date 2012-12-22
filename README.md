@@ -169,9 +169,9 @@ you just need to run `npm install`
 to install all of the dependencies
 as listed in `package.json`.
 
-### Unit tests
+### Tests
 
-The unit tests are in `test/complexityReport.js`. You can run them with the
+The tests are in `test/complexityReport.js`. You can run them with the
 command `npm test` or `jake test`.
 
 [ci-image]: https://secure.travis-ci.org/philbooth/complexityReport.js.png?branch=master

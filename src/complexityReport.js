@@ -7,12 +7,14 @@
 
 'use strict';
 
-var check, esprima, syntaxDefinitions, report;
+var check, esprima, syntaxDefinitions, safeName, syntaxes, report;
 
 exports.run = run;
 
 check = require('check-types');
 esprima = require('esprima');
+safeName = require('./safeName');
+syntaxDefinitions = require('./syntax');
 
 /**
  * Public function `run`.
@@ -25,6 +27,8 @@ esprima = require('esprima');
  *
  */
 function run (source, options) {
+    // TODO: Asynchronize.
+
     var settings, ast;
 
     check.verifyUnemptyString(source, 'Invalid source');
@@ -39,7 +43,7 @@ function run (source, options) {
         loc: true
     });
 
-    syntaxDefinitions = getSyntaxDefinitions(settings);
+    syntaxes = syntaxDefinitions.get(settings);
     report = createReport(ast.loc);
 
     processTree(ast.body, undefined, undefined);
@@ -55,236 +59,6 @@ function getDefaultSettings () {
         switchcase: true,
         forin: false,
         trycatch: false
-    };
-}
-
-function getSyntaxDefinitions (settings) {
-    // TODO: Refactor to traits.
-    return {
-        Literal: {
-            operands: [ {
-                identifier: function (node) {
-                    if (check.isString(node.value)) {
-                        // Avoid conflicts between string literals and identifiers.
-                        return '"' + node.value + '"';
-                    }
-
-                    return node.value;
-                }
-            } ]
-        },
-        Identifier: {
-            operands: [ { identifier: function (node) { return node.name; } } ]
-        },
-        BlockStatement: {
-            children: [ 'body' ]
-        },
-        ObjectExpression: {
-            operators: [ { identifier: '{}' } ],
-            operands: [ { identifier: safeName } ],
-            children: [ 'properties' ]
-        },
-        Property: {
-            lloc: 1,
-            operators: [ { identifier: ':' } ],
-            children: [ 'key', 'value' ],
-            getAssignedName: function (node) { return safeName(node.key); }
-        },
-        ThisExpression: {
-            operands: [ { identifier: 'this' } ]
-        },
-        ArrayExpression: {
-            operators: [ { identifier: '[]' } ],
-            operands: [ { identifier: safeName } ],
-            children: [ 'elements' ]
-        },
-        MemberExpression: {
-            lloc: function (node) {
-                return [
-                    'ObjectExpression',
-                    'ArrayExpression',
-                    'FunctionExpression'
-                ].indexOf(node.object.type) === -1 ? 0 : 1;
-            },
-            operators: [ { identifier: '.' } ],
-            children: [ 'object', 'property' ]
-        },
-        CallExpression: getFunctionCallSyntaxDefinition('()'),
-        NewExpression: getFunctionCallSyntaxDefinition('new'),
-        ExpressionStatement: {
-            lloc: 1,
-            children: [ 'expression' ]
-        },
-        VariableDeclaration: {
-            operators: [ { identifier: function (node) { return node.kind; } } ],
-            children: [ 'declarations' ]
-        },
-        VariableDeclarator: {
-            lloc: 1,
-            operators: [ {
-                identifier: '=',
-                optional: function (node) {
-                    return !!node.init;
-                }
-            } ],
-            children: [ 'id', 'init' ],
-            getAssignedName: function (node) { return safeName(node.id); }
-        },
-        AssignmentExpression: {
-            operators: [ { identifier: function (node) { return node.operator; } } ],
-            children: [ 'left', 'right' ],
-            getAssignedName: function (node) {
-                if (node.left.type === 'MemberExpression') {
-                    return safeName(node.left.object) + '.' + node.left.property.name;
-                }
-                        
-                return safeName(node.left.id);
-            }
-        },
-        UnaryExpression: {
-            operators: [ {
-                identifier: function (node) {
-                    return node.operator + ' (' + (node.prefix ? 'pre' : 'post') + 'fix)';
-                }
-            } ],
-            children: [ 'argument' ]
-        },
-        UpdateExpression: {
-            operators: [ {
-                identifier: function (node) {
-                    return node.operator + ' (' + (node.prefix ? 'pre' : 'post') + 'fix)';
-                }
-            } ],
-            children: [ 'argument' ]
-        },
-        BinaryExpression: {
-            operators: [ { identifier: function (node) { return node.operator; } } ],
-            children: [ 'left', 'right' ]
-        },
-        LogicalExpression: {
-            complexity: function (node) { return settings.logicalor && node.operator === '||' ? 1 : 0; },
-            operators: [ { identifier: function (node) { return node.operator; } } ],
-            children: [ 'left', 'right' ]
-        },
-        SequenceExpression: {
-            children: [ 'expressions' ]
-        },
-        IfStatement: {
-            lloc: function (node) { return node.alternate ? 2 : 1; },
-            complexity: 1,
-            operators: [ {
-                identifier: 'if'
-            }, {
-                identifier: 'else',
-                optional: function (node) { return !!node.alternate; }
-            } ],
-            children: [ 'test', 'consequent', 'alternate' ]
-        },
-        ConditionalExpression: {
-            complexity: 1,
-            operators: [ { identifier: ':?' } ],
-            children: [ 'test', 'consequent', 'alternate' ]
-        },
-        SwitchStatement: {
-            lloc: 1,
-            operators: [ { identifier: 'switch' } ],
-            children: [ 'discriminant', 'cases' ]
-        },
-        SwitchCase: {
-            lloc: 1,
-            complexity: function (node) { return settings.switchcase && node.test ? 1 : 0; },
-            operators: [ {
-                identifier: function (node) {
-                    return node.test ? 'case' : 'default';
-                }
-            } ],
-            children: [ 'test', 'consequent' ]
-        },
-        BreakStatement: getBreakContinueSyntaxDefinition('break'),
-        ContinueStatement: getBreakContinueSyntaxDefinition('continue'),
-        ForStatement: getLoopSyntaxDefinition('for', 1),
-        ForInStatement: {
-            lloc: 1,
-            complexity: function (node) { return settings.forin ? 1 : 0; },
-            operators: [ { identifier: 'forin' } ],
-            children: [ 'left', 'right', 'body' ]
-        },
-        WhileStatement: getLoopSyntaxDefinition('while', 1),
-        DoWhileStatement: getLoopSyntaxDefinition('dowhile', 2),
-        FunctionDeclaration: getFunctionSyntaxDefinition(1),
-        FunctionExpression: getFunctionSyntaxDefinition(0),
-        ReturnStatement: {
-            lloc: 1,
-            operators: [ { identifier: 'return' } ],
-            children: [ 'argument' ]
-        },
-        TryStatement: {
-            lloc: 1,
-            children: [ 'block', 'handlers' ]
-        },
-        CatchClause: {
-            lloc: 1,
-            complexity: function (node) { return settings.trycatch ? 1 : 0; },
-            operators: [ { identifier: 'catch' } ],
-            children: [ 'param', 'body' ]
-        },
-        ThrowStatement: {
-            lloc: 1,
-            operators: [ { identifier: 'throw' } ],
-            children: [ 'argument' ]
-        },
-        WithStatement: {
-            lloc: 1,
-            operators: [ { identifier: 'with' } ],
-            children: [ 'object', 'body' ]
-        }
-    };
-}
-
-function safeName (object, defaultName) {
-    if (check.isObject(object) && check.isUnemptyString(object.name)) {
-        return object.name;
-    }
-
-    if (check.isUnemptyString(defaultName)) {
-        return defaultName;
-    }
-
-    return '<anonymous>';
-}
-
-function getFunctionCallSyntaxDefinition (type) {
-    return {
-        lloc: function (node) { return node.callee.type === 'FunctionExpression' ? 1 : 0; },
-        operators: [ { identifier: type } ],
-        children: [ 'arguments', 'callee' ]
-    };
-}
-
-function getBreakContinueSyntaxDefinition (type) {
-    return {
-        lloc: 1,
-        operators: [ { identifier: true } ],
-        children: [ 'label' ]
-    };
-}
-
-function getLoopSyntaxDefinition (type, lloc) {
-    return {
-        lloc: lloc,
-        complexity: function (node) { return node.test ? 1 : 0; },
-        operators: [ { identifier: type } ],
-        children: [ 'init', 'test', 'update', 'body' ]
-    };
-}
-
-function getFunctionSyntaxDefinition (lloc) {
-    return {
-        lloc: lloc,
-        operators: [ { identifier: 'function' } ],
-        operands: [ { identifier: function (node) { return safeName(node.id); } } ],
-        children: [ 'params', 'body' ],
-        isFunction: true
     };
 }
 
@@ -336,18 +110,18 @@ function processTree (tree, assignedName, currentReport) {
 }
 
 function processNode (node, assignedName, currentReport) {
-    var def;
+    var syntax;
 
     if (check.isObject(node)) {
-        def = syntaxDefinitions[node.type];
-        
-        if (check.isObject(syntaxDefinitions[node.type])) {
+        syntax = syntaxes[node.type];
+
+        if (check.isObject(syntaxes[node.type])) {
             processLloc(node, currentReport);
             processComplexity(node, currentReport);
             processOperators(node, currentReport);
             processOperands(node, currentReport);
-            
-            if (def.isFunction) {
+
+            if (syntax.newScope) {
                 processChildrenInNewScope(node, assignedName);
             } else {
                 processChildren(node, currentReport);
@@ -361,7 +135,7 @@ function processLloc (node, currentReport) {
 }
 
 function incrementCounter (node, name, incrementFn, currentReport) {
-    var amount = syntaxDefinitions[node.type][name];
+    var amount = syntaxes[node.type][name];
 
     if (check.isNumber(amount)) {
         incrementFn(currentReport, amount);
@@ -399,19 +173,19 @@ function processOperands (node, currentReport) {
 }
 
 function processHalsteadMetric (node, metric, currentReport) {
-    var def = syntaxDefinitions[node.type], i, identifier;
+    var syntax = syntaxes[node.type], i, identifier;
 
-    if (check.isArray(def[metric])) {
-        for (i = 0; i < def[metric].length; i += 1) {
-            if (check.isFunction(def[metric][i].identifier)) {
-                identifier = def[metric][i].identifier(node);
+    if (check.isArray(syntax[metric])) {
+        for (i = 0; i < syntax[metric].length; i += 1) {
+            if (check.isFunction(syntax[metric][i].identifier)) {
+                identifier = syntax[metric][i].identifier(node);
             } else {
-                identifier = def[metric][i].identifier;
+                identifier = syntax[metric][i].identifier;
             }
 
             if (
-                check.isFunction(def[metric][i].optional) === false ||
-                def[metric][i].optional(node) === true
+                check.isFunction(syntax[metric][i].filter) === false ||
+                syntax[metric][i].filter(node) === true
             ) {
                 halsteadItemEncountered(currentReport, metric, identifier);
             }
@@ -469,13 +243,13 @@ function processChildrenInNewScope (node, assignedName) {
 }
 
 function processChildren (node, currentReport) {
-    var def = syntaxDefinitions[node.type], i;
+    var syntax = syntaxes[node.type], i;
 
-    if (check.isArray(def.children)) {
-        for (i = 0; i < def.children.length; i += 1) {
+    if (check.isArray(syntax.children)) {
+        for (i = 0; i < syntax.children.length; i += 1) {
             processChild(
-                node[def.children[i]],
-                check.isFunction(def.getAssignedName) ? def.getAssignedName(node) : '',
+                node[syntax.children[i]],
+                check.isFunction(syntax.assignableName) ? syntax.assignableName(node) : '',
                 currentReport
             );
         }
@@ -489,9 +263,9 @@ function processChild (child, assignedName, currentReport) {
 
 function calculateMetrics () {
     var i, data, averages,
-    
+
     sums = [ 0, 0, 0 ],
-    
+
     indices = {
         loc: 0,
         complexity: 1,
@@ -500,7 +274,7 @@ function calculateMetrics () {
 
     for (i = 0; i < report.functions.length; i += 1) {
         data = report.functions[i].complexity;
-        
+
         calculateHalsteadMetrics(data.halstead);
         sumMaintainabilityMetrics(sums, indices, data);
     }

@@ -7,20 +7,20 @@
     var exec = require('child_process').exec,
 
     commands = {
-        test: './node_modules/.bin/mocha --ui tdd --reporter spec --colors --slow 50 ./test/complexityReport.js',
-        lint: './node_modules/.bin/jshint ./src/complexityReport.js --config config/jshint.json',
+        test: './node_modules/.bin/mocha --ui tdd --reporter spec --colors ./test/complexityReport.js',
+        lint: './node_modules/.bin/jshint ./src --config config/jshint.json',
         prepare: 'npm install'
     };
 
     desc('Run the unit tests.');
-    task('test', [ 'prepare' ], function () {
+    task('test', function () {
         runTask(test, 'Testing...');
     }, {
         async: true
     });
 
     desc('Lint the source code.');
-    task('lint', [ 'prepare' ], function () {
+    task('lint', function () {
         runTask(lint, 'Linting...');
     }, {
         async: true

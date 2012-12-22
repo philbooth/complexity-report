@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-/*globals require, process */
+/*globals require, process, console */
 
 (function () {
     'use strict';
