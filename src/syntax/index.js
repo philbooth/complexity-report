@@ -4,33 +4,46 @@
 'use strict';
 
 var fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    loaded = false,
+    syntaxModules = [];
 
 exports.get = getSyntax;
 
 function getSyntax (settings) {
-    var syntax = {}, fileNames, i, fileName, components;
+    var syntax = {}, name;
 
-    fileNames = getSyntaxFileNames();
+    if (loaded === false) {
+        loadSyntaxModules();
+        loaded = true;
+    }
 
-    for (i = 0; i < fileNames.length; i += 1) {
-        fileName = fileNames[i];
-        components = splitFileName(fileName);
-
-        if (isSyntaxDefinition(fileName, components)) {
-            setSyntax(syntax, components[0], settings);
+    for (name in syntaxModules) {
+        if (syntaxModules.hasOwnProperty(name)) {
+            setSyntax(syntax, name, settings);
         }
     }
 
     return syntax;
 }
 
-function getSyntaxFileNames () {
-    return fs.readdirSync(__dirname);
+function loadSyntaxModules () {
+    var fileNames, i, fileName, components;
+
+    fileNames = getSyntaxFileNames();
+
+    for (i = 0; i < fileNames.length; i += 1) {
+        fileName = fileNames[i];
+        components = fileName.split('.');
+
+        if (isSyntaxDefinition(fileName, components)) {
+            loadSyntaxModule(components[0]);
+        }
+    }
 }
 
-function splitFileName (fileName) {
-    return fileName.split('.');
+function getSyntaxFileNames () {
+    return fs.readdirSync(__dirname);
 }
 
 function isSyntaxDefinition (fileName, components) {
@@ -45,7 +58,11 @@ function pathify (directory, fileName) {
     return directory + '/' + fileName;
 }
 
+function loadSyntaxModule (name) {
+    syntaxModules[name] = require(pathify('.', name));
+}
+
 function setSyntax (syntax, name, settings) {
-    syntax[name] = require(pathify('.', name)).get(settings);
+    syntax[name] = syntaxModules[name].get(settings);
 }
 
