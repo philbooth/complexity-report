@@ -34,11 +34,31 @@ function parseCommandLine () {
             'specify the output format of the report'
         ).
         option(
-            '-t, --threshold <complexity>',
-            'specifify the per-function complexity threshold',
+            '-m, --maxmi <maintainability>',
+            'specifify the per-module maintainability index threshold',
+            parseFloat
+        ).
+        option(
+            '-c, --maxcc <complexity>',
+            'specifify the per-function cyclomatic complexity threshold',
             function (value) {
                 return parseInt(value, 10);
             }
+        ).
+        option(
+            '-d, --maxhd <difficulty>',
+            'specifify the per-function Halstead difficulty threshold',
+            parseFloat
+        ).
+        option(
+            '-v, --maxhv <volume>',
+            'specifify the per-function Halstead volume threshold',
+            parseFloat
+        ).
+        option(
+            '-e, --maxhe <effort>',
+            'specifify the per-function Halstead effort threshold',
+            parseFloat
         ).
         option(
             '-s, --silent',
@@ -123,11 +143,7 @@ function commentFirstLine (source) {
 function getReport (path, source) {
     var report = cr.run(source, options);
 
-    if (
-        state.tooComplex === false &&
-        check.isNumber(cli.threshold) &&
-        isTooComplex(report)
-    ) {
+    if (state.tooComplex === false && isTooComplex(report)) {
         state.tooComplex = true;
     }
 
@@ -137,10 +153,49 @@ function getReport (path, source) {
 }
 
 function isTooComplex (report) {
+    if (
+        (isModuleComplexityThresholdSet() && isModuleTooComplex(report)) ||
+        (isFunctionComplexityThresholdSet() && isFunctionTooComplex(report))
+    ) {
+        state.tooComplex = true;
+    }
+}
+
+function isModuleComplexityThresholdSet () {
+    return check.isNumber(cli.maxmi);
+}
+
+function isModuleTooComplex (report) {
+    if (isThresholdBreached(cli.maxmi, report.maintainability)) {
+        return true;
+    }
+}
+
+function isThresholdBreached (threshold, metric) {
+    return check.isNumber(threshold) && metric > threshold;
+}
+
+function isFunctionComplexityThresholdSet () {
+    return check.isNumber(cli.maxcc) || check.isNumber(cli.maxhd) || check.isNumber(cli.maxhv) || check.isNumber(cli.maxhe);
+}
+
+function isFunctionTooComplex (report) {
     var i;
 
     for (i = 0; i < report.functions.length; i += 1) {
-        if (report.functions[i].complexity.cyclomatic > cli.threshold) {
+        if (isThresholdBreached(cli.maxcc, report.functions[i].complexity.cyclomatic)) {
+            return true;
+        }
+
+        if (isThresholdBreached(cli.maxhd, report.functions[i].complexity.halstead.difficulty)) {
+            return true;
+        }
+
+        if (isThresholdBreached(cli.maxhv, report.functions[i].complexity.halstead.volume)) {
+            return true;
+        }
+
+        if (isThresholdBreached(cli.maxhe, report.functions[i].complexity.halstead.effort)) {
             return true;
         }
     }
