@@ -74,6 +74,7 @@ cr [options] <file...>
 
 Currently there are three output formats supported:
 `plain`,
+`minimal`,
 `json`
 and `xml`.
 These are loaded with `require`
