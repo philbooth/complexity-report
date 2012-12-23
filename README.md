@@ -54,7 +54,15 @@ cr [options] <file...>
   defaults to `stdout`.
 * `-f <format>`: Specify an output format for the report,
   defaults to `plain`.
-* `-t <threshold>`: Specify the per-function complexity threshold
+* `-m <maintainability>`: Specify the per-module maintainability index threshold
+  (beyond which, the process will fail when exiting).
+* `-c <complexity>`: Specify the per-function cyclomatic complexity threshold
+  (beyond which, the process will fail when exiting).
+* `-d <difficulty>`: Specify the per-function Halstead difficulty threshold
+  (beyond which, the process will fail when exiting).
+* `-v <volume>`: Specify the per-function Halstead volume threshold
+  (beyond which, the process will fail when exiting).
+* `-e <effort>`: Specify the per-function Halstead effort threshold
   (beyond which, the process will fail when exiting).
 * `-s`: Silences the console output.
 * `-l`: Disregards operator `||` as a source of cyclomatic complexity.
