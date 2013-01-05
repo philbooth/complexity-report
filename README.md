@@ -11,7 +11,7 @@ Currently the tool reports on:
 * maintainability index.
 
 The tool can be configured to fail
-when cyclomatic complexity passes a specified threshold,
+when complexity metrics pass a specified threshold,
 to aid its usefulness in automated environments / CI.
 There are also options
 for controlling how metrics are calculated
