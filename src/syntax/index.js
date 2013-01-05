@@ -1,10 +1,9 @@
 /*jshint nomen:false */
-/*globals require, __dirname, exports */
+/*globals require, exports, __dirname */
 
 'use strict';
 
 var fs = require('fs'),
-    path = require('path'),
     loaded = false,
     syntaxModules = [];
 
