@@ -72,7 +72,7 @@ cr [options] <file...>
 
 #### Output formats
 
-Currently there are three output formats supported:
+Currently there are four output formats supported:
 `plain`,
 `minimal`,
 `json`
