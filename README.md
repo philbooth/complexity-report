@@ -129,11 +129,12 @@ for the source in its entirety.
 
 ## Related projects
 
-* [Gleb Bahmutov][gleb]'s [js-complexity-viz]
-  is a wrapper for complexityReport.js,
-  which uses the Google Visualization API
-  to render complexity charts
-  for all JavaScript files in a directory tree.
+There are two projects
+that generate chart visualizations
+of complexiytReport.js metrics:
+
+* [Gleb Bahmutov][gleb]'s [js-complexity-viz];
+* [Jarrod Overson][jarrod]'s [Plato].
 
 ## Development
 
@@ -190,6 +191,8 @@ command `npm test` or `jake test`.
 [jscomplexity]: http://jscomplexity.org/
 [gleb]: https://github.com/bahmutov
 [js-complexity-viz]: https://github.com/bahmutov/js-complexity-viz
+[jarrod]: http://jarrodoverson.com/blog/about
+[plato]: https://github.com/jsoverson/plato
 [tracker]: https://github.com/philbooth/complexityReport.js/issues
 [node]: http://nodejs.org/
 [npm]: https://npmjs.org/
