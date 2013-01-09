@@ -302,7 +302,7 @@ function calculateHalsteadMetrics (data) {
         data.vocabulary = data.operators.distinct + data.operands.distinct;
         data.difficulty =
             (data.operators.distinct / 2) *
-            (data.operands.total / data.operands.distinct);
+            (data.operands.distinct === 0 ? 1 : data.operands.total / data.operands.distinct);
         data.volume = data.length * (Math.log(data.vocabulary) / Math.log(2));
         data.effort = data.difficulty * data.volume;
         data.bugs = data.volume / 3000;

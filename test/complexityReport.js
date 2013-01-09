@@ -2262,6 +2262,46 @@
                     assert.strictEqual(report.maintainability, 171);
                 });
             });
+
+            suite('empty return:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('function foo () { return; }');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct Halstead total operators', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 2);
+                });
+
+                test('aggregate has correct Halstead distinct operators', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operators.distinct, 2);
+                });
+
+                test('aggregate has correct Halstead total operands', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.total, 1);
+                });
+
+                test('aggregate has correct Halstead distinct operands', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 1);
+                });
+
+                test('aggregate has correct Halstead difficulty', function () {
+                    assert.strictEqual(report.aggregate.complexity.halstead.difficulty, 1);
+                });
+
+                test('function has correct Halstead difficulty', function () {
+                    assert.strictEqual(report.functions[0].complexity.halstead.difficulty, 0.5);
+                });
+
+                test('maintainability index is correct', function () {
+                    assert.strictEqual(report.maintainability, 171);
+                });
+            });
         });
     });
 }());
