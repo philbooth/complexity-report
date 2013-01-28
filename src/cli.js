@@ -41,9 +41,7 @@ function parseCommandLine () {
         option(
             '-c, --maxcc <complexity>',
             'specifify the per-function cyclomatic complexity threshold',
-            function (value) {
-                return parseInt(value, 10);
-            }
+            parseInt
         ).
         option(
             '-d, --maxhd <difficulty>',
