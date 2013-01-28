@@ -3,10 +3,15 @@
     "version": "0.6.2",
     "author": "Phil Booth <pmbooth@gmail.com>",
     "description": "A tool for reporting code complexity metrics in JavaScript projects.",
-    "contributors": {
-        "name": "Phil Booth",
-        "email": "pmbooth@gmail.com"
-    },
+    "contributors": [
+        {
+            "name": "Phil Booth",
+            "email": "pmbooth@gmail.com"
+        },
+        {
+            "name": "Juzer Ali"
+        }
+    ]
     "bin": {
         "cr": "./src/cli.js"
     },
