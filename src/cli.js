@@ -35,27 +35,27 @@ function parseCommandLine () {
         ).
         option(
             '-m, --maxmi <maintainability>',
-            'specifify the per-module maintainability index threshold',
+            'specify the per-module maintainability index threshold',
             parseFloat
         ).
         option(
             '-c, --maxcc <complexity>',
-            'specifify the per-function cyclomatic complexity threshold',
+            'specify the per-function cyclomatic complexity threshold',
             parseInt
         ).
         option(
             '-d, --maxhd <difficulty>',
-            'specifify the per-function Halstead difficulty threshold',
+            'specify the per-function Halstead difficulty threshold',
             parseFloat
         ).
         option(
             '-v, --maxhv <volume>',
-            'specifify the per-function Halstead volume threshold',
+            'specify the per-function Halstead volume threshold',
             parseFloat
         ).
         option(
             '-e, --maxhe <effort>',
-            'specifify the per-function Halstead effort threshold',
+            'specify the per-function Halstead effort threshold',
             parseFloat
         ).
         option(
