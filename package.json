@@ -1,6 +1,6 @@
 {
     "name": "complexity-report",
-    "version": "0.6.2",
+    "version": "0.7.0",
     "author": "Phil Booth <pmbooth@gmail.com>",
     "description": "A tool for reporting code complexity metrics in JavaScript projects.",
     "contributors": [
@@ -35,7 +35,7 @@
     "devDependencies": {
         "jake": "0.5.x",
         "jshint": "0.9.x",
-        "mocha": "1.7.x",
+        "mocha": "1.8.x",
         "chai": "1.4.x"
     },
     "license": "MIT",
