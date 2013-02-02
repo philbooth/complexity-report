@@ -49,6 +49,10 @@ function run (source, options) {
 
     calculateMetrics();
 
+    if (options.newMI) {
+        report.maintainability = Math.max(0, (report.maintainability*100)/171); 
+    }
+
     return report;
 }
 
