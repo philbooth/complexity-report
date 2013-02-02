@@ -68,7 +68,8 @@ cr [options] <file...>
 * `-l`: Disregards operator `||` as a source of cyclomatic complexity.
 * `-w`: Disregards `switch` statements as a source of cyclomatic complexity.
 * `-i`: Treats `for`...`in` loops as a source of cyclomatic complexity.
-* `-c`: Treats `catch` clauses as a source of cyclomatic complexity.
+* `-t`: Treats `catch` clauses as a source of cyclomatic complexity.
+* `-n`: Uses the [Microsoft-variant maintainability index][msvariant].
 
 #### Output formats
 
@@ -189,6 +190,7 @@ command `npm test` or `jake test`.
 [ci-status]: http://travis-ci.org/#!/philbooth/complexityReport.js
 [esprima]: http://esprima.org/
 [jscomplexity]: http://jscomplexity.org/
+[msvariant]: http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx
 [gleb]: https://github.com/bahmutov
 [js-complexity-viz]: https://github.com/bahmutov/js-complexity-viz
 [jarrod]: http://jarrodoverson.com/blog/about
