@@ -75,8 +75,12 @@ function parseCommandLine () {
             'treat for...in statements as source of cyclomatic complexity'
         ).
         option(
-            '-c, --trycatch',
+            '-t, --trycatch',
             'treat catch clauses as source of cyclomatic complexity'
+        ).
+        option(
+            '-n, --newMI',
+            'Rebase Maintainability Index betwen 0 - 100'
         );
 
     cli.parse(process.argv);
@@ -85,8 +89,10 @@ function parseCommandLine () {
         logicalor: !cli.logicalor,
         switchcase: !cli.switchcase,
         forin: cli.forin || false,
-        trycatch: cli.trycatch || false
+        trycatch: cli.trycatch || false,
+        newMI: cli.newMI || false
     };
+
 
     if (check.isUnemptyString(cli.format) === false) {
         cli.format = 'plain';
