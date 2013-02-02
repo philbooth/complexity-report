@@ -47,11 +47,7 @@ function run (source, options) {
 
     processTree(ast.body, undefined, undefined);
 
-    calculateMetrics();
-
-    if (options.newMI) {
-        report.maintainability = Math.max(0, (report.maintainability*100)/171); 
-    }
+    calculateMetrics(settings);
 
     return report;
 }
@@ -61,7 +57,8 @@ function getDefaultSettings () {
         logicalor: true,
         switchcase: true,
         forin: false,
-        trycatch: false
+        trycatch: false,
+        newmi: false
     };
 }
 
@@ -264,7 +261,7 @@ function processChild (child, assignedName, currentReport) {
     fn(child, assignedName, currentReport);
 }
 
-function calculateMetrics () {
+function calculateMetrics (settings) {
     var i, data, averages,
 
     sums = [ 0, 0, 0 ],
@@ -294,7 +291,8 @@ function calculateMetrics () {
     calculateMaintainabilityIndex(
         averages[indices.effort],
         averages[indices.complexity],
-        averages[indices.loc]
+        averages[indices.loc],
+        settings
     );
 }
 
@@ -330,7 +328,7 @@ function sumMaintainabilityMetrics (sums, indices, data) {
     sums[indices.effort] += data.halstead.effort;
 }
 
-function calculateMaintainabilityIndex (averageEffort, averageComplexity, averageLoc) {
+function calculateMaintainabilityIndex (averageEffort, averageComplexity, averageLoc, settings) {
     if (averageComplexity === 0) {
         throw new Error('Encountered function with cyclomatic complexity zero!');
     }
@@ -343,6 +341,10 @@ function calculateMaintainabilityIndex (averageEffort, averageComplexity, averag
             (3.42 * Math.log(averageEffort)) -
             (0.23 * Math.log(averageComplexity)) -
             (16.2 * Math.log(averageLoc));
+    }
+
+    if (settings.newmi) {
+        report.maintainability = Math.max(0, (report.maintainability*100)/171);
     }
 }
 

@@ -79,8 +79,8 @@ function parseCommandLine () {
             'treat catch clauses as source of cyclomatic complexity'
         ).
         option(
-            '-n, --newMI',
-            'Rebase Maintainability Index betwen 0 - 100'
+            '-n, --newmi',
+            'rebase maintainability index on scale from 0 to 100'
         );
 
     cli.parse(process.argv);
@@ -90,7 +90,7 @@ function parseCommandLine () {
         switchcase: !cli.switchcase,
         forin: cli.forin || false,
         trycatch: cli.trycatch || false,
-        newMI: cli.newMI || false
+        newmi: cli.newmi || false
     };
 
 
