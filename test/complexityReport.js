@@ -2302,6 +2302,24 @@
                     assert.strictEqual(report.maintainability, 171);
                 });
             });
+
+            suite('Microsoft variant maintainability index:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('function foo (a, b) { if (a) { b(a); } else { a(b); } } function bar (c, d) { var i; for (i = 0; i < c.length; i += 1) { d += 1; } console.log(d); }', {
+                        newmi: true
+                    });
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('maintainability index is correct', function () {
+                    assert.strictEqual(Math.round(report.maintainability), 75);
+                });
+            });
         });
     });
 }());
