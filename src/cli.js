@@ -80,7 +80,7 @@ function parseCommandLine () {
         ).
         option(
             '-n, --newmi',
-            'use the Microsoft-variant maintainability (scale of 0 to 100)'
+            'use the Microsoft-variant maintainability index (scale of 0 to 100)'
         );
 
     cli.parse(process.argv);
