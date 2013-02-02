@@ -119,6 +119,8 @@ The following options are available:
 * `trycatch`: Boolean indicating whether `catch` clauses
   should be considered a source of cyclomatic complexity,
   defaults to `false`.
+* `newmi`: Boolean indicating whether the maintainability
+  index should be rebased on a scale from 0 to 100.
 
 The returned report is an object
 that contains properties detailing the complexity
