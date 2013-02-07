@@ -132,12 +132,14 @@ for the source in its entirety.
 
 ## Related projects
 
-There are two projects
-that generate chart visualizations
-of complexiytReport.js metrics:
+Visualizations:
 
 * [Gleb Bahmutov][gleb]'s [js-complexity-viz];
 * [Jarrod Overson][jarrod]'s [Plato].
+
+Build tasks:
+
+* [Viget Labs][viget]' [grunt-complexity].
 
 ## Development
 
@@ -197,6 +199,8 @@ command `npm test` or `jake test`.
 [js-complexity-viz]: https://github.com/bahmutov/js-complexity-viz
 [jarrod]: http://jarrodoverson.com/blog/about
 [plato]: https://github.com/jsoverson/plato
+[viget]: http://viget.com/
+[grunt-complexity]: https://github.com/vigetlabs/grunt-complexity
 [tracker]: https://github.com/philbooth/complexityReport.js/issues
 [node]: http://nodejs.org/
 [npm]: https://npmjs.org/
