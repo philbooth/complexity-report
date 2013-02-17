@@ -5,7 +5,7 @@
 exports.format = format;
 
 function format (reports) {
-    var formatted = '# Complexity report, ' + (new Date()).toLocaleDateString() + '\n\n', i;
+    var formatted = '# Complexity report ~ ' + (new Date()).toLocaleDateString() + '\n\n', i;
 
     for (i = 0; i < reports.length; i += 1) {
         formatted += formatModule(reports[i]) + '\n\n';
