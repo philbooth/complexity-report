@@ -50,9 +50,9 @@ sudo npm install -g complexity-report
 cr [options] <file...>
 ```
 
-The tool will automatically
-recursively read files from any directories
-that it encounters.
+The tool will recursively read files
+from any directories that it encounters
+automatically.
 
 #### Options
 
