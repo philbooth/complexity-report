@@ -144,9 +144,10 @@ Visualizations:
 * [Gleb Bahmutov][gleb]'s [js-complexity-viz];
 * [Jarrod Overson][jarrod]'s [Plato].
 
-Build tasks:
+Build tools:
 
 * [Viget Labs][viget]' [grunt-complexity].
+* [Cliffano Subagio][cliffano]'s [Bob].
 
 ## Development
 
@@ -209,6 +210,8 @@ command `npm test` or `jake test`.
 [plato]: https://github.com/jsoverson/plato
 [viget]: http://viget.com/
 [grunt-complexity]: https://github.com/vigetlabs/grunt-complexity
+[cliffano]: http://blog.cliffano.com/
+[bob]: https://github.com/cliffano/bob
 [tracker]: https://github.com/philbooth/complexityReport.js/issues
 [node]: http://nodejs.org/
 [npm]: https://npmjs.org/
