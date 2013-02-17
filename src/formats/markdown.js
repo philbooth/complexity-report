@@ -16,7 +16,7 @@ function format (reports) {
 
 function formatModule (report) {
     return [
-        '##'
+        '##',
         report.module,
         '\n\n',
         '* Maintainability index: ', report.maintainability, '\n',
