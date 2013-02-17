@@ -77,8 +77,9 @@ that it encounters.
 
 #### Output formats
 
-Currently there are four output formats supported:
+Currently there are five output formats supported:
 `plain`,
+`markdown`,
 `minimal`,
 `json`
 and `xml`.
