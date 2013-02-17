@@ -19,7 +19,7 @@ function formatModule (report) {
         '##',
         report.module,
         '\n\n',
-        '* Maintainability index: ', report.maintainability, '\n',
+        '* Maintainability index: ', report.maintainability, '\n\n',
         '* Aggregate cyclomatic complexity: ', report.aggregate.complexity.cyclomatic,
         formatFunctions(report.functions)
     ].join('');
@@ -37,7 +37,7 @@ function formatFunctions (report) {
 
 function formatFunction (report) {
     return [
-        '    * Function: **', report.name, '**\n',
+        '    * Function: **', report.name.replace('<', '&lt;'), '**\n\n',
         '        * Line No.: ', report.line, '\n',
         '        * Physical SLOC: ', report.complexity.sloc.physical, '\n',
         '        * Logical SLOC: ', report.complexity.sloc.logical, '\n',
