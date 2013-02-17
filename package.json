@@ -1,6 +1,6 @@
 {
     "name": "complexity-report",
-    "version": "0.7.0",
+    "version": "0.8.0",
     "author": "Phil Booth <pmbooth@gmail.com>",
     "description": "A tool for reporting code complexity metrics in JavaScript projects.",
     "contributors": [
