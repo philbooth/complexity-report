@@ -101,29 +101,31 @@ function parseCommandLine () {
 }
 
 function readFiles (paths) {
-    var i, stat;
-
-    for (i = 0; i < paths.length; i += 1) {
-        stat = fs.statSync(paths[i]);
+    paths.forEach(function (p) {
+        var stat = fs.statSync(p);
 
         if (stat.isDirectory()) {
-            readFiles(
-                fs.readdirSync(paths[i]).map(function (p) {
-                    return path.resolve(paths[i], p);
-                })
-            );
+            readDirectory(p);
         } else {
-            readFile(paths[i]);
+            readFile(p);
         }
-    }
+    });
 
     state.starting = false;
 }
 
-function readFile (path) {
+function readDirectory (directoryPath) {
+    readFiles(
+        fs.readdirSync(directoryPath).map(function (p) {
+            return path.resolve(directoryPath, p);
+        })
+    );
+}
+
+function readFile (filePath) {
     state.unreadCount += 1;
 
-    fs.readFile(path, 'utf8', function (err, source) {
+    fs.readFile(filePath, 'utf8', function (err, source) {
         if (err) {
             error('readFile', err);
         }
@@ -132,7 +134,7 @@ function readFile (path) {
             source = commentFirstLine(source);
         }
 
-        getReport(path, source);
+        getReport(filePath, source);
 
         finish();
     });
@@ -155,14 +157,14 @@ function commentFirstLine (source) {
     return '//' + source;
 }
 
-function getReport (path, source) {
+function getReport (filePath, source) {
     var report = cr.run(source, options);
 
     if (state.tooComplex === false && isTooComplex(report)) {
         state.tooComplex = true;
     }
 
-    report.module = path;
+    report.module = filePath;
 
     reports.push(report);
 }
