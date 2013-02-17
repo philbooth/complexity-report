@@ -10,6 +10,8 @@ Currently the tool reports on:
 * Halstead metrics;
 * maintainability index.
 
+[Here is an example report][eg].
+
 The tool can be configured to fail
 when complexity metrics pass a specified threshold,
 to aid its usefulness in automated environments / CI.
@@ -197,6 +199,7 @@ command `npm test` or `jake test`.
 
 [ci-image]: https://secure.travis-ci.org/philbooth/complexityReport.js.png?branch=master
 [ci-status]: http://travis-ci.org/#!/philbooth/complexityReport.js
+[eg]: https://github.com/philbooth/complexityReport.js/blob/master/SELF.md
 [esprima]: http://esprima.org/
 [jscomplexity]: http://jscomplexity.org/
 [msvariant]: http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx
