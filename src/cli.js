@@ -8,19 +8,20 @@ var reports = [],
 
 cli = require('commander'),
 fs = require('fs'),
+path = require('path'),
 cr = require('./complexityReport'),
 check = require('check-types'),
 options,
 formatter,
 
 state = {
-    reading: true,
-    unread: 0,
+    starting: true,
+    unreadCount: 0,
     tooComplex: false
 };
 
 parseCommandLine();
-readSourceFiles();
+readFiles(cli.args);
 
 function parseCommandLine () {
     cli.
@@ -93,28 +94,38 @@ function parseCommandLine () {
         newmi: cli.newmi || false
     };
 
-
     if (check.isUnemptyString(cli.format) === false) {
         cli.format = 'plain';
     }
     formatter = require('./formats/' + cli.format);
 }
 
-function readSourceFiles () {
-    var i;
+function readFiles (paths) {
+    var i, stat;
 
-    for (i = 0; i < cli.args.length; i += 1) {
-        state.unread += 1;
-        readSourceFile(cli.args[i]);
+    for (i = 0; i < paths.length; i += 1) {
+        stat = fs.statSync(paths[i]);
+
+        if (stat.isDirectory()) {
+            readFiles(
+                fs.readdirSync(paths[i]).map(function (p) {
+                    return path.resolve(paths[i], p);
+                })
+            );
+        } else {
+            readFile(paths[i]);
+        }
     }
 
-    state.reading = false;
+    state.starting = false;
 }
 
-function readSourceFile (path) {
+function readFile (path) {
+    state.unreadCount += 1;
+
     fs.readFile(path, 'utf8', function (err, source) {
         if (err) {
-            error('readSourceFile', err);
+            error('readFile', err);
         }
 
         if (beginsWithShebang(source)) {
@@ -208,9 +219,9 @@ function isFunctionTooComplex (report) {
 }
 
 function finish () {
-    state.unread -= 1;
+    state.unreadCount -= 1;
 
-    if (state.reading === false && state.unread === 0) {
+    if (state.starting === false && state.unreadCount === 0) {
         if (!cli.silent) {
             writeReport();
         }
