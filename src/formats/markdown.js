@@ -29,7 +29,7 @@ function formatFunctions (report) {
     var formatted = '', i;
 
     for (i = 0; i < report.length; i += 1) {
-        formatted += '\n\n' + formatFunction(report[i]);
+        formatted += '\n' + formatFunction(report[i]);
     }
 
     return formatted;
