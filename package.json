@@ -6,7 +6,8 @@
     "contributors": [
         { "name": "Phil Booth", "email": "pmbooth@gmail.com" },
         { "name": "Juzer Ali" },
-        { "name": "Mark Trostler" }
+        { "name": "Mark Trostler" },
+        [ "name": "Wyatt Preul" }
     ],
     "bin": {
         "cr": "./src/cli.js"
