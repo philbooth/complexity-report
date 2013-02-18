@@ -164,15 +164,22 @@ function commentFirstLine (source) {
 }
 
 function getReport (filePath, source) {
-    var report = cr.run(source, options);
+    var report;
 
-    if (state.tooComplex === false && isTooComplex(report)) {
-        state.tooComplex = true;
+    try {
+        report = cr.run(source, options);
+
+        if (state.tooComplex === false && isTooComplex(report)) {
+            state.tooComplex = true;
+        }
+
+        report.module = filePath;
+
+        reports.push(report);
+    } catch (error) {
+        console.log('Failed to analyse file `' + filePath + '`');
+        console.log('Reason: ' + error.message);
     }
-
-    report.module = filePath;
-
-    reports.push(report);
 }
 
 function isTooComplex (report) {
