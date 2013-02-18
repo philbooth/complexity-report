@@ -60,6 +60,7 @@ automatically.
   defaults to `stdout`.
 * `-f <format>`: Specify an output format for the report,
   defaults to `plain`.
+* `-a`: Include hidden files in the report.
 * `-m <maintainability>`: Specify the per-module maintainability index threshold
   (beyond which, the process will fail when exiting).
 * `-c <complexity>`: Specify the per-function cyclomatic complexity threshold
@@ -146,8 +147,9 @@ Visualizations:
 
 Build tools:
 
-* [Viget Labs][viget]' [grunt-complexity].
-* [Cliffano Subagio][cliffano]'s [Bob].
+* [Viget Labs][viget]' [grunt-complexity];
+* [Cliffano Subagio][cliffano]'s [Bob];
+* [Cardio].
 
 ## Development
 
@@ -212,6 +214,7 @@ command `npm test` or `jake test`.
 [grunt-complexity]: https://github.com/vigetlabs/grunt-complexity
 [cliffano]: http://blog.cliffano.com/
 [bob]: https://github.com/cliffano/bob
+[cardio]: https://github.com/auchenberg/cardio
 [tracker]: https://github.com/philbooth/complexityReport.js/issues
 [node]: http://nodejs.org/
 [npm]: https://npmjs.org/
