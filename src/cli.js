@@ -35,6 +35,10 @@ function parseCommandLine () {
             'specify the output format of the report'
         ).
         option(
+            '-a, --allfiles',
+            'include hidden files in the report'
+        ).
+        option(
             '-m, --maxmi <maintainability>',
             'specify the per-module maintainability index threshold',
             parseFloat
@@ -117,7 +121,7 @@ function readFiles (paths) {
 function readDirectory (directoryPath) {
     readFiles(
         fs.readdirSync(directoryPath).filter(function (p) {
-            return /^\./.test(path.basename(p)) === false && /\.js$/.test(path.basename(p)) === true;
+            return path.basename(p).charAt(0) !== '.' || cli.allfiles;
         }).map(function (p) {
             return path.resolve(directoryPath, p);
         })
