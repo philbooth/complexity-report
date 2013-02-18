@@ -116,7 +116,9 @@ function readFiles (paths) {
 
 function readDirectory (directoryPath) {
     readFiles(
-        fs.readdirSync(directoryPath).map(function (p) {
+        fs.readdirSync(directoryPath).filter(function (p) {
+            return /^\./.test(path.basename(p)) === false && /\.js$/.test(path.basename(p)) === true;
+        }).map(function (p) {
             return path.resolve(directoryPath, p);
         })
     );
