@@ -21,6 +21,7 @@ state = {
 };
 
 parseCommandLine();
+expectFiles(cli.args, cli.help.bind(cli));
 readFiles(cli.args);
 
 function parseCommandLine () {
@@ -102,6 +103,12 @@ function parseCommandLine () {
         cli.format = 'plain';
     }
     formatter = require('./formats/' + cli.format);
+}
+
+function expectFiles (paths, noFilesFn) {
+    if (paths.length === 0) {
+        noFilesFn();
+    }
 }
 
 function readFiles (paths) {
