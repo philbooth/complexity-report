@@ -102,7 +102,11 @@ function parseCommandLine () {
     if (check.isUnemptyString(cli.format) === false) {
         cli.format = 'plain';
     }
-    formatter = require('./formats/' + cli.format);
+    try {
+        formatter = require('./formats/' + cli.format);
+    } catch (error) {
+        formatter = require(cli.format);
+    }
 }
 
 function expectFiles (paths, noFilesFn) {
