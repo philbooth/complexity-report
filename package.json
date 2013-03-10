@@ -1,13 +1,14 @@
 {
     "name": "complexity-report",
-    "version": "0.10.1",
+    "version": "0.10.2",
     "author": "Phil Booth <pmbooth@gmail.com>",
     "description": "A tool for reporting code complexity metrics in JavaScript projects.",
     "contributors": [
         { "name": "Phil Booth", "email": "pmbooth@gmail.com" },
         { "name": "Juzer Ali" },
         { "name": "Mark Trostler" },
-        { "name": "Wyatt Preul" }
+        { "name": "Wyatt Preul" },
+        { "name": "Rowan Manning" }
     ],
     "bin": {
         "cr": "./src/cli.js"
