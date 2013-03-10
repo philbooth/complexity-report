@@ -112,7 +112,7 @@ function parseCommandLine () {
     }
 
     if (check.isUnemptyString(cli.filepattern) === false) {
-        cli.filepattern = '\\.js?$';
+        cli.filepattern = '\\.js$';
     }
     cli.filepattern = new RegExp(cli.filepattern);
 
