@@ -65,7 +65,7 @@ automatically.
   using a regular expression to match against file names,
   defaults to `\.js$`.
 * `-x <number>`: Specify the maximum number of files to open concurrently,
-  defaults to `0`.
+  defaults to `1024`.
 * `-m <maintainability>`: Specify the per-module maintainability index threshold
   (beyond which, the process will fail when exiting).
 * `-c <complexity>`: Specify the per-function cyclomatic complexity threshold
