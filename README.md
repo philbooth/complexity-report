@@ -162,34 +162,6 @@ Build tools:
 
 ## Development
 
-### Roadmap
-
-The short-term plan is
-to write more output formats
-and open up lots more options
-for external configuration of the analysis.
-
-I also need to spend some time
-throwing more complex test cases at it,
-to flush out all of the edge cases
-that I'm probably not yet handling.
-To this end,
-it would be great to hear from people
-that have run the tool
-against their own codebases.
-The bigger and uglier, the better!
-If you spot any issues,
-please raise them in the [tracker].
-
-In the longer term,
-I have some vague ideas concerning
-how to track trends in a codebase over time.
-Visualisations is another area that could be pretty sweet to look into.
-
-If you think there's anything else I should look at,
-please raise an issue or, even better,
-feel free to implement it and submit a pull request! `:)`
-
 ### Dependencies
 
 The build environment relies on
