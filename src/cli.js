@@ -4,7 +4,7 @@
 
 'use strict';
 
-var options, formatter, state, reports = [],
+var options, formatter, filePattern, state, reports = [],
 
 cli = require('commander'),
 fs = require('fs'),
@@ -17,7 +17,6 @@ parseCommandLine();
 state = {
     starting: true,
     openFileCount: 0,
-    maximumOpenFileCount: cli.maxfiles || 1024,
     tooComplex: false
 };
 
@@ -38,6 +37,10 @@ function parseCommandLine () {
         option(
             '-a, --allfiles',
             'include hidden files in the report'
+        ).
+        option(
+            '-p, --filepattern <pattern>',
+            'specify the files to process using a regular expression to match against file names'
         ).
         option(
             '-x, --maxfiles <number>',
@@ -107,6 +110,16 @@ function parseCommandLine () {
     if (check.isUnemptyString(cli.format) === false) {
         cli.format = 'plain';
     }
+
+    if (check.isUnemptyString(cli.filepattern) === false) {
+        cli.filepattern = '\\.js?$';
+    }
+    cli.filepattern = new RegExp(cli.filepattern);
+
+    if (check.isNumber(cli.maxfiles) === false) {
+        cli.maxfiles = 1024;
+    }
+
     try {
         formatter = require('./formats/' + cli.format);
     } catch (error) {
@@ -126,7 +139,7 @@ function readFiles (paths) {
 
         if (stat.isDirectory()) {
             readDirectory(p);
-        } else {
+        } else if (cli.filepattern.test(p)) {
             conditionallyReadFile(p);
         }
     });
@@ -145,8 +158,6 @@ function readDirectory (directoryPath) {
 }
 
 function conditionallyReadFile (filePath) {
-    console.log('conditionallyReadFile: ' + state.openFileCount + ' [' + state.maximumOpenFileCount + ']');
-
     if (isOpenFileLimitReached()) {
         runOnNextTick(function () {
             conditionallyReadFile(filePath);
@@ -177,7 +188,7 @@ function readFile (filePath) {
 }
 
 function isOpenFileLimitReached () {
-    return state.openFileCount >= state.maximumOpenFileCount;
+    return state.openFileCount >= cli.maxfiles;
 }
 
 function runOnNextTick (fn) {
