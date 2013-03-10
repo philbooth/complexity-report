@@ -87,9 +87,12 @@ Currently there are five output formats supported:
 `json`
 and `xml`.
 These are loaded with `require`
-from the `src/formats` subdirectory
-and adding new formats is really easy.
-Each format module must export a function `format`,
+from the `src/formats` subdirectory.
+If the format file is not found, then
+the tool will attempt to load a module
+with the name specified.
+Adding new formats is really easy;
+each format module must export a function `format`,
 which takes a report object as its only argument
 and returns its string representation of the report.
 See `src/formats/plain.js` for an example format.
