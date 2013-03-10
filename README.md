@@ -88,9 +88,10 @@ Currently there are five output formats supported:
 and `xml`.
 These are loaded with `require`
 from the `src/formats` subdirectory.
-If the format file is not found, then
-the tool will attempt to load a module
-with the name specified.
+If the format file is not found
+in that directory,
+a second attempt will be made to load the module
+without the subdirectory prefix.
 Adding new formats is really easy;
 each format module must export a function `format`,
 which takes a report object as its only argument
