@@ -61,6 +61,8 @@ automatically.
 * `-f <format>`: Specify an output format for the report,
   defaults to `plain`.
 * `-a`: Include hidden files in the report.
+* `-x <number>`: Specify the maximum number of files to open concurrently,
+  defaults to `0`.
 * `-m <maintainability>`: Specify the per-module maintainability index threshold
   (beyond which, the process will fail when exiting).
 * `-c <complexity>`: Specify the per-function cyclomatic complexity threshold
