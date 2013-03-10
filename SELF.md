@@ -1,19 +1,27 @@
-# Complexity report ~ Sunday, February 17, 2013
+# Complexity report ~ Sunday, March 10, 2013
 
 ##/Users/phil/Code/complexityReport.js/src/cli.js
 
-* Maintainability index: 128.7473317849948
-* Aggregate cyclomatic complexity: 25
+* Maintainability index: 127.30981468417971
+* Aggregate cyclomatic complexity: 31
     * Function: **parseCommandLine**
         * Line No.: 26
-        * Physical SLOC: 76
-        * Logical SLOC: 11
-        * Cyclomatic complexity: 5
-        * Halstead difficulty: 8.4
-        * Halstead volume: 844.6853551720181
-        * Halstead effort: 7095.356983444953
+        * Physical SLOC: 103
+        * Logical SLOC: 19
+        * Cyclomatic complexity: 7
+        * Halstead difficulty: 11.428571428571427
+        * Halstead volume: 1289.3654689326472
+        * Halstead effort: 14735.605359230252
+    * Function: **expectFiles**
+        * Line No.: 130
+        * Physical SLOC: 5
+        * Logical SLOC: 2
+        * Cyclomatic complexity: 2
+        * Halstead difficulty: 3
+        * Halstead volume: 30
+        * Halstead effort: 90
     * Function: **readFiles**
-        * Line No.: 103
+        * Line No.: 136
         * Physical SLOC: 13
         * Logical SLOC: 2
         * Cyclomatic complexity: 1
@@ -21,47 +29,87 @@
         * Halstead volume: 39.863137138648355
         * Halstead effort: 93.01398665684617
     * Function: **&lt;anonymous>**
-        * Line No.: 104
+        * Line No.: 137
         * Physical SLOC: 9
-        * Logical SLOC: 5
-        * Cyclomatic complexity: 2
-        * Halstead difficulty: 4.714285714285714
-        * Halstead volume: 77.70923408096293
-        * Halstead effort: 366.3435320959681
+        * Logical SLOC: 6
+        * Cyclomatic complexity: 3
+        * Halstead difficulty: 4.5
+        * Halstead volume: 116
+        * Halstead effort: 522
     * Function: **readDirectory**
-        * Line No.: 117
-        * Physical SLOC: 7
+        * Line No.: 150
+        * Physical SLOC: 9
         * Logical SLOC: 1
         * Cyclomatic complexity: 1
-        * Halstead difficulty: 1.75
-        * Halstead volume: 41.20902501875006
-        * Halstead effort: 72.1157937828126
+        * Halstead difficulty: 1.9285714285714288
+        * Halstead volume: 59.794705707972525
+        * Halstead effort: 115.31836100823274
     * Function: **&lt;anonymous>**
-        * Line No.: 119
+        * Line No.: 154
         * Physical SLOC: 3
         * Logical SLOC: 1
         * Cyclomatic complexity: 1
         * Halstead difficulty: 1.875
         * Halstead volume: 22.458839376460833
         * Halstead effort: 42.11032383086406
+    * Function: **&lt;anonymous>**
+        * Line No.: 152
+        * Physical SLOC: 3
+        * Logical SLOC: 1
+        * Cyclomatic complexity: 2
+        * Halstead difficulty: 2.8125
+        * Halstead volume: 62.907475208398566
+        * Halstead effort: 176.92727402362095
+    * Function: **conditionallyReadFile**
+        * Line No.: 160
+        * Physical SLOC: 9
+        * Logical SLOC: 4
+        * Cyclomatic complexity: 2
+        * Halstead difficulty: 2.4
+        * Halstead volume: 38.03910001730775
+        * Halstead effort: 91.2938400415386
+    * Function: **&lt;anonymous>**
+        * Line No.: 162
+        * Physical SLOC: 3
+        * Logical SLOC: 1
+        * Cyclomatic complexity: 1
+        * Halstead difficulty: 0.5
+        * Halstead volume: 4.754887502163469
+        * Halstead effort: 2.3774437510817346
     * Function: **readFile**
-        * Line No.: 125
-        * Physical SLOC: 17
+        * Line No.: 170
+        * Physical SLOC: 19
         * Logical SLOC: 2
         * Cyclomatic complexity: 1
         * Halstead difficulty: 2.25
         * Halstead volume: 50.18947501009619
         * Halstead effort: 112.92631877271643
     * Function: **&lt;anonymous>**
-        * Line No.: 128
-        * Physical SLOC: 13
-        * Logical SLOC: 6
+        * Line No.: 173
+        * Physical SLOC: 15
+        * Logical SLOC: 7
         * Cyclomatic complexity: 3
-        * Halstead difficulty: 2.5
-        * Halstead volume: 82.4541375165866
-        * Halstead effort: 206.13534379146648
+        * Halstead difficulty: 3.75
+        * Halstead volume: 114.44895955500952
+        * Halstead effort: 429.18359833128574
+    * Function: **isOpenFileLimitReached**
+        * Line No.: 190
+        * Physical SLOC: 3
+        * Logical SLOC: 1
+        * Cyclomatic complexity: 1
+        * Halstead difficulty: 1.5
+        * Halstead volume: 22.458839376460833
+        * Halstead effort: 33.68825906469125
+    * Function: **runOnNextTick**
+        * Line No.: 194
+        * Physical SLOC: 3
+        * Logical SLOC: 1
+        * Cyclomatic complexity: 1
+        * Halstead difficulty: 0.6666666666666666
+        * Halstead volume: 10
+        * Halstead effort: 6.666666666666666
     * Function: **error**
-        * Line No.: 143
+        * Line No.: 198
         * Physical SLOC: 3
         * Logical SLOC: 1
         * Cyclomatic complexity: 1
@@ -69,7 +117,7 @@
         * Halstead volume: 41.20902501875006
         * Halstead effort: 82.41805003750012
     * Function: **fail**
-        * Line No.: 147
+        * Line No.: 202
         * Physical SLOC: 4
         * Logical SLOC: 2
         * Cyclomatic complexity: 1
@@ -77,7 +125,7 @@
         * Halstead volume: 33
         * Halstead effort: 38.5
     * Function: **beginsWithShebang**
-        * Line No.: 152
+        * Line No.: 207
         * Physical SLOC: 3
         * Logical SLOC: 1
         * Cyclomatic complexity: 1
@@ -85,7 +133,7 @@
         * Halstead volume: 41.20902501875006
         * Halstead effort: 115.38527005250016
     * Function: **commentFirstLine**
-        * Line No.: 156
+        * Line No.: 211
         * Physical SLOC: 3
         * Logical SLOC: 1
         * Cyclomatic complexity: 1
@@ -93,15 +141,15 @@
         * Halstead volume: 10
         * Halstead effort: 15
     * Function: **getReport**
-        * Line No.: 160
-        * Physical SLOC: 11
-        * Logical SLOC: 5
+        * Line No.: 215
+        * Physical SLOC: 18
+        * Logical SLOC: 10
         * Cyclomatic complexity: 2
-        * Halstead difficulty: 5.25
-        * Halstead volume: 158.12342722003538
-        * Halstead effort: 830.1479929051858
+        * Halstead difficulty: 7.071428571428571
+        * Halstead volume: 279.69276394968557
+        * Halstead effort: 1977.8274022156336
     * Function: **isTooComplex**
-        * Line No.: 172
+        * Line No.: 234
         * Physical SLOC: 8
         * Logical SLOC: 2
         * Cyclomatic complexity: 3
@@ -109,7 +157,7 @@
         * Halstead volume: 76.14709844115208
         * Halstead effort: 285.5516191543203
     * Function: **isModuleComplexityThresholdSet**
-        * Line No.: 181
+        * Line No.: 243
         * Physical SLOC: 3
         * Logical SLOC: 1
         * Cyclomatic complexity: 1
@@ -117,7 +165,7 @@
         * Halstead volume: 22.458839376460833
         * Halstead effort: 33.68825906469125
     * Function: **isModuleTooComplex**
-        * Line No.: 185
+        * Line No.: 247
         * Physical SLOC: 5
         * Logical SLOC: 2
         * Cyclomatic complexity: 2
@@ -125,7 +173,7 @@
         * Halstead volume: 39.863137138648355
         * Halstead effort: 93.01398665684617
     * Function: **isThresholdBreached**
-        * Line No.: 191
+        * Line No.: 253
         * Physical SLOC: 3
         * Logical SLOC: 1
         * Cyclomatic complexity: 1
@@ -133,7 +181,7 @@
         * Halstead volume: 38.03910001730775
         * Halstead effort: 166.4210625757214
     * Function: **isFunctionComplexityThresholdSet**
-        * Line No.: 195
+        * Line No.: 257
         * Physical SLOC: 3
         * Logical SLOC: 1
         * Cyclomatic complexity: 4
@@ -141,7 +189,7 @@
         * Halstead volume: 110.70181179639353
         * Halstead effort: 506.0654253549418
     * Function: **isFunctionTooComplex**
-        * Line No.: 199
+        * Line No.: 261
         * Physical SLOC: 23
         * Logical SLOC: 11
         * Cyclomatic complexity: 6
@@ -149,15 +197,15 @@
         * Halstead volume: 451.7922325468643
         * Halstead effort: 5082.662616152224
     * Function: **finish**
-        * Line No.: 223
-        * Physical SLOC: 13
-        * Logical SLOC: 6
+        * Line No.: 285
+        * Physical SLOC: 11
+        * Logical SLOC: 5
         * Cyclomatic complexity: 4
-        * Halstead difficulty: 4.666666666666666
-        * Halstead volume: 131.68575291675114
-        * Halstead effort: 614.5335136115052
+        * Halstead difficulty: 3.545454545454546
+        * Halstead volume: 106.27403387250884
+        * Halstead effort: 376.7897564570768
     * Function: **writeReport**
-        * Line No.: 237
+        * Line No.: 297
         * Physical SLOC: 13
         * Logical SLOC: 5
         * Cyclomatic complexity: 2
@@ -165,7 +213,7 @@
         * Halstead volume: 144.94647495169912
         * Halstead effort: 652.2591372826461
     * Function: **&lt;anonymous>**
-        * Line No.: 241
+        * Line No.: 301
         * Physical SLOC: 5
         * Logical SLOC: 2
         * Cyclomatic complexity: 2
@@ -696,6 +744,19 @@
         * Halstead volume: 107.5488750216347
         * Halstead effort: 614.5650001236268
 
+##/Users/phil/Code/complexityReport.js/src/syntax/ArrayExpression.js
+
+* Maintainability index: 156.55238607408194
+* Aggregate cyclomatic complexity: 1
+    * Function: **get**
+        * Line No.: 9
+        * Physical SLOC: 3
+        * Logical SLOC: 1
+        * Cyclomatic complexity: 1
+        * Halstead difficulty: 1.7142857142857142
+        * Halstead volume: 39.863137138648355
+        * Halstead effort: 68.33680652339717
+
 ##/Users/phil/Code/complexityReport.js/src/syntax/AssignmentExpression.js
 
 * Maintainability index: 142.87477813190347
@@ -724,19 +785,6 @@
         * Halstead difficulty: 5.4
         * Halstead volume: 140
         * Halstead effort: 756
-
-##/Users/phil/Code/complexityReport.js/src/syntax/ArrayExpression.js
-
-* Maintainability index: 156.55238607408194
-* Aggregate cyclomatic complexity: 1
-    * Function: **get**
-        * Line No.: 9
-        * Physical SLOC: 3
-        * Logical SLOC: 1
-        * Cyclomatic complexity: 1
-        * Halstead difficulty: 1.7142857142857142
-        * Halstead volume: 39.863137138648355
-        * Halstead effort: 68.33680652339717
 
 ##/Users/phil/Code/complexityReport.js/src/syntax/BinaryExpression.js
 
