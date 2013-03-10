@@ -1,26 +1,26 @@
 #!/usr/bin/env node
 
-/*globals require, process, console */
+/*globals require, process, console, setTimeout */
 
 'use strict';
 
-var reports = [],
+var options, formatter, state, reports = [],
 
 cli = require('commander'),
 fs = require('fs'),
 path = require('path'),
 cr = require('./complexityReport'),
-check = require('check-types'),
-options,
-formatter,
+check = require('check-types');
+
+parseCommandLine();
 
 state = {
     starting: true,
-    unreadCount: 0,
+    openFileCount: 0,
+    maximumOpenFileCount: cli.maxfiles || 1024,
     tooComplex: false
 };
 
-parseCommandLine();
 expectFiles(cli.args, cli.help.bind(cli));
 readFiles(cli.args);
 
@@ -38,6 +38,11 @@ function parseCommandLine () {
         option(
             '-a, --allfiles',
             'include hidden files in the report'
+        ).
+        option(
+            '-x, --maxfiles <number>',
+            'specify the maximum number of files to have open at any point',
+            parseInt
         ).
         option(
             '-m, --maxmi <maintainability>',
@@ -122,7 +127,7 @@ function readFiles (paths) {
         if (stat.isDirectory()) {
             readDirectory(p);
         } else {
-            readFile(p);
+            conditionallyReadFile(p);
         }
     });
 
@@ -139,13 +144,27 @@ function readDirectory (directoryPath) {
     );
 }
 
+function conditionallyReadFile (filePath) {
+    console.log('conditionallyReadFile: ' + state.openFileCount + ' [' + state.maximumOpenFileCount + ']');
+
+    if (isOpenFileLimitReached()) {
+        runOnNextTick(function () {
+            conditionallyReadFile(filePath);
+        });
+    } else {
+        readFile(filePath);
+    }
+}
+
 function readFile (filePath) {
-    state.unreadCount += 1;
+    state.openFileCount += 1;
 
     fs.readFile(filePath, 'utf8', function (err, source) {
         if (err) {
             error('readFile', err);
         }
+
+        state.openFileCount -= 1;
 
         if (beginsWithShebang(source)) {
             source = commentFirstLine(source);
@@ -155,6 +174,14 @@ function readFile (filePath) {
 
         finish();
     });
+}
+
+function isOpenFileLimitReached () {
+    return state.openFileCount >= state.maximumOpenFileCount;
+}
+
+function runOnNextTick (fn) {
+    setTimeout(fn, 0);
 }
 
 function error (functionName, err) {
@@ -245,9 +272,7 @@ function isFunctionTooComplex (report) {
 }
 
 function finish () {
-    state.unreadCount -= 1;
-
-    if (state.starting === false && state.unreadCount === 0) {
+    if (state.starting === false && state.openFileCount === 0) {
         if (!cli.silent) {
             writeReport();
         }
