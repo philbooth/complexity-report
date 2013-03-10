@@ -61,7 +61,7 @@ automatically.
 * `-f <format>`: Specify an output format for the report,
   defaults to `plain`.
 * `-a`: Include hidden files in the report.
-* `-p` <regex>`: Specify the files to be processed
+* `-p <regex>`: Specify the files to be processed
   using a regular expression to match against file names,
   defaults to `\.js$`.
 * `-x <number>`: Specify the maximum number of files to open concurrently,
