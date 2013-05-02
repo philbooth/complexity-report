@@ -32,7 +32,7 @@ function indent (string, indentation) {
 
 function formatModule (indentation, report) {
     var i, functions = '', nextIndentation = incrementIndentation(indentation);
-    
+
     for (i = 0; i < report.functions.length; i += 1) {
         functions += formatFunction(nextIndentation, report.functions[i]);
     }
