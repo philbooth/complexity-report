@@ -100,13 +100,11 @@ function createInitialHalsteadItemState () {
 }
 
 function processTree (tree, assignedName, currentReport) {
-    var i;
-
     check.verifyArray(tree, 'Invalid syntax tree');
 
-    for (i = 0; i < tree.length; i += 1) {
-        processNode(tree[i], assignedName, currentReport);
-    }
+    tree.forEach(function (node) {
+        processNode(node, assignedName, currentReport);
+    });
 }
 
 function processNode (node, assignedName, currentReport) {
@@ -173,23 +171,22 @@ function processOperands (node, currentReport) {
 }
 
 function processHalsteadMetric (node, metric, currentReport) {
-    var syntax = syntaxes[node.type], i, identifier;
+    var syntax = syntaxes[node.type];
 
     if (check.isArray(syntax[metric])) {
-        for (i = 0; i < syntax[metric].length; i += 1) {
-            if (check.isFunction(syntax[metric][i].identifier)) {
-                identifier = syntax[metric][i].identifier(node);
+        syntax[metric].forEach(function (s) {
+            var identifier;
+
+            if (check.isFunction(s.identifier)) {
+                identifier = s.identifier(node);
             } else {
-                identifier = syntax[metric][i].identifier;
+                identifier = s.identifier;
             }
 
-            if (
-                check.isFunction(syntax[metric][i].filter) === false ||
-                syntax[metric][i].filter(node) === true
-            ) {
+            if (check.isFunction(s.filter) === false || s.filter(node) === true) {
                 halsteadItemEncountered(currentReport, metric, identifier);
             }
-        }
+        });
     }
 }
 
@@ -243,16 +240,16 @@ function processChildrenInNewScope (node, assignedName) {
 }
 
 function processChildren (node, currentReport) {
-    var syntax = syntaxes[node.type], i;
+    var syntax = syntaxes[node.type];
 
     if (check.isArray(syntax.children)) {
-        for (i = 0; i < syntax.children.length; i += 1) {
+        syntax.children.forEach(function (child) {
             processChild(
-                node[syntax.children[i]],
+                node[child],
                 check.isFunction(syntax.assignableName) ? syntax.assignableName(node) : '',
                 currentReport
             );
-        }
+        });
     }
 }
 
