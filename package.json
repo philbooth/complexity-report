@@ -30,15 +30,15 @@
         "esprima"
     ],
     "dependencies": {
-        "check-types": "0.3.x",
+        "check-types": "0.6.x",
         "esprima": "1.0.x",
         "commander": "1.1.x"
     },
     "devDependencies": {
         "jake": "0.5.x",
-        "jshint": "0.9.x",
-        "mocha": "1.8.x",
-        "chai": "1.4.x"
+        "jshint": "1.1.x",
+        "mocha": "1.9.x",
+        "chai": "1.6.x"
     },
     "license": "MIT",
     "scripts": {
