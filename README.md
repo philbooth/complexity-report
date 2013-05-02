@@ -6,6 +6,7 @@ A tool for reporting code complexity metrics in JavaScript projects.
 Currently the tool reports on:
 
 * lines of code;
+* number of parameters;
 * cyclomatic complexity;
 * Halstead metrics;
 * maintainability index.
