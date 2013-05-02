@@ -19,7 +19,8 @@ function formatModule (report) {
         report.module,
         '\n\n',
         '  Maintainability index: ', report.maintainability, '\n',
-        '  Aggregate cyclomatic complexity: ', report.aggregate.complexity.cyclomatic,
+        '  Aggregate cyclomatic complexity: ', report.aggregate.complexity.cyclomatic, '\n',
+        '  Mean parameter count: ', report.params,
         formatFunctions(report.functions)
     ].join('');
 }
@@ -40,6 +41,7 @@ function formatFunction (report) {
         '    Line No.: ', report.line, '\n',
         '    Physical SLOC: ', report.complexity.sloc.physical, '\n',
         '    Logical SLOC: ', report.complexity.sloc.logical, '\n',
+        '    Parameter count: ', report.complexity.params, '\n',
         '    Cyclomatic complexity: ', report.complexity.cyclomatic, '\n',
         '    Halstead difficulty: ', report.complexity.halstead.difficulty, '\n',
         '    Halstead volume: ', report.complexity.halstead.volume, '\n',

@@ -68,6 +68,7 @@ function formatComplexity (indentation, data) {
     return createElement(
         indentation, 'complexity', true,
         formatSlocComplexity(nextIndentation, data.sloc) +
+            formatParameterComplexity(nextIndentation, data.params) +
             formatCyclomaticComplexity(nextIndentation, data.cyclomatic) +
             formatHalsteadComplexity(nextIndentation, data.halstead)
     );
@@ -83,6 +84,10 @@ function formatSlocComplexity (indentation, data) {
 function formatSlocMetrics (indentation, data) {
     return createElement(indentation, 'physical', false, data.physical) +
         createElement(indentation, 'logical', false, data.logical);
+}
+
+function formatParameterComplexity (indentation, data) {
+    return createElement(indentation, 'parameters', false, data);
 }
 
 function formatCyclomaticComplexity (indentation, data) {
