@@ -213,6 +213,14 @@
                 test('maintainability index is correct', function () {
                     assert.strictEqual(Math.round(report.maintainability), 166);
                 });
+
+                test('aggregate has correct parameter count', function () {
+                    assert.strictEqual(report.aggregate.complexity.params, 0);
+                });
+
+                test('mean parameter count is correct', function () {
+                    assert.strictEqual(report.params, 0);
+                });
             });
 
             suite('condition:', function () {
