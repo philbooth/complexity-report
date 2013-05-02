@@ -96,7 +96,9 @@ from the `src/formats` subdirectory.
 If the format file is not found
 in that directory,
 a second attempt will be made to load the module
-without the subdirectory prefix.
+without the subdirectory prefix,
+more easily enabling the use of
+custom formats if they are required.
 Adding new formats is really easy;
 each format module must export a function `format`,
 which takes a report object as its only argument
