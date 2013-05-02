@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-/*globals require, process, console, setTimeout */
+/*globals require, process, console, setImmediate */
 
 'use strict';
 
@@ -159,7 +159,7 @@ function readDirectory (directoryPath) {
 
 function conditionallyReadFile (filePath) {
     if (isOpenFileLimitReached()) {
-        runOnNextTick(function () {
+        setImmediate(function () {
             conditionallyReadFile(filePath);
         });
     } else {
@@ -189,10 +189,6 @@ function readFile (filePath) {
 
 function isOpenFileLimitReached () {
     return state.openFileCount >= cli.maxfiles;
-}
-
-function runOnNextTick (fn) {
-    setTimeout(fn, 0);
 }
 
 function error (functionName, err) {
