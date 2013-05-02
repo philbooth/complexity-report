@@ -64,12 +64,12 @@ function getDefaultSettings () {
 
 function createReport (lines) {
     return {
-        aggregate: createFunctionReport(undefined, lines),
+        aggregate: createFunctionReport(undefined, lines, 0),
         functions: []
     };
 }
 
-function createFunctionReport (name, lines) {
+function createFunctionReport (name, lines, params) {
     return {
         name: name,
         line: lines.start.line,
@@ -79,7 +79,8 @@ function createFunctionReport (name, lines) {
                 logical: 0
             },
             cyclomatic: 1,
-            halstead: createInitialHalsteadState()
+            halstead: createInitialHalsteadState(),
+            params: params
         }
     };
 }
@@ -232,9 +233,10 @@ function incrementTotalHalsteadItems (baseReport, metric) {
 }
 
 function processChildrenInNewScope (node, assignedName) {
-    var newReport = createFunctionReport(safeName(node.id, assignedName), node.loc);
+    var newReport = createFunctionReport(safeName(node.id, assignedName), node.loc, node.params.length);
 
     report.functions.push(newReport);
+    report.aggregate.complexity.params += node.params.length;
 
     processChildren(node, newReport);
 }
@@ -261,12 +263,13 @@ function processChild (child, assignedName, currentReport) {
 function calculateMetrics (settings) {
     var i, data, averages,
 
-    sums = [ 0, 0, 0 ],
+    sums = [ 0, 0, 0, 0 ],
 
     indices = {
         loc: 0,
         complexity: 1,
-        effort: 2
+        effort: 2,
+        params: 3
     };
 
     for (i = 0; i < report.functions.length; i += 1) {
@@ -291,6 +294,8 @@ function calculateMetrics (settings) {
         averages[indices.loc],
         settings
     );
+
+    report.params = averages[indices.params];
 }
 
 function calculateHalsteadMetrics (data) {
@@ -323,6 +328,7 @@ function sumMaintainabilityMetrics (sums, indices, data) {
     sums[indices.loc] += data.sloc.logical;
     sums[indices.complexity] += data.cyclomatic;
     sums[indices.effort] += data.halstead.effort;
+    sums[indices.params] += data.params;
 }
 
 function calculateMaintainabilityIndex (averageEffort, averageComplexity, averageLoc, settings) {

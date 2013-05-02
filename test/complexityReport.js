@@ -1102,6 +1102,10 @@
                     assert.strictEqual(report.functions[0].complexity.cyclomatic, 1);
                 });
 
+                test('function has correct parameter count', function () {
+                    assert.strictEqual(report.functions[0].complexity.params, 0);
+                });
+
                 test('aggregate has correct Halstead total operators', function () {
                     assert.strictEqual(report.aggregate.complexity.halstead.operators.total, 1);
                 });
@@ -1160,6 +1164,10 @@
 
                 test('maintainability index is correct', function () {
                     assert.strictEqual(report.maintainability, 171);
+                });
+
+                test('aggregate has correct parameter count', function () {
+                    assert.strictEqual(report.aggregate.complexity.params, 0);
                 });
             });
 
@@ -1806,6 +1814,10 @@
                     assert.strictEqual(report.functions[0].complexity.cyclomatic, 2);
                 });
 
+                test('function has correct parameter count', function () {
+                    assert.strictEqual(report.functions[0].complexity.params, 1);
+                });
+
                 test('aggregate has correct cyclomatic complexity', function () {
                     assert.strictEqual(report.aggregate.complexity.cyclomatic, 2);
                 });
@@ -1824,6 +1836,10 @@
 
                 test('aggregate has correct Halstead distinct operands', function () {
                     assert.strictEqual(report.aggregate.complexity.halstead.operands.distinct, 6);
+                });
+
+                test('aggregate has correct parameter count', function () {
+                    assert.strictEqual(report.aggregate.complexity.params, 1);
                 });
             });
 
@@ -2245,6 +2261,22 @@
                 test('maintainability index is correct', function () {
                     assert.strictEqual(Math.round(report.maintainability), 128);
                 });
+
+                test('first function has correct parameter count', function () {
+                    assert.strictEqual(report.functions[0].complexity.params, 2);
+                });
+
+                test('second function has correct parameter count', function () {
+                    assert.strictEqual(report.functions[1].complexity.params, 2);
+                });
+
+                test('aggregate has correct parameter count', function () {
+                    assert.strictEqual(report.aggregate.complexity.params, 4);
+                });
+
+                test('mean parameter count is correct', function () {
+                    assert.strictEqual(report.params, 2);
+                });
             });
 
             suite('issue 3 / reddit.ISV_Damocles:', function () {
@@ -2318,6 +2350,46 @@
 
                 test('maintainability index is correct', function () {
                     assert.strictEqual(Math.round(report.maintainability), 75);
+                });
+            });
+
+            suite('Functions with consistent parameter counts:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('function foo (a) {} function bar (b) {} function baz (c) {}');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct parameter count', function () {
+                    assert.strictEqual(report.aggregate.complexity.params, 3);
+                });
+
+                test('mean parameter count is correct', function () {
+                    assert.strictEqual(report.params, 1);
+                });
+            });
+
+            suite('Functions with inconsistent parameter counts:', function () {
+                var report;
+
+                setup(function () {
+                    report = cr.run('function foo (a, b, c, d, e) {} function bar (a, b, c, d, e) {} function baz (a) {}');
+                });
+
+                teardown(function () {
+                    report = undefined;
+                });
+
+                test('aggregate has correct parameter count', function () {
+                    assert.strictEqual(report.aggregate.complexity.params, 11);
+                });
+
+                test('mean parameter count is correct', function () {
+                    assert.strictEqual(report.params, 11/3);
                 });
             });
         });
