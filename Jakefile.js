@@ -7,8 +7,8 @@
     var exec = require('child_process').exec,
 
     commands = {
-        test: './node_modules/.bin/mocha --ui tdd --reporter spec --colors ./test/complexityReport.js',
-        lint: './node_modules/.bin/jshint ./src --config config/jshint.json',
+        test: 'node node_modules/mocha/bin/mocha --ui tdd --reporter spec --colors ./test/complexityReport.js',
+        lint: 'node node_modules/jshint/bin/jshint src --config config/jshint.json',
         prepare: 'npm install'
     };
 
