@@ -8,7 +8,8 @@
         { "name": "Juzer Ali" },
         { "name": "Mark Trostler" },
         { "name": "Wyatt Preul" },
-        { "name": "Rowan Manning" }
+        { "name": "Rowan Manning" },
+        { "name": "Andrew Pennebaker" }
     ],
     "bin": {
         "cr": "./src/cli.js"
