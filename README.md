@@ -163,6 +163,10 @@ Build tools:
 * [Cliffano Subagio][cliffano]'s [Bob];
 * [Cardio].
 
+Editor integration:
+
+* [Brackets-crjs].
+
 ## Development
 
 ### Dependencies
@@ -199,6 +203,7 @@ command `npm test` or `jake test`.
 [cliffano]: http://blog.cliffano.com/
 [bob]: https://github.com/cliffano/bob
 [cardio]: https://github.com/auchenberg/cardio
+[brackets-crjs]: https://github.com/sahlas/brackets-crjs
 [tracker]: https://github.com/philbooth/complexityReport.js/issues
 [node]: http://nodejs.org/
 [npm]: https://npmjs.org/
