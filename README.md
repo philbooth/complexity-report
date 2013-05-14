@@ -183,10 +183,30 @@ you just need to run `npm install`
 to install all of the dependencies
 as listed in `package.json`.
 
+### Linting
+
+There is a config file
+for JSHint
+in `config/jshint.json`.
+You can run JSHint
+with the command
+`jake lint`.
+
 ### Tests
 
-The tests are in `test/complexityReport.js`. You can run them with the
-command `npm test` or `jake test`.
+The tests are in `test/complexityReport.js`.
+You can run them
+with the command
+`npm test`
+or `jake test`.
+
+### Complexity :)
+
+Of course,
+you can also run complexityReport against itself!
+From the command line,
+run `./src/cli.js src`.
+Or you can see a recent report [here][eg].
 
 [ci-image]: https://secure.travis-ci.org/philbooth/complexityReport.js.png?branch=master
 [ci-status]: http://travis-ci.org/#!/philbooth/complexityReport.js
