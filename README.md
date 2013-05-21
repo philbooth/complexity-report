@@ -29,6 +29,10 @@ there is also a web front-end available:
 
 * [JSComplexity.org][jscomplexity]
 
+## License
+
+[MIT][license]
+
 ## Installation
 
 ### Local to the current project
@@ -213,6 +217,7 @@ Or you can see a recent report [here][eg].
 [eg]: https://github.com/philbooth/complexityReport.js/blob/master/SELF.md
 [esprima]: http://esprima.org/
 [jscomplexity]: http://jscomplexity.org/
+[license]: https://github.com/philbooth/complexityReport.js/blob/master/COPYING
 [msvariant]: http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx
 [gleb]: https://github.com/bahmutov
 [js-complexity-viz]: https://github.com/bahmutov/js-complexity-viz
