@@ -232,8 +232,10 @@ function isTooComplex (report) {
         (isModuleComplexityThresholdSet() && isModuleTooComplex(report)) ||
         (isFunctionComplexityThresholdSet() && isFunctionTooComplex(report))
     ) {
-        state.tooComplex = true;
+        return true;
     }
+
+    return false;
 }
 
 function isModuleComplexityThresholdSet () {
@@ -241,13 +243,17 @@ function isModuleComplexityThresholdSet () {
 }
 
 function isModuleTooComplex (report) {
-    if (isThresholdBreached(cli.maxmi, report.maintainability)) {
+    if (isThresholdBreached(cli.maxmi, report.maintainability, true)) {
         return true;
     }
 }
 
-function isThresholdBreached (threshold, metric) {
-    return check.isNumber(threshold) && metric > threshold;
+function isThresholdBreached (threshold, metric, inverse) {
+    if (!inverse) {
+        return check.isNumber(threshold) && metric > threshold;
+    }
+
+    return check.isNumber(threshold) && metric < threshold;
 }
 
 function isFunctionComplexityThresholdSet () {
