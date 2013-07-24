@@ -215,6 +215,7 @@ function getReport (filePath, source) {
         report = cr.run(source, options);
 
         if (state.tooComplex === false && isTooComplex(report)) {
+            console.log("Module to complex:" + filePath);
             state.tooComplex = true;
         }
 
