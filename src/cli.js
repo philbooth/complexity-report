@@ -17,7 +17,8 @@ parseCommandLine();
 state = {
     starting: true,
     openFileCount: 0,
-    tooComplex: false
+    tooComplex: false,
+    failingModules: []
 };
 
 expectFiles(cli.args, cli.help.bind(cli));
@@ -48,7 +49,7 @@ function parseCommandLine () {
             parseInt
         ).
         option(
-            '-m, --maxmi <maintainability>',
+            '-m, --minmi <maintainability>',
             'specify the per-module maintainability index threshold',
             parseFloat
         ).
@@ -215,8 +216,8 @@ function getReport (filePath, source) {
         report = cr.run(source, options);
 
         if (state.tooComplex === false && isTooComplex(report)) {
-            console.log("Module too complex: " + filePath);
             state.tooComplex = true;
+            state.failingModules.push(filePath);
         }
 
         report.module = filePath;
@@ -240,11 +241,11 @@ function isTooComplex (report) {
 }
 
 function isModuleComplexityThresholdSet () {
-    return check.isNumber(cli.maxmi);
+    return check.isNumber(cli.minmi);
 }
 
 function isModuleTooComplex (report) {
-    if (isThresholdBreached(cli.maxmi, report.maintainability, true)) {
+    if (isThresholdBreached(cli.minmi, report.maintainability, true)) {
         return true;
     }
 }
@@ -292,7 +293,7 @@ function finish () {
         }
 
         if (state.tooComplex) {
-            fail('Warning: Complexity threshold breached!');
+            fail('Warning: Complexity threshold breached!\nFailing modules:\n' + state.failingModules.join('\n'));
         }
     }
 }
