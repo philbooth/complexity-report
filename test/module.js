@@ -5,7 +5,7 @@
 
     var assert = require('chai').assert,
 
-    modulePath = '../src/complexityReport';
+    modulePath = '../src/module';
 
     suite('complexityReport:', function () {
         test('require does not throw', function () {
