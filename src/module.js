@@ -1,31 +1,17 @@
-/**
- * Complexity reporting tool for JavaScript.
- */
-
 /*globals exports, require */
 
 'use strict';
 
 var check, esprima, syntaxDefinitions, safeName, syntaxes, report;
 
-exports.run = run;
+exports.analyse = analyse;
 
 check = require('check-types');
 esprima = require('esprima');
 safeName = require('./safeName');
 syntaxDefinitions = require('./syntax');
 
-/**
- * Public function `run`.
- *
- * Returns a an object detailing the complexity of the code in the
- * source argument.
- *
- * @param source {string}    The source code to analyse for complexity.
- * @param [options] {object} Options to modify the complexity calculation.
- *
- */
-function run (source, options) {
+function analyse (source, options) {
     // TODO: Asynchronize.
 
     var settings, ast;

@@ -29,107 +29,107 @@
                 cr = undefined;
             });
 
-            test('run function is exported', function () {
-                assert.isFunction(cr.run);
+            test('analyse function is exported', function () {
+                assert.isFunction(cr.analyse);
             });
 
-            test('run throws when source is object', function () {
+            test('analyse throws when source is object', function () {
                 assert.throws(function () {
-                    cr.run({});
+                    cr.analyse({});
                 });
             });
 
-            test('run throws when source is empty string', function () {
+            test('analyse throws when source is empty string', function () {
                 assert.throws(function () {
-                    cr.run('');
+                    cr.analyse('');
                 });
             });
 
-            test('run throws when source is not javascript', function () {
+            test('analyse throws when source is not javascript', function () {
                 assert.throws(function () {
-                    cr.run('foo bar');
+                    cr.analyse('foo bar');
                 });
             });
 
-            test('run does not throw when source is javascript', function () {
+            test('analyse does not throw when source is javascript', function () {
                 assert.doesNotThrow(function () {
-                    cr.run('console.log("foo");');
+                    cr.analyse('console.log("foo");');
                 });
             });
 
-            test('run returns object', function () {
-                assert.isObject(cr.run('"foo"'));
+            test('analyse returns object', function () {
+                assert.isObject(cr.analyse('"foo"'));
             });
 
-            test('run returns aggregate complexity property', function () {
-                assert.isObject(cr.run('"foo"').aggregate.complexity);
+            test('analyse returns aggregate complexity property', function () {
+                assert.isObject(cr.analyse('"foo"').aggregate.complexity);
             });
 
-            test('run returns aggregate lines of code property', function () {
-                assert.isObject(cr.run('"foo"').aggregate.complexity.sloc);
+            test('analyse returns aggregate lines of code property', function () {
+                assert.isObject(cr.analyse('"foo"').aggregate.complexity.sloc);
             });
 
-            test('run returns aggregate physical lines of code property', function () {
-                assert.isNumber(cr.run('"foo"').aggregate.complexity.sloc.physical);
+            test('analyse returns aggregate physical lines of code property', function () {
+                assert.isNumber(cr.analyse('"foo"').aggregate.complexity.sloc.physical);
             });
 
-            test('run returns aggregate logical lines of code property', function () {
-                assert.isNumber(cr.run('"foo"').aggregate.complexity.sloc.logical);
+            test('analyse returns aggregate logical lines of code property', function () {
+                assert.isNumber(cr.analyse('"foo"').aggregate.complexity.sloc.logical);
             });
 
-            test('run returns aggregate cyclomatic complexity property', function () {
-                assert.isNumber(cr.run('"foo"').aggregate.complexity.cyclomatic);
+            test('analyse returns aggregate cyclomatic complexity property', function () {
+                assert.isNumber(cr.analyse('"foo"').aggregate.complexity.cyclomatic);
             });
 
-            test('run returns aggregate halstead property', function () {
-                assert.isObject(cr.run('"foo"').aggregate.complexity.halstead);
+            test('analyse returns aggregate halstead property', function () {
+                assert.isObject(cr.analyse('"foo"').aggregate.complexity.halstead);
             });
 
-            test('run returns aggregate halstead operators property', function () {
-                assert.isObject(cr.run('"foo"').aggregate.complexity.halstead.operators);
+            test('analyse returns aggregate halstead operators property', function () {
+                assert.isObject(cr.analyse('"foo"').aggregate.complexity.halstead.operators);
             });
 
-            test('run returns aggregate halstead total operators property', function () {
-                assert.isNumber(cr.run('"foo"').aggregate.complexity.halstead.operators.total);
+            test('analyse returns aggregate halstead total operators property', function () {
+                assert.isNumber(cr.analyse('"foo"').aggregate.complexity.halstead.operators.total);
             });
 
-            test('run returns aggregate halstead distinct operators property', function () {
-                assert.isNumber(cr.run('"foo"').aggregate.complexity.halstead.operators.distinct);
+            test('analyse returns aggregate halstead distinct operators property', function () {
+                assert.isNumber(cr.analyse('"foo"').aggregate.complexity.halstead.operators.distinct);
             });
 
-            test('run returns aggregate halstead operator identifiers property', function () {
-                assert.isArray(cr.run('"foo"').aggregate.complexity.halstead.operators.identifiers);
+            test('analyse returns aggregate halstead operator identifiers property', function () {
+                assert.isArray(cr.analyse('"foo"').aggregate.complexity.halstead.operators.identifiers);
             });
 
-            test('run returns aggregate halstead operands property', function () {
-                assert.isObject(cr.run('"foo"').aggregate.complexity.halstead.operands);
+            test('analyse returns aggregate halstead operands property', function () {
+                assert.isObject(cr.analyse('"foo"').aggregate.complexity.halstead.operands);
             });
 
-            test('run returns aggregate halstead total operands property', function () {
-                assert.isNumber(cr.run('"foo"').aggregate.complexity.halstead.operands.total);
+            test('analyse returns aggregate halstead total operands property', function () {
+                assert.isNumber(cr.analyse('"foo"').aggregate.complexity.halstead.operands.total);
             });
 
-            test('run returns aggregate halstead distinct operands property', function () {
-                assert.isNumber(cr.run('"foo"').aggregate.complexity.halstead.operands.distinct);
+            test('analyse returns aggregate halstead distinct operands property', function () {
+                assert.isNumber(cr.analyse('"foo"').aggregate.complexity.halstead.operands.distinct);
             });
 
-            test('run returns aggregate halstead operand identifiers property', function () {
-                assert.isArray(cr.run('"foo"').aggregate.complexity.halstead.operands.identifiers);
+            test('analyse returns aggregate halstead operand identifiers property', function () {
+                assert.isArray(cr.analyse('"foo"').aggregate.complexity.halstead.operands.identifiers);
             });
 
-            test('run returns maintainability property', function () {
-                assert.isNumber(cr.run('"foo"').maintainability);
+            test('analyse returns maintainability property', function () {
+                assert.isNumber(cr.analyse('"foo"').maintainability);
             });
 
-            test('run returns functions property', function () {
-                assert.isArray(cr.run('"foo"').functions);
+            test('analyse returns functions property', function () {
+                assert.isArray(cr.analyse('"foo"').functions);
             });
 
             suite('function call:', function () {
                 var report;
 
                 setup(function () {
-                    report = cr.run('parseInt("10", 10);');
+                    report = cr.analyse('parseInt("10", 10);');
                 });
 
                 teardown(function () {
@@ -227,7 +227,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('if (true) { "foo"; }');
+                    report = cr.analyse('if (true) { "foo"; }');
                 });
 
                 teardown(function () {
@@ -317,7 +317,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('if (true) { "foo"; } else { "bar"; }');
+                    report = cr.analyse('if (true) { "foo"; } else { "bar"; }');
                 });
 
                 teardown(function () {
@@ -403,7 +403,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('if (true) { "foo"; } if (false) { "bar"; }');
+                    report = cr.analyse('if (true) { "foo"; } if (false) { "bar"; }');
                 });
 
                 teardown(function () {
@@ -465,7 +465,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('if (true) { "foo"; } else if (false) { "bar"; }');
+                    report = cr.analyse('if (true) { "foo"; } else if (false) { "bar"; }');
                 });
 
                 teardown(function () {
@@ -515,7 +515,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('if (true) { "foo"; if (false) { "bar"; } }');
+                    report = cr.analyse('if (true) { "foo"; if (false) { "bar"; } }');
                 });
 
                 teardown(function () {
@@ -535,7 +535,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('switch (Date.now()) { case 1: "foo"; break; case 2: "bar"; break; default: "baz"; }');
+                    report = cr.analyse('switch (Date.now()) { case 1: "foo"; break; case 2: "bar"; break; default: "baz"; }');
                 });
 
                 teardown(function () {
@@ -575,7 +575,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('switch (Date.now()) { case 1: case 2: "foo"; break; default: "bar"; }');
+                    report = cr.analyse('switch (Date.now()) { case 1: case 2: "foo"; break; default: "bar"; }');
                 });
 
                 teardown(function () {
@@ -615,7 +615,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('switch (Date.now()) { case 1: "foo"; break; case 2: "bar"; break; default: if (true) { "baz"; } }');
+                    report = cr.analyse('switch (Date.now()) { case 1: "foo"; break; case 2: "bar"; break; default: if (true) { "baz"; } }');
                 });
 
                 teardown(function () {
@@ -655,7 +655,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('var i; for (i = 0; i < 10; i += 1) { "foo"; }');
+                    report = cr.analyse('var i; for (i = 0; i < 10; i += 1) { "foo"; }');
                 });
 
                 teardown(function () {
@@ -707,7 +707,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('var i; for (i = 0; i < 10; i += 1) { if (true) { "foo"; } }');
+                    report = cr.analyse('var i; for (i = 0; i < 10; i += 1) { if (true) { "foo"; } }');
                 });
 
                 teardown(function () {
@@ -739,7 +739,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('var property; for (property in { foo: "bar", baz: "qux" }) { "wibble"; }');
+                    report = cr.analyse('var property; for (property in { foo: "bar", baz: "qux" }) { "wibble"; }');
                 });
 
                 teardown(function () {
@@ -791,7 +791,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('var property, object = { foo: "bar", baz: "qux" }; for (property in object) { if (object.hasOwnProperty(property)) { "wibble"; } }');
+                    report = cr.analyse('var property, object = { foo: "bar", baz: "qux" }; for (property in object) { if (object.hasOwnProperty(property)) { "wibble"; } }');
                 });
 
                 teardown(function () {
@@ -823,7 +823,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('while (true) { "foo"; }');
+                    report = cr.analyse('while (true) { "foo"; }');
                 });
 
                 teardown(function () {
@@ -863,7 +863,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('while (true) { if (true) { "foo"; } }');
+                    report = cr.analyse('while (true) { if (true) { "foo"; } }');
                 });
 
                 teardown(function () {
@@ -895,7 +895,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('do { "foo"; } while (true)');
+                    report = cr.analyse('do { "foo"; } while (true)');
                 });
 
                 teardown(function () {
@@ -935,7 +935,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('do { if (true) { "foo"; } } while (true)');
+                    report = cr.analyse('do { if (true) { "foo"; } } while (true)');
                 });
 
                 teardown(function () {
@@ -967,7 +967,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('try { "foo"; } catch (e) { e.message; }');
+                    report = cr.analyse('try { "foo"; } catch (e) { e.message; }');
                 });
 
                 teardown(function () {
@@ -1007,7 +1007,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('try { if (true) { "foo"; } } catch (e) { "bar"; }');
+                    report = cr.analyse('try { if (true) { "foo"; } } catch (e) { "bar"; }');
                 });
 
                 teardown(function () {
@@ -1039,7 +1039,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('try { "foo"; } catch (e) { if (true) { "bar"; } }');
+                    report = cr.analyse('try { "foo"; } catch (e) { if (true) { "bar"; } }');
                 });
 
                 teardown(function () {
@@ -1071,7 +1071,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('function foo () { "bar"; }');
+                    report = cr.analyse('function foo () { "bar"; }');
                 });
 
                 teardown(function () {
@@ -1183,7 +1183,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('function foo () { bar(); function bar () { "baz"; } }');
+                    report = cr.analyse('function foo () { bar(); function bar () { "baz"; } }');
                 });
 
                 teardown(function () {
@@ -1235,7 +1235,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('function foo () { if (true) { "bar"; } }');
+                    report = cr.analyse('function foo () { if (true) { "bar"; } }');
                 });
 
                 teardown(function () {
@@ -1271,7 +1271,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('var foo = "bar";');
+                    report = cr.analyse('var foo = "bar";');
                 });
 
                 teardown(function () {
@@ -1311,7 +1311,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('var foo = true ? "bar" : "baz";');
+                    report = cr.analyse('var foo = true ? "bar" : "baz";');
                 });
 
                 teardown(function () {
@@ -1347,7 +1347,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('var foo = true ? "bar" : (false ? "baz" : "qux");');
+                    report = cr.analyse('var foo = true ? "bar" : (false ? "baz" : "qux");');
                 });
 
                 teardown(function () {
@@ -1383,7 +1383,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('var foo = true || false;');
+                    report = cr.analyse('var foo = true || false;');
                 });
 
                 teardown(function () {
@@ -1419,7 +1419,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('var foo = function () { "bar"; }');
+                    report = cr.analyse('var foo = function () { "bar"; }');
                 });
 
                 teardown(function () {
@@ -1459,7 +1459,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('var foo = function bar () { "baz"; }');
+                    report = cr.analyse('var foo = function bar () { "baz"; }');
                 });
 
                 teardown(function () {
@@ -1487,7 +1487,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('function foo () { return true ? "bar" : "baz"; }');
+                    report = cr.analyse('function foo () { return true ? "bar" : "baz"; }');
                 });
 
                 teardown(function () {
@@ -1527,7 +1527,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('function foo () { return true || false; }');
+                    report = cr.analyse('function foo () { return true || false; }');
                 });
 
                 teardown(function () {
@@ -1559,7 +1559,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('function foo () { return function () { "bar"; }; }');
+                    report = cr.analyse('function foo () { return function () { "bar"; }; }');
                 });
 
                 teardown(function () {
@@ -1603,7 +1603,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('function foo () { return function bar () { "baz"; }; }');
+                    report = cr.analyse('function foo () { return function bar () { "baz"; }; }');
                 });
 
                 teardown(function () {
@@ -1627,7 +1627,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('parseInt("10", true ? 10 : 8);');
+                    report = cr.analyse('parseInt("10", true ? 10 : 8);');
                 });
 
                 teardown(function () {
@@ -1659,7 +1659,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('parseInt("10", 10 || 8);');
+                    report = cr.analyse('parseInt("10", 10 || 8);');
                 });
 
                 teardown(function () {
@@ -1675,7 +1675,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('setTimeout(function () { "foo"; }, 1000);');
+                    report = cr.analyse('setTimeout(function () { "foo"; }, 1000);');
                 });
 
                 teardown(function () {
@@ -1715,7 +1715,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('setTimeout(function foo () { "bar"; }, 1000);');
+                    report = cr.analyse('setTimeout(function foo () { "bar"; }, 1000);');
                 });
 
                 teardown(function () {
@@ -1731,7 +1731,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('var foo = true || false;', {
+                    report = cr.analyse('var foo = true || false;', {
                         logicalor: false
                     });
                 });
@@ -1749,7 +1749,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('switch (Date.now()) { case 1: "foo"; break; case 2: "bar"; break; default: "baz"; }', {
+                    report = cr.analyse('switch (Date.now()) { case 1: "foo"; break; case 2: "bar"; break; default: "baz"; }', {
                         switchcase: false
                     });
                 });
@@ -1767,7 +1767,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('var property; for (property in { foo: "bar", baz: "qux" }) { "wibble"; }', {
+                    report = cr.analyse('var property; for (property in { foo: "bar", baz: "qux" }) { "wibble"; }', {
                         forin: true
                     });
                 });
@@ -1785,7 +1785,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('try { "foo"; } catch (e) { e.message; }', {
+                    report = cr.analyse('try { "foo"; } catch (e) { e.message; }', {
                         trycatch: true
                     });
                 });
@@ -1803,7 +1803,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('(function (foo) { if (foo === "foo") { console.log(foo); return; } "bar"; }("foo"));');
+                    report = cr.analyse('(function (foo) { if (foo === "foo") { console.log(foo); return; } "bar"; }("foo"));');
                 });
 
                 teardown(function () {
@@ -1855,7 +1855,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('if ("foo" && "bar") { "baz"; }');
+                    report = cr.analyse('if ("foo" && "bar") { "baz"; }');
                 });
 
                 teardown(function () {
@@ -1891,7 +1891,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('(function () { "foo"; }).call(this);');
+                    report = cr.analyse('(function () { "foo"; }).call(this);');
                 });
 
                 teardown(function () {
@@ -1927,7 +1927,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('var foo = {}; foo.bar = function () { "foobar"; };');
+                    report = cr.analyse('var foo = {}; foo.bar = function () { "foobar"; };');
                 });
 
                 teardown(function () {
@@ -1967,7 +1967,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('"".bar = function () { "bar"; };');
+                    report = cr.analyse('"".bar = function () { "bar"; };');
                 });
 
                 teardown(function () {
@@ -1991,7 +1991,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('var foo = {};');
+                    report = cr.analyse('var foo = {};');
                 });
 
                 teardown(function () {
@@ -2031,7 +2031,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('var foo = { bar: "bar", baz: function () { "baz"; } };');
+                    report = cr.analyse('var foo = { bar: "bar", baz: function () { "baz"; } };');
                 });
 
                 teardown(function () {
@@ -2071,7 +2071,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('var foo = { bar: function () { if (true) { "bar"; } }, bar: function () { "bar"; } };');
+                    report = cr.analyse('var foo = { bar: function () { if (true) { "bar"; } }, bar: function () { "bar"; } };');
                 });
 
                 teardown(function () {
@@ -2107,7 +2107,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('try { throw new Error("foo"); } catch (e) { alert(error.message); }');
+                    report = cr.analyse('try { throw new Error("foo"); } catch (e) { alert(error.message); }');
                 });
 
                 teardown(function () {
@@ -2143,7 +2143,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('var a = 0; ++a; a++;');
+                    report = cr.analyse('var a = 0; ++a; a++;');
                 });
 
                 teardown(function () {
@@ -2183,7 +2183,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('[ "foo", "bar" ];');
+                    report = cr.analyse('[ "foo", "bar" ];');
                 });
 
                 teardown(function () {
@@ -2223,7 +2223,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('// This is a\n// multi-line\n// comment.\nparseInt(\n\t(function () {\n\t\t// Moar\n\t\t// commentz!\n\t\treturn [\n\t\t\t"1",\n\t\t\t"0"\n\t\t].join("");\n\t}()),\n\t10\n);');
+                    report = cr.analyse('// This is a\n// multi-line\n// comment.\nparseInt(\n\t(function () {\n\t\t// Moar\n\t\t// commentz!\n\t\treturn [\n\t\t\t"1",\n\t\t\t"0"\n\t\t].join("");\n\t}()),\n\t10\n);');
                 });
 
                 teardown(function () {
@@ -2259,7 +2259,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('function foo (a, b) { if (a) { b(a); } else { a(b); } } function bar (c, d) { var i; for (i = 0; i < c.length; i += 1) { d += 1; } console.log(d); }');
+                    report = cr.analyse('function foo (a, b) { if (a) { b(a); } else { a(b); } } function bar (c, d) { var i; for (i = 0; i < c.length; i += 1) { d += 1; } console.log(d); }');
                 });
 
                 teardown(function () {
@@ -2291,7 +2291,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('var callback = arguments[arguments.length-1] instanceof Function ? arguments[arguments.length-1] : function() {};');
+                    report = cr.analyse('var callback = arguments[arguments.length-1] instanceof Function ? arguments[arguments.length-1] : function() {};');
                 });
 
                 teardown(function () {
@@ -2307,7 +2307,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('function foo () { return; }');
+                    report = cr.analyse('function foo () { return; }');
                 });
 
                 teardown(function () {
@@ -2347,7 +2347,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('function foo (a, b) { if (a) { b(a); } else { a(b); } } function bar (c, d) { var i; for (i = 0; i < c.length; i += 1) { d += 1; } console.log(d); }', {
+                    report = cr.analyse('function foo (a, b) { if (a) { b(a); } else { a(b); } } function bar (c, d) { var i; for (i = 0; i < c.length; i += 1) { d += 1; } console.log(d); }', {
                         newmi: true
                     });
                 });
@@ -2365,7 +2365,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('function foo (a) {} function bar (b) {} function baz (c) {}');
+                    report = cr.analyse('function foo (a) {} function bar (b) {} function baz (c) {}');
                 });
 
                 teardown(function () {
@@ -2385,7 +2385,7 @@
                 var report;
 
                 setup(function () {
-                    report = cr.run('function foo (a, b, c, d, e) {} function bar (a, b, c, d, e) {} function baz (a) {}');
+                    report = cr.analyse('function foo (a, b, c, d, e) {} function bar (a, b, c, d, e) {} function baz (a) {}');
                 });
 
                 teardown(function () {
