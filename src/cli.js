@@ -44,6 +44,10 @@ function parseCommandLine () {
             'specify the files to process using a regular expression to match against file names'
         ).
         option(
+            '-r, --dirpattern <pattern>',
+            'specify the dir to traverse using a regular expression to match against directory names'
+        ).
+        option(
             '-x, --maxfiles <number>',
             'specify the maximum number of files to have open at any point',
             parseInt
@@ -117,6 +121,10 @@ function parseCommandLine () {
     }
     cli.filepattern = new RegExp(cli.filepattern);
 
+    if (check.isUnemptyString(cli.dirpattern)) {
+        cli.dirpattern = new RegExp(cli.dirpattern);
+    }
+
     if (check.isNumber(cli.maxfiles) === false) {
         cli.maxfiles = 1024;
     }
@@ -139,7 +147,10 @@ function readFiles (paths) {
         var stat = fs.statSync(p);
 
         if (stat.isDirectory()) {
-            readDirectory(p);
+            // if no dirpattern set OR it matches to directory name
+            if (!cli.dirpattern || cli.dirpattern.test(p)) {
+                readDirectory(p);
+            }
         } else if (cli.filepattern.test(p)) {
             conditionallyReadFile(p);
         }

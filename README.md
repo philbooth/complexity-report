@@ -69,6 +69,10 @@ automatically.
 * `-p <regex>`: Specify the files to be processed
   using a regular expression to match against file names,
   defaults to `\.js$`.
+* `-r <regex>`: Specify the directory to be traversed
+  using a regular expression to match against directory names,
+  defaults to all directories.  Usefull if you want to exclude specific
+  directories such as 'node_modules': -r '^((?!node_modules).)*$'
 * `-x <number>`: Specify the maximum number of files to open concurrently,
   defaults to `1024`.
 * `-m <maintainability>`: Specify the per-module maintainability index threshold
