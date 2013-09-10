@@ -45,7 +45,7 @@ function parseCommandLine () {
         ).
         option(
             '-r, --dirpattern <pattern>',
-            'specify the dir to traverse using a regular expression to match against directory names'
+            'specify the directories to process using a regular expression to match against directory names'
         ).
         option(
             '-x, --maxfiles <number>',
@@ -147,7 +147,6 @@ function readFiles (paths) {
         var stat = fs.statSync(p);
 
         if (stat.isDirectory()) {
-            // if no dirpattern set OR it matches to directory name
             if (!cli.dirpattern || cli.dirpattern.test(p)) {
                 readDirectory(p);
             }

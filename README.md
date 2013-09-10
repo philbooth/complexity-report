@@ -69,7 +69,7 @@ automatically.
 * `-p <regex>`: Specify the files to be processed
   using a regular expression to match against file names,
   defaults to `\.js$`.
-* `-r <regex>`: Specify the directory to be traversed
+* `-r <regex>`: Specify the directories to be processed
   using a regular expression to match against directory names,
   defaults to all directories.  Usefull if you want to exclude specific
   directories such as 'node_modules': -r '^((?!node_modules).)*$'
