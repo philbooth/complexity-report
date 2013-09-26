@@ -17,7 +17,8 @@ parseCommandLine();
 state = {
     starting: true,
     openFileCount: 0,
-    tooComplex: false
+    tooComplex: false,
+    failingModules: []
 };
 
 expectFiles(cli.args, cli.help.bind(cli));
@@ -43,12 +44,16 @@ function parseCommandLine () {
             'specify the files to process using a regular expression to match against file names'
         ).
         option(
+            '-r, --dirpattern <pattern>',
+            'specify the directories to process using a regular expression to match against directory names'
+        ).
+        option(
             '-x, --maxfiles <number>',
             'specify the maximum number of files to have open at any point',
             parseInt
         ).
         option(
-            '-m, --maxmi <maintainability>',
+            '-m, --minmi <maintainability>',
             'specify the per-module maintainability index threshold',
             parseFloat
         ).
@@ -116,6 +121,10 @@ function parseCommandLine () {
     }
     cli.filepattern = new RegExp(cli.filepattern);
 
+    if (check.isUnemptyString(cli.dirpattern)) {
+        cli.dirpattern = new RegExp(cli.dirpattern);
+    }
+
     if (check.isNumber(cli.maxfiles) === false) {
         cli.maxfiles = 1024;
     }
@@ -138,7 +147,9 @@ function readFiles (paths) {
         var stat = fs.statSync(p);
 
         if (stat.isDirectory()) {
-            readDirectory(p);
+            if (!cli.dirpattern || cli.dirpattern.test(p)) {
+                readDirectory(p);
+            }
         } else if (cli.filepattern.test(p)) {
             conditionallyReadFile(p);
         }
@@ -216,6 +227,7 @@ function getReport (filePath, source) {
 
         if (state.tooComplex === false && isTooComplex(report)) {
             state.tooComplex = true;
+            state.failingModules.push(filePath);
         }
 
         report.module = filePath;
@@ -232,22 +244,28 @@ function isTooComplex (report) {
         (isModuleComplexityThresholdSet() && isModuleTooComplex(report)) ||
         (isFunctionComplexityThresholdSet() && isFunctionTooComplex(report))
     ) {
-        state.tooComplex = true;
+        return true;
     }
+
+    return false;
 }
 
 function isModuleComplexityThresholdSet () {
-    return check.isNumber(cli.maxmi);
+    return check.isNumber(cli.minmi);
 }
 
 function isModuleTooComplex (report) {
-    if (isThresholdBreached(cli.maxmi, report.maintainability)) {
+    if (isThresholdBreached(cli.minmi, report.maintainability, true)) {
         return true;
     }
 }
 
-function isThresholdBreached (threshold, metric) {
-    return check.isNumber(threshold) && metric > threshold;
+function isThresholdBreached (threshold, metric, inverse) {
+    if (!inverse) {
+        return check.isNumber(threshold) && metric > threshold;
+    }
+
+    return check.isNumber(threshold) && metric < threshold;
 }
 
 function isFunctionComplexityThresholdSet () {
@@ -285,7 +303,7 @@ function finish () {
         }
 
         if (state.tooComplex) {
-            fail('Warning: Complexity threshold breached!');
+            fail('Warning: Complexity threshold breached!\nFailing modules:\n' + state.failingModules.join('\n'));
         }
     }
 }
