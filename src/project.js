@@ -14,8 +14,8 @@ function analyse (sources, options) {
 
     check.verifyArray(sources, 'Invalid sources');
 
-    return sources.reduce(function (reports, source) {
-        moduleAnalyser.analyse(source, options);
+    return sources.map(function (source) {
+        return moduleAnalyser.analyse(source, options);
     }, []);
 }
 
