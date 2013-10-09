@@ -9,13 +9,13 @@ exports.analyse = analyse;
 check = require('check-types');
 moduleAnalyser = require('./module');
 
-function analyse (sources, options) {
+function analyse (modules, options) {
     // TODO: Asynchronize.
 
-    check.verifyArray(sources, 'Invalid sources');
+    check.verifyArray(modules, 'Invalid modules');
 
-    return sources.map(function (source) {
-        return moduleAnalyser.analyse(source, options);
+    return modules.map(function (m) {
+        return moduleAnalyser.analyse(m.source, options);
     }, []);
 }
 

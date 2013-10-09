@@ -52,25 +52,31 @@ suite('project:', function () {
 
         test('analyse throws when source array contains non-JavaScript', function () {
             assert.throws(function () {
-                cr.analyse([ 'foo bar' ]);
+                cr.analyse([ { source: 'foo bar' } ]);
             });
         });
 
         test('analyse does not throw when source array contains JavaScript', function () {
             assert.doesNotThrow(function () {
-                cr.analyse([ 'function foo () {} ' ]);
+                cr.analyse([ { source: 'function foo () {}' } ]);
             });
         });
 
         test('analyse throws when non-JavaScript is not first', function () {
             assert.throws(function () {
-                cr.analyse([ 'function foo () {}', 'function bar () {}', 'foo bar' ]);
+                cr.analyse([ { source: 'function foo () {}' }, { source: 'function bar () {}' }, { source: 'foo bar' } ]);
             });
         });
 
         test('analyse does not throw when source array contains multiple JavaScript', function () {
             assert.doesNotThrow(function () {
-                cr.analyse([ 'function foo () {}', 'console.log("bar");', 'var i; for (i = 0; i < 10; i += 1) { alert(i); }' ]);
+                cr.analyse([ { source: 'function foo () {}' }, { source: 'console.log("bar");' }, { source: 'var i; for (i = 0; i < 10; i += 1) { alert(i); }' } ]);
+            });
+        });
+
+        test('analyse throws when module array items have no source property', function () {
+            assert.throws(function () {
+                cr.analyse([ 'function foo () {}' ]);
             });
         });
 
@@ -99,8 +105,8 @@ suite('project:', function () {
 
             setup(function () {
                 reports = cr.analyse([
-                    'if (true) { "foo"; } else { "bar"; }',
-                    'function foo (a, b) { if (a) { b(a); } else { a(b); } } function bar (c, d) { var i; for (i = 0; i < c.length; i += 1) { d += 1; } console.log(d); }'
+                    { source: 'if (true) { "foo"; } else { "bar"; }' },
+                    { source: 'function foo (a, b) { if (a) { b(a); } else { a(b); } } function bar (c, d) { var i; for (i = 0; i < c.length; i += 1) { d += 1; } console.log(d); }' }
                 ]);
             });
 
