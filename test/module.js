@@ -124,6 +124,10 @@ suite('module:', function () {
             assert.isArray(cr.analyse('"foo"').functions);
         });
 
+        test('analyse returns dependencies property', function () {
+            assert.isArray(cr.analyse('"foo"').dependencies);
+        });
+
         suite('function call:', function () {
             var report;
 
@@ -220,6 +224,10 @@ suite('module:', function () {
             test('mean parameter count is correct', function () {
                 assert.strictEqual(report.params, 0);
             });
+
+            test('dependencies is correct', function () {
+                assert.lengthOf(report.dependencies, 0);
+            });
         });
 
         suite('condition:', function () {
@@ -309,6 +317,10 @@ suite('module:', function () {
 
             test('maintainability index is correct', function () {
                 assert.strictEqual(Math.round(report.maintainability), 157);
+            });
+
+            test('dependencies is correct', function () {
+                assert.lengthOf(report.dependencies, 0);
             });
         });
 
@@ -2397,6 +2409,69 @@ suite('module:', function () {
 
             test('mean parameter count is correct', function () {
                 assert.strictEqual(report.params, 11/3);
+            });
+        });
+
+        suite('CommonJS require literal:', function () {
+            var report;
+
+            setup(function () {
+                report = cr.analyse('require("./foo");');
+            });
+
+            teardown(function () {
+                report = undefined;
+            });
+
+            test('dependencies has correct length', function () {
+                assert.lengthOf(report.dependencies, 1);
+            });
+
+            test('dependency is correct', function () {
+                assert.isObject(report.dependencies[0]);
+                assert.strictEqual(report.dependencies[0].line, 1);
+                assert.strictEqual(report.dependencies[0].path, './foo');
+            });
+        });
+
+        suite('alternative CommonJS require literal:', function () {
+            var report;
+
+            setup(function () {
+                report = cr.analyse('require("./bar");');
+            });
+
+            teardown(function () {
+                report = undefined;
+            });
+
+            test('dependency is correct', function () {
+                assert.strictEqual(report.dependencies[0].path, './bar');
+            });
+        });
+
+        suite('multiple CommonJS require literal:', function () {
+            var report;
+
+            setup(function () {
+                report = cr.analyse('require("./foo");\nrequire("./bar");\nrequire("./baz");');
+            });
+
+            teardown(function () {
+                report = undefined;
+            });
+
+            test('dependencies has correct length', function () {
+                assert.lengthOf(report.dependencies, 3);
+            });
+
+            test('dependencies are correct', function () {
+                assert.strictEqual(report.dependencies[0].line, 1);
+                assert.strictEqual(report.dependencies[0].path, './foo');
+                assert.strictEqual(report.dependencies[1].line, 2);
+                assert.strictEqual(report.dependencies[1].path, './bar');
+                assert.strictEqual(report.dependencies[2].line, 3);
+                assert.strictEqual(report.dependencies[2].path, './baz');
             });
         });
     });

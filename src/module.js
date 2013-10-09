@@ -51,7 +51,8 @@ function getDefaultSettings () {
 function createReport (lines) {
     return {
         aggregate: createFunctionReport(undefined, lines, 0),
-        functions: []
+        functions: [],
+        dependencies: []
     };
 }
 
@@ -100,11 +101,12 @@ function processNode (node, assignedName, currentReport) {
     if (check.isObject(node)) {
         syntax = syntaxes[node.type];
 
-        if (check.isObject(syntaxes[node.type])) {
+        if (check.isObject(syntax)) {
             processLloc(node, currentReport);
             processComplexity(node, currentReport);
             processOperators(node, currentReport);
             processOperands(node, currentReport);
+            processDependencies(node);
 
             if (syntax.newScope) {
                 processChildrenInNewScope(node, assignedName);
@@ -216,6 +218,17 @@ function incrementHalsteadMetric (baseReport, metric, type) {
 
 function incrementTotalHalsteadItems (baseReport, metric) {
     incrementHalsteadMetric(baseReport, metric, 'total');
+}
+
+function processDependencies (node) {
+    var syntax = syntaxes[node.type], dependencies;
+
+    if (check.isFunction(syntax.dependencies)) {
+        dependencies = syntax.dependencies(node);
+        if (check.isObject(dependencies)) {
+            report.dependencies = report.dependencies.concat(dependencies);
+        }
+    }
 }
 
 function processChildrenInNewScope (node, assignedName) {

@@ -8,7 +8,7 @@ var check = require('check-types'),
 
 exports.actualise = actualiseTraits;
 
-function actualiseTraits (lloc, complexity, operators, operands, children, assignableName, newScope) {
+function actualiseTraits (lloc, complexity, operators, operands, children, assignableName, newScope, dependencies) {
     return {
         lloc: lloc,
         complexity: complexity,
@@ -16,7 +16,8 @@ function actualiseTraits (lloc, complexity, operators, operands, children, assig
         operands: operandTraits.actualise(safeArray(operands)),
         children: safeArray(children),
         assignableName: assignableName,
-        newScope: newScope
+        newScope: newScope,
+        dependencies: dependencies
     };
 }
 
