@@ -226,7 +226,7 @@ Or you can see a recent report [here][eg].
 [gleb]: https://github.com/bahmutov
 [js-complexity-viz]: https://github.com/bahmutov/js-complexity-viz
 [jarrod]: http://jarrodoverson.com/blog/about
-[plato]: https://github.com/jsoverson/plato
+[plato]: https://github.com/es-analysis/plato
 [viget]: http://viget.com/
 [grunt-complexity]: https://github.com/vigetlabs/grunt-complexity
 [cliffano]: http://blog.cliffano.com/
