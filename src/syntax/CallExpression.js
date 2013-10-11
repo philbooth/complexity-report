@@ -13,15 +13,29 @@ function get () {
         },
         0, '()', undefined, [ 'arguments', 'callee' ], undefined, undefined,
         function (node) {
-            if (node.callee.type === 'Identifier' &&
-                node.callee.name === 'require' &&
-                node.arguments.length === 1 &&
-                node.arguments[0].type === 'Literal'
-            ) {
-                return {
-                    line: node.loc.start.line,
-                    path: node.arguments[0].value
-                };
+            if (node.callee.type === 'Identifier' && node.callee.name === 'require') {
+                if (node.arguments.length === 1) {
+                    return {
+                        line: node.loc.start.line,
+                        path: node.arguments[0].type === 'Literal' ? node.arguments[0].value : '* dynamic dependency *'
+                    };
+                }
+
+                if (node.arguments.length === 2) {
+                    if (node.arguments[0].type === 'ArrayExpression') {
+                        return node.arguments[0].elements.map(function (item) {
+                            return {
+                                line: node.loc.start.line,
+                                path: item.type === 'Literal' ? item.value : '* dynamic dependency *'
+                            };
+                        });
+                    }
+
+                    return {
+                        line: node.loc.start.line,
+                        path: '* dynamic dependencies *'
+                    };
+                }
             }
         }
     );

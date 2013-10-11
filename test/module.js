@@ -2427,7 +2427,7 @@ suite('module:', function () {
                 assert.lengthOf(report.dependencies, 1);
             });
 
-            test('dependency is correct', function () {
+            test('dependencies are correct', function () {
                 assert.isObject(report.dependencies[0]);
                 assert.strictEqual(report.dependencies[0].line, 1);
                 assert.strictEqual(report.dependencies[0].path, './foo');
@@ -2445,16 +2445,16 @@ suite('module:', function () {
                 report = undefined;
             });
 
-            test('dependency is correct', function () {
+            test('dependencies are correct', function () {
                 assert.strictEqual(report.dependencies[0].path, './bar');
             });
         });
 
-        suite('multiple CommonJS require literal:', function () {
+        suite('CommonJS require multiple:', function () {
             var report;
 
             setup(function () {
-                report = cr.analyse('require("./foo");\nrequire("./bar");\nrequire("./baz");');
+                report = cr.analyse('require("./foo");\nrequire("./bar");\n\nrequire("./baz");');
             });
 
             teardown(function () {
@@ -2470,10 +2470,139 @@ suite('module:', function () {
                 assert.strictEqual(report.dependencies[0].path, './foo');
                 assert.strictEqual(report.dependencies[1].line, 2);
                 assert.strictEqual(report.dependencies[1].path, './bar');
-                assert.strictEqual(report.dependencies[2].line, 3);
+                assert.strictEqual(report.dependencies[2].line, 4);
                 assert.strictEqual(report.dependencies[2].path, './baz');
             });
         });
+
+        suite('CommonJS require variable:', function () {
+            var report;
+
+            setup(function () {
+                report = cr.analyse('var foo = "./foo";require(foo);');
+            });
+
+            teardown(function () {
+                report = undefined;
+            });
+
+            test('dependencies has correct length', function () {
+                assert.lengthOf(report.dependencies, 1);
+            });
+
+            test('dependencies are correct', function () {
+                assert.isObject(report.dependencies[0]);
+                assert.strictEqual(report.dependencies[0].line, 1);
+                assert.strictEqual(report.dependencies[0].path, '* dynamic dependency *');
+            });
+        });
+
+        suite('AMD require literal:', function () {
+            var report;
+
+            setup(function () {
+                report = cr.analyse('require([ "foo" ], function (foo) {});');
+            });
+
+            teardown(function () {
+                report = undefined;
+            });
+
+            test('dependencies has correct length', function () {
+                assert.lengthOf(report.dependencies, 1);
+            });
+
+            test('dependencies are correct', function () {
+                assert.isObject(report.dependencies[0]);
+                assert.strictEqual(report.dependencies[0].line, 1);
+                assert.strictEqual(report.dependencies[0].path, 'foo');
+            });
+        });
+
+        suite('alternative AMD require literal:', function () {
+            var report;
+
+            setup(function () {
+                report = cr.analyse('require([ "bar" ], function (barModule) {});');
+            });
+
+            teardown(function () {
+                report = undefined;
+            });
+
+            test('dependencies are correct', function () {
+                assert.strictEqual(report.dependencies[0].path, 'bar');
+            });
+        });
+
+        suite('AMD require multiple:', function () {
+            var report;
+
+            setup(function () {
+                report = cr.analyse('require([ "foo", "bar", "baz" ], function (foo, bar, baz) {});');
+            });
+
+            teardown(function () {
+                report = undefined;
+            });
+
+            test('dependencies has correct length', function () {
+                assert.lengthOf(report.dependencies, 3);
+            });
+
+            test('dependencies are correct', function () {
+                assert.strictEqual(report.dependencies[0].line, 1);
+                assert.strictEqual(report.dependencies[0].path, 'foo');
+                assert.strictEqual(report.dependencies[1].line, 1);
+                assert.strictEqual(report.dependencies[1].path, 'bar');
+                assert.strictEqual(report.dependencies[2].line, 1);
+                assert.strictEqual(report.dependencies[2].path, 'baz');
+            });
+        });
+
+        suite('AMD require variable:', function () {
+            var report;
+
+            setup(function () {
+                report = cr.analyse('var foo = "foo";\nrequire([ foo ], function (foo) {});');
+            });
+
+            teardown(function () {
+                report = undefined;
+            });
+
+            test('dependencies has correct length', function () {
+                assert.lengthOf(report.dependencies, 1);
+            });
+
+            test('dependencies are correct', function () {
+                assert.strictEqual(report.dependencies[0].line, 2);
+                assert.strictEqual(report.dependencies[0].path, '* dynamic dependency *');
+            });
+        });
+
+        suite('AMD require variable array:', function () {
+            var report;
+
+            setup(function () {
+                report = cr.analyse('var foo = [ "foo" ];\nrequire(foo, function (foo) {});');
+            });
+
+            teardown(function () {
+                report = undefined;
+            });
+
+            test('dependencies has correct length', function () {
+                assert.lengthOf(report.dependencies, 1);
+            });
+
+            test('dependencies are correct', function () {
+                assert.strictEqual(report.dependencies[0].line, 2);
+                assert.strictEqual(report.dependencies[0].path, '* dynamic dependencies *');
+            });
+        });
+
+        // TODO: Test require.config
     });
 });
 

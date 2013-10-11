@@ -225,7 +225,7 @@ function processDependencies (node) {
 
     if (check.isFunction(syntax.dependencies)) {
         dependencies = syntax.dependencies(node);
-        if (check.isObject(dependencies)) {
+        if (check.isObject(dependencies) || check.isArray(dependencies)) {
             report.dependencies = report.dependencies.concat(dependencies);
         }
     }
