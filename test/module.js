@@ -2602,7 +2602,30 @@ suite('module:', function () {
             });
         });
 
-        // TODO: Test require.config
+        suite('AMD require.config:', function () {
+            var report;
+
+            setup(function () {
+                report = cr.analyse('require.config({\n\tpaths: {\n\t\tfoo: "path/to/foo",\n\t\tbaz: "../wibble"\n\t}\n});\nrequire([ "foo", "bar", "baz" ], function (foo, bar, baz) {});');
+            });
+
+            teardown(function () {
+                report = undefined;
+            });
+
+            test('dependencies has correct length', function () {
+                assert.lengthOf(report.dependencies, 3);
+            });
+
+            test('dependencies are correct', function () {
+                assert.strictEqual(report.dependencies[0].line, 7);
+                assert.strictEqual(report.dependencies[0].path, 'path/to/foo');
+                assert.strictEqual(report.dependencies[1].line, 7);
+                assert.strictEqual(report.dependencies[1].path, 'bar');
+                assert.strictEqual(report.dependencies[2].line, 7);
+                assert.strictEqual(report.dependencies[2].path, '../wibble');
+            });
+        });
     });
 });
 

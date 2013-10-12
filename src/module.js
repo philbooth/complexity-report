@@ -2,7 +2,7 @@
 
 'use strict';
 
-var check, esprima, syntaxDefinitions, safeName, syntaxes, report;
+var check, esprima, syntaxDefinitions, safeName, syntaxes, report, clearDependencies;
 
 exports.analyse = analyse;
 
@@ -30,6 +30,7 @@ function analyse (source, options) {
 
     syntaxes = syntaxDefinitions.get(settings);
     report = createReport(ast.loc);
+    clearDependencies = true;
 
     processTree(ast.body, undefined, undefined);
 
@@ -224,11 +225,13 @@ function processDependencies (node) {
     var syntax = syntaxes[node.type], dependencies;
 
     if (check.isFunction(syntax.dependencies)) {
-        dependencies = syntax.dependencies(node);
+        dependencies = syntax.dependencies(node, clearDependencies);
         if (check.isObject(dependencies) || check.isArray(dependencies)) {
             report.dependencies = report.dependencies.concat(dependencies);
         }
     }
+
+    clearDependencies = false;
 }
 
 function processChildrenInNewScope (node, assignedName) {
