@@ -2,7 +2,7 @@
 
 'use strict';
 
-var traits = require('./traits'), dependencies = {};
+var traits = require('./traits'), amdPathAliases = {};
 
 exports.get = get;
 
@@ -12,34 +12,19 @@ function get () {
             return node.callee.type === 'FunctionExpression' ? 1 : 0;
         },
         0, '()', undefined, [ 'arguments', 'callee' ], undefined, undefined,
-        function (node, clearDependencies) {
-            if (clearDependencies) {
-                // TODO: This prohibits async running. Refine by passing in module id as key for dependency map map.
-                dependencies = {};
+        function (node, clearAliases) {
+            if (clearAliases) {
+                // TODO: This prohibits async running. Refine by passing in module id as key for amdPathAliases.
+                amdPathAliases = {};
             }
 
             if (node.callee.type === 'Identifier' && node.callee.name === 'require') {
                 if (node.arguments.length === 1) {
-                    return {
-                        line: node.loc.start.line,
-                        path: node.arguments[0].type === 'Literal' ? node.arguments[0].value : '* dynamic dependency *'
-                    };
+                    return processCommonJsRequire(node);
                 }
 
                 if (node.arguments.length === 2) {
-                    if (node.arguments[0].type === 'ArrayExpression') {
-                        return node.arguments[0].elements.map(function (item) {
-                            return {
-                                line: node.loc.start.line,
-                                path: item.type === 'Literal' ? dependencies[item.value] || item.value : '* dynamic dependency *'
-                            };
-                        });
-                    }
-
-                    return {
-                        line: node.loc.start.line,
-                        path: '* dynamic dependencies *'
-                    };
+                    return processAmdRequire(node);
                 }
 
                 return;
@@ -50,27 +35,66 @@ function get () {
                 node.callee.object.type === 'Identifier' &&
                 node.callee.object.name === 'require' &&
                 node.callee.property.type === 'Identifier' &&
-                node.callee.property.name === 'config' &&
-                node.arguments.length === 1 &&
-                node.arguments[0].type === 'ObjectExpression' &&
-                Array.isArray(node.arguments[0].properties)
+                node.callee.property.name === 'config'
             ) {
-                node.arguments[0].properties.forEach(function (p) {
-                    if (
-                        p.key.type === 'Identifier' &&
-                        p.key.name === 'paths' &&
-                        p.value.type === 'ObjectExpression' &&
-                        Array.isArray(p.value.properties)
-                    ) {
-                        p.value.properties.forEach(function (pp) {
-                            if (pp.key.type === 'Identifier' && pp.value.type === 'Literal') {
-                                dependencies[pp.key.name] = pp.value.value;
-                            }
-                        });
-                    }
-                });
+                processAmdRequireConfig(node.arguments);
             }
         }
     );
+}
+
+function processCommonJsRequire (node) {
+    return createDependency(node, resolveRequireDependency(node.arguments[0]));
+}
+
+function resolveRequireDependency (dependency, resolver) {
+    if (dependency.type === 'Literal') {
+        if (typeof resolver === 'function') {
+            return resolver(dependency.value);
+        }
+
+        return dependency.value;
+    }
+
+    return '* dynamic dependency *';
+}
+
+function createDependency (node, path) {
+    return {
+        line: node.loc.start.line,
+        path: path
+    };
+}
+
+function processAmdRequire (node) {
+    if (node.arguments[0].type === 'ArrayExpression') {
+        return node.arguments[0].elements.map(function (item) {
+            return createDependency(node, resolveRequireDependency(item, resolveAmdRequireDependency));
+        });
+    }
+
+    return createDependency(node, '* dynamic dependencies *');
+}
+
+function resolveAmdRequireDependency (dependency) {
+    return amdPathAliases[dependency] || dependency;
+}
+
+function processAmdRequireConfig (args) {
+    if (args.length === 1 && args[0].type === 'ObjectExpression') {
+        args[0].properties.forEach(processAmdRequireConfigProperty);
+    }
+}
+
+function processAmdRequireConfigProperty (property) {
+    if (property.key.type === 'Identifier' && property.key.name === 'paths' && property.value.type === 'ObjectExpression') {
+        property.value.properties.forEach(setAmdPathAlias);
+    }
+}
+
+function setAmdPathAlias (alias) {
+    if (alias.key.type === 'Identifier' && alias.value.type === 'Literal') {
+        amdPathAliases[alias.key.name] = alias.value.value;
+    }
 }
 
