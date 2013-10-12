@@ -20,6 +20,7 @@ function formatModule (report) {
         '\n\n',
         '  Maintainability index: ', report.maintainability, '\n',
         '  Aggregate cyclomatic complexity: ', report.aggregate.complexity.cyclomatic, '\n',
+        '  Dependency count: ', report.dependencies.length,
         '  Mean parameter count: ', report.params,
         formatFunctions(report.functions)
     ].join('');
