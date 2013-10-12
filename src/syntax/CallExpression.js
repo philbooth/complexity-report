@@ -70,12 +70,18 @@ function createDependency (node, path) {
 
 function processAmdRequire (node) {
     if (node.arguments[0].type === 'ArrayExpression') {
-        return node.arguments[0].elements.map(function (item) {
-            return createDependency(node, resolveRequireDependency(item, resolveAmdRequireDependency));
-        });
+        return node.arguments[0].elements.map(processAmdRequireItem.bind(null, node));
+    }
+
+    if (node.arguments[0].type === 'Literal') {
+        return processAmdRequireItem(node, node.arguments[0]);
     }
 
     return createDependency(node, '* dynamic dependencies *');
+}
+
+function processAmdRequireItem (node, item) {
+    return createDependency(node, resolveRequireDependency(item, resolveAmdRequireDependency));
 }
 
 function resolveAmdRequireDependency (dependency) {

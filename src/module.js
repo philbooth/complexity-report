@@ -229,9 +229,11 @@ function processDependencies (node) {
         if (check.isObject(dependencies) || check.isArray(dependencies)) {
             report.dependencies = report.dependencies.concat(dependencies);
         }
-    }
 
-    clearDependencies = false;
+        // HACK: This will fail with async or if other syntax than CallExpression introduces dependencies.
+        // TODO: Come up with a less crude approach.
+        clearDependencies = false;
+    }
 }
 
 function processChildrenInNewScope (node, assignedName) {

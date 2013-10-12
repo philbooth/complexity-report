@@ -2626,6 +2626,27 @@ suite('module:', function () {
                 assert.strictEqual(report.dependencies[2].path, '../wibble');
             });
         });
+
+        suite('AMD require literal string:', function () {
+            var report;
+
+            setup(function () {
+                report = cr.analyse('require("foo", function (foo) {});');
+            });
+
+            teardown(function () {
+                report = undefined;
+            });
+
+            test('dependencies has correct length', function () {
+                assert.lengthOf(report.dependencies, 1);
+            });
+
+            test('dependencies are correct', function () {
+                assert.strictEqual(report.dependencies[0].line, 1);
+                assert.strictEqual(report.dependencies[0].path, 'foo');
+            });
+        });
     });
 });
 
