@@ -4,12 +4,12 @@
 
 'use strict';
 
-var options, formatter, filePattern, state, reports = [],
+var options, formatter, filePattern, state,
 
 cli = require('commander'),
 fs = require('fs'),
 path = require('path'),
-cr = require('./complexityReport'),
+cr = require('./project'),
 check = require('check-types');
 
 parseCommandLine();
@@ -17,6 +17,7 @@ parseCommandLine();
 state = {
     starting: true,
     openFileCount: 0,
+    source: [],
     tooComplex: false,
     failingModules: []
 };
@@ -131,7 +132,7 @@ function parseCommandLine () {
 
     try {
         formatter = require('./formats/' + cli.format);
-    } catch (error) {
+    } catch (err) {
         formatter = require(cli.format);
     }
 }
@@ -192,9 +193,7 @@ function readFile (filePath) {
             source = commentFirstLine(source);
         }
 
-        getReport(filePath, source);
-
-        finish();
+        setSource(filePath, source);
     });
 }
 
@@ -219,35 +218,61 @@ function commentFirstLine (source) {
     return '//' + source;
 }
 
-function getReport (filePath, source) {
-    var report;
+function setSource (modulePath, source) {
+    state.source.push({
+        path: modulePath,
+        source: source
+    });
 
-    try {
-        report = cr.run(source, options);
-
-        if (state.tooComplex === false && isTooComplex(report)) {
-            state.tooComplex = true;
-            state.failingModules.push(filePath);
-        }
-
-        report.module = filePath;
-
-        reports.push(report);
-    } catch (error) {
-        console.log('Failed to analyse file `' + filePath + '`');
-        console.log('Reason: ' + error.message);
+    if (state.starting === false && state.openFileCount === 0) {
+        getReports();
     }
 }
 
-function isTooComplex (report) {
-    if (
-        (isModuleComplexityThresholdSet() && isModuleTooComplex(report)) ||
-        (isFunctionComplexityThresholdSet() && isFunctionTooComplex(report))
-    ) {
-        return true;
-    }
+function getReports () {
+    var reports, failingModules;
 
-    return false;
+    try {
+        reports = cr.analyse(state.source, options);
+
+        if (!cli.silent) {
+            writeReports(reports);
+        }
+
+        failingModules = getFailingModules(reports);
+        if (failingModules.length > 0) {
+            fail('Warning: Complexity threshold breached!\nFailing modules:\n' + failingModules.join('\n'));
+        }
+    } catch (err) {
+        error('getReports', err);
+    }
+}
+
+function writeReports (reports) {
+    var formatted = formatter.format(reports);
+
+    if (check.isUnemptyString(cli.output)) {
+        fs.writeFile(cli.output, formatted, 'utf8', function (err) {
+            if (err) {
+                error('writeReport', err);
+            }
+        });
+    } else {
+        console.log(formatted);
+    }
+}
+
+function getFailingModules (reports) {
+    return reports.reduce(function (failingModules, report) {
+        if (
+            (isModuleComplexityThresholdSet() && isModuleTooComplex(report)) ||
+            (isFunctionComplexityThresholdSet() && isFunctionTooComplex(report))
+        ) {
+            return failingModules.concat(report.path);
+        }
+
+        return failingModules;
+    }, []);
 }
 
 function isModuleComplexityThresholdSet () {
@@ -294,31 +319,5 @@ function isFunctionTooComplex (report) {
     }
 
     return false;
-}
-
-function finish () {
-    if (state.starting === false && state.openFileCount === 0) {
-        if (!cli.silent) {
-            writeReport();
-        }
-
-        if (state.tooComplex) {
-            fail('Warning: Complexity threshold breached!\nFailing modules:\n' + state.failingModules.join('\n'));
-        }
-    }
-}
-
-function writeReport () {
-    var formatted = formatter.format(reports);
-
-    if (check.isUnemptyString(cli.output)) {
-        fs.writeFile(cli.output, formatted, 'utf8', function (err) {
-            if (err) {
-                error('writeReport', err);
-            }
-        });
-    } else {
-        console.log(formatted);
-    }
 }
 

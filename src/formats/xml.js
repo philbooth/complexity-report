@@ -38,7 +38,7 @@ function formatModule (indentation, report) {
     }
 
     return createElementWithAttributes(
-        indentation, 'report', 'module="' + report.module + '"', true,
+        indentation, 'report', 'module="' + report.path + '"', true,
         createElement(nextIndentation, 'maintainability', false, report.maintainability) +
             formatAggregate(nextIndentation, report.aggregate) + functions
     );

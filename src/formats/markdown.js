@@ -5,20 +5,14 @@
 exports.format = format;
 
 function format (reports) {
-    var formatted = '# Complexity report ~ ' + (new Date()).toLocaleDateString() + '\n\n', i;
-
-    for (i = 0; i < reports.length; i += 1) {
-        formatted += formatModule(reports[i]) + '\n\n';
-    }
-
-    return formatted;
+    return reports.reduce(function (formatted, report) {
+        return formatted + formatModule(report) + '\n\n';
+    }, '# Complexity report ~ ' + (new Date()).toLocaleDateString() + '\n\n');
 }
 
 function formatModule (report) {
     return [
-        '## ',
-        report.module,
-        '\n\n',
+        '## ', report.path, '\n\n',
         '* Maintainability index: ', report.maintainability, '\n',
         '* Aggregate cyclomatic complexity: ', report.aggregate.complexity.cyclomatic, '\n',
         '* Dependency count: ', report.dependencies.length, '\n',
@@ -28,13 +22,9 @@ function formatModule (report) {
 }
 
 function formatFunctions (report) {
-    var formatted = '', i;
-
-    for (i = 0; i < report.length; i += 1) {
-        formatted += '\n' + formatFunction(report[i]);
-    }
-
-    return formatted;
+    return report.reduce(function (formatted, r) {
+        return formatted + '\n' + formatFunction(r);
+    }, '');
 }
 
 function formatFunction (report) {

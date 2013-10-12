@@ -1,21 +1,22 @@
-# Complexity report ~ Thursday, May 02, 2013
+# Complexity report ~ Saturday, October 12, 2013
 
 ## /home/phil/Code/complexityReport.js/src/cli.js
 
-* Maintainability index: 126.74075721093715
-* Aggregate cyclomatic complexity: 31
-* Mean parameter count: 0.9230769230769231
+* Maintainability index: 125.75264086605284
+* Aggregate cyclomatic complexity: 34
+* Dependency count: 7
+* Mean parameter count: 1.037037037037037
 * Function: **parseCommandLine**
-    * Line No.: 26
-    * Physical SLOC: 103
-    * Logical SLOC: 19
+    * Line No.: 28
+    * Physical SLOC: 111
+    * Logical SLOC: 21
     * Parameter count: 0
-    * Cyclomatic complexity: 7
-    * Halstead difficulty: 11.428571428571427
-    * Halstead volume: 1289.3654689326472
-    * Halstead effort: 14735.605359230252
+    * Cyclomatic complexity: 8
+    * Halstead difficulty: 12
+    * Halstead volume: 1439.357108119455
+    * Halstead effort: 17272.28529743346
 * Function: **expectFiles**
-    * Line No.: 130
+    * Line No.: 140
     * Physical SLOC: 5
     * Logical SLOC: 2
     * Parameter count: 2
@@ -24,8 +25,8 @@
     * Halstead volume: 30
     * Halstead effort: 90
 * Function: **readFiles**
-    * Line No.: 136
-    * Physical SLOC: 13
+    * Line No.: 146
+    * Physical SLOC: 15
     * Logical SLOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 1
@@ -33,16 +34,16 @@
     * Halstead volume: 39.863137138648355
     * Halstead effort: 93.01398665684617
 * Function: **&lt;anonymous>**
-    * Line No.: 137
-    * Physical SLOC: 9
-    * Logical SLOC: 6
+    * Line No.: 147
+    * Physical SLOC: 11
+    * Logical SLOC: 7
     * Parameter count: 1
-    * Cyclomatic complexity: 3
-    * Halstead difficulty: 4.5
-    * Halstead volume: 116
-    * Halstead effort: 522
+    * Cyclomatic complexity: 5
+    * Halstead difficulty: 7.636363636363637
+    * Halstead volume: 178.41295556463058
+    * Halstead effort: 1362.4262061299064
 * Function: **readDirectory**
-    * Line No.: 150
+    * Line No.: 162
     * Physical SLOC: 9
     * Logical SLOC: 1
     * Parameter count: 1
@@ -51,7 +52,7 @@
     * Halstead volume: 59.794705707972525
     * Halstead effort: 115.31836100823274
 * Function: **&lt;anonymous>**
-    * Line No.: 154
+    * Line No.: 166
     * Physical SLOC: 3
     * Logical SLOC: 1
     * Parameter count: 1
@@ -60,7 +61,7 @@
     * Halstead volume: 22.458839376460833
     * Halstead effort: 42.11032383086406
 * Function: **&lt;anonymous>**
-    * Line No.: 152
+    * Line No.: 164
     * Physical SLOC: 3
     * Logical SLOC: 1
     * Parameter count: 1
@@ -69,7 +70,7 @@
     * Halstead volume: 62.907475208398566
     * Halstead effort: 176.92727402362095
 * Function: **conditionallyReadFile**
-    * Line No.: 160
+    * Line No.: 172
     * Physical SLOC: 9
     * Logical SLOC: 4
     * Parameter count: 1
@@ -78,7 +79,7 @@
     * Halstead volume: 38.03910001730775
     * Halstead effort: 91.2938400415386
 * Function: **&lt;anonymous>**
-    * Line No.: 162
+    * Line No.: 174
     * Physical SLOC: 3
     * Logical SLOC: 1
     * Parameter count: 0
@@ -87,8 +88,8 @@
     * Halstead volume: 4.754887502163469
     * Halstead effort: 2.3774437510817346
 * Function: **readFile**
-    * Line No.: 170
-    * Physical SLOC: 19
+    * Line No.: 182
+    * Physical SLOC: 17
     * Logical SLOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 1
@@ -96,16 +97,16 @@
     * Halstead volume: 50.18947501009619
     * Halstead effort: 112.92631877271643
 * Function: **&lt;anonymous>**
-    * Line No.: 173
-    * Physical SLOC: 15
-    * Logical SLOC: 7
+    * Line No.: 185
+    * Physical SLOC: 13
+    * Logical SLOC: 6
     * Parameter count: 2
     * Cyclomatic complexity: 3
-    * Halstead difficulty: 3.75
-    * Halstead volume: 114.44895955500952
-    * Halstead effort: 429.18359833128574
+    * Halstead difficulty: 3.8636363636363633
+    * Halstead volume: 104
+    * Halstead effort: 401.81818181818176
 * Function: **isOpenFileLimitReached**
-    * Line No.: 190
+    * Line No.: 200
     * Physical SLOC: 3
     * Logical SLOC: 1
     * Parameter count: 0
@@ -114,7 +115,7 @@
     * Halstead volume: 22.458839376460833
     * Halstead effort: 33.68825906469125
 * Function: **error**
-    * Line No.: 194
+    * Line No.: 204
     * Physical SLOC: 3
     * Logical SLOC: 1
     * Parameter count: 2
@@ -123,7 +124,7 @@
     * Halstead volume: 41.20902501875006
     * Halstead effort: 82.41805003750012
 * Function: **fail**
-    * Line No.: 198
+    * Line No.: 208
     * Physical SLOC: 4
     * Logical SLOC: 2
     * Parameter count: 1
@@ -132,7 +133,7 @@
     * Halstead volume: 33
     * Halstead effort: 38.5
 * Function: **beginsWithShebang**
-    * Line No.: 203
+    * Line No.: 213
     * Physical SLOC: 3
     * Logical SLOC: 1
     * Parameter count: 1
@@ -141,7 +142,7 @@
     * Halstead volume: 41.20902501875006
     * Halstead effort: 115.38527005250016
 * Function: **commentFirstLine**
-    * Line No.: 207
+    * Line No.: 217
     * Physical SLOC: 3
     * Logical SLOC: 1
     * Parameter count: 1
@@ -149,26 +150,62 @@
     * Halstead difficulty: 1.5
     * Halstead volume: 10
     * Halstead effort: 15
-* Function: **getReport**
-    * Line No.: 211
-    * Physical SLOC: 18
-    * Logical SLOC: 10
+* Function: **setSource**
+    * Line No.: 221
+    * Physical SLOC: 10
+    * Logical SLOC: 5
     * Parameter count: 2
     * Cyclomatic complexity: 2
-    * Halstead difficulty: 7.071428571428571
-    * Halstead volume: 279.69276394968557
-    * Halstead effort: 1977.8274022156336
-* Function: **isTooComplex**
-    * Line No.: 230
-    * Physical SLOC: 8
+    * Halstead difficulty: 5.409090909090909
+    * Halstead volume: 125.09775004326937
+    * Halstead effort: 676.6651025067753
+* Function: **getReports**
+    * Line No.: 232
+    * Physical SLOC: 18
+    * Logical SLOC: 11
+    * Parameter count: 0
+    * Cyclomatic complexity: 3
+    * Halstead difficulty: 6.075
+    * Halstead volume: 228.32510677099592
+    * Halstead effort: 1387.0750236338001
+* Function: **writeReports**
+    * Line No.: 251
+    * Physical SLOC: 13
+    * Logical SLOC: 5
+    * Parameter count: 1
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 4.75
+    * Halstead volume: 149.33879237447786
+    * Halstead effort: 709.3592637787699
+* Function: **&lt;anonymous>**
+    * Line No.: 255
+    * Physical SLOC: 5
     * Logical SLOC: 2
     * Parameter count: 1
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 1.6666666666666667
+    * Halstead volume: 16.253496664211536
+    * Halstead effort: 27.089161107019226
+* Function: **getFailingModules**
+    * Line No.: 265
+    * Physical SLOC: 12
+    * Logical SLOC: 1
+    * Parameter count: 1
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 4.166666666666667
+    * Halstead volume: 30
+    * Halstead effort: 125.00000000000001
+* Function: **&lt;anonymous>**
+    * Line No.: 266
+    * Physical SLOC: 10
+    * Logical SLOC: 3
+    * Parameter count: 2
     * Cyclomatic complexity: 3
-    * Halstead difficulty: 3.75
-    * Halstead volume: 76.14709844115208
-    * Halstead effort: 285.5516191543203
+    * Halstead difficulty: 4.875
+    * Halstead volume: 98.9912279734977
+    * Halstead effort: 482.5822363708013
 * Function: **isModuleComplexityThresholdSet**
-    * Line No.: 239
+    * Line No.: 278
     * Physical SLOC: 3
     * Logical SLOC: 1
     * Parameter count: 0
@@ -177,25 +214,25 @@
     * Halstead volume: 22.458839376460833
     * Halstead effort: 33.68825906469125
 * Function: **isModuleTooComplex**
-    * Line No.: 243
+    * Line No.: 282
     * Physical SLOC: 5
     * Logical SLOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 2
-    * Halstead difficulty: 2.3333333333333335
-    * Halstead volume: 39.863137138648355
-    * Halstead effort: 93.01398665684617
+    * Halstead difficulty: 2.6666666666666665
+    * Halstead volume: 43.18506523353572
+    * Halstead effort: 115.16017395609524
 * Function: **isThresholdBreached**
-    * Line No.: 249
-    * Physical SLOC: 3
-    * Logical SLOC: 1
-    * Parameter count: 2
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 4.375
-    * Halstead volume: 38.03910001730775
-    * Halstead effort: 166.4210625757214
+    * Line No.: 288
+    * Physical SLOC: 7
+    * Logical SLOC: 3
+    * Parameter count: 3
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 11.2
+    * Halstead volume: 96.21143267166839
+    * Halstead effort: 1077.568045922686
 * Function: **isFunctionComplexityThresholdSet**
-    * Line No.: 253
+    * Line No.: 296
     * Physical SLOC: 3
     * Logical SLOC: 1
     * Parameter count: 0
@@ -204,7 +241,7 @@
     * Halstead volume: 110.70181179639353
     * Halstead effort: 506.0654253549418
 * Function: **isFunctionTooComplex**
-    * Line No.: 257
+    * Line No.: 300
     * Physical SLOC: 23
     * Logical SLOC: 11
     * Parameter count: 1
@@ -212,38 +249,12 @@
     * Halstead difficulty: 11.25
     * Halstead volume: 451.7922325468643
     * Halstead effort: 5082.662616152224
-* Function: **finish**
-    * Line No.: 281
-    * Physical SLOC: 11
-    * Logical SLOC: 5
-    * Parameter count: 0
-    * Cyclomatic complexity: 4
-    * Halstead difficulty: 3.545454545454546
-    * Halstead volume: 106.27403387250884
-    * Halstead effort: 376.7897564570768
-* Function: **writeReport**
-    * Line No.: 293
-    * Physical SLOC: 13
-    * Logical SLOC: 5
-    * Parameter count: 0
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 4.5
-    * Halstead volume: 144.94647495169912
-    * Halstead effort: 652.2591372826461
-* Function: **&lt;anonymous>**
-    * Line No.: 297
-    * Physical SLOC: 5
-    * Logical SLOC: 2
-    * Parameter count: 1
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 1.6666666666666667
-    * Halstead volume: 16.253496664211536
-    * Halstead effort: 27.089161107019226
 
 ## /home/phil/Code/complexityReport.js/src/formats/json.js
 
 * Maintainability index: 157.71800752429994
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 0
 * Mean parameter count: 1
 * Function: **format**
     * Line No.: 7
@@ -255,361 +266,59 @@
     * Halstead volume: 27
     * Halstead effort: 48.599999999999994
 
-## /home/phil/Code/complexityReport.js/src/complexityReport.js
-
-* Maintainability index: 122.96163736290345
-* Aggregate cyclomatic complexity: 28
-* Mean parameter count: 2.057142857142857
-* Function: **run**
-    * Line No.: 28
-    * Physical SLOC: 26
-    * Logical SLOC: 14
-    * Parameter count: 2
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 7.434782608695652
-    * Halstead volume: 315
-    * Halstead effort: 2341.9565217391305
-* Function: **getDefaultSettings**
-    * Line No.: 55
-    * Physical SLOC: 9
-    * Logical SLOC: 6
-    * Parameter count: 0
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 2.0625
-    * Halstead volume: 62.26976913547136
-    * Halstead effort: 128.43139884190967
-* Function: **createReport**
-    * Line No.: 65
-    * Physical SLOC: 6
-    * Logical SLOC: 3
-    * Parameter count: 1
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 3.2142857142857144
-    * Halstead volume: 53.77443751081735
-    * Halstead effort: 172.84640628477007
-* Function: **createFunctionReport**
-    * Line No.: 72
-    * Physical SLOC: 15
-    * Logical SLOC: 10
-    * Parameter count: 3
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 6.5625
-    * Halstead volume: 235.22522171496468
-    * Halstead effort: 1543.6655175044557
-* Function: **createInitialHalsteadState**
-    * Line No.: 88
-    * Physical SLOC: 6
-    * Logical SLOC: 3
-    * Parameter count: 0
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 2.5
-    * Halstead volume: 33
-    * Halstead effort: 82.5
-* Function: **createInitialHalsteadItemState**
-    * Line No.: 95
-    * Physical SLOC: 7
-    * Logical SLOC: 4
-    * Parameter count: 0
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 2.8
-    * Halstead volume: 41.20902501875006
-    * Halstead effort: 115.38527005250016
-* Function: **processTree**
-    * Line No.: 103
-    * Physical SLOC: 7
-    * Logical SLOC: 2
-    * Parameter count: 3
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 1.875
-    * Halstead volume: 51.89147427955947
-    * Halstead effort: 97.296514274174
-* Function: **&lt;anonymous>**
-    * Line No.: 106
-    * Physical SLOC: 3
-    * Logical SLOC: 1
-    * Parameter count: 1
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 0.625
-    * Halstead volume: 13.931568569324174
-    * Halstead effort: 8.707230355827608
-* Function: **processNode**
-    * Line No.: 111
-    * Physical SLOC: 20
-    * Logical SLOC: 12
-    * Parameter count: 3
-    * Cyclomatic complexity: 4
-    * Halstead difficulty: 7.199999999999999
-    * Halstead volume: 250.36209309838935
-    * Halstead effort: 1802.607070308403
-* Function: **processLloc**
-    * Line No.: 132
-    * Physical SLOC: 3
-    * Logical SLOC: 1
-    * Parameter count: 2
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 0.7
-    * Halstead volume: 20.67970000576925
-    * Halstead effort: 14.475790004038473
-* Function: **incrementCounter**
-    * Line No.: 136
-    * Physical SLOC: 9
-    * Logical SLOC: 6
-    * Parameter count: 4
-    * Cyclomatic complexity: 3
-    * Halstead difficulty: 6.6000000000000005
-    * Halstead volume: 148
-    * Halstead effort: 976.8000000000001
-* Function: **incrementLogicalSloc**
-    * Line No.: 146
-    * Physical SLOC: 7
-    * Logical SLOC: 3
-    * Parameter count: 2
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 3
-    * Halstead volume: 79.72627427729671
-    * Halstead effort: 239.17882283189013
-* Function: **processComplexity**
-    * Line No.: 154
-    * Physical SLOC: 3
-    * Logical SLOC: 1
-    * Parameter count: 2
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 0.7
-    * Halstead volume: 20.67970000576925
-    * Halstead effort: 14.475790004038473
-* Function: **incrementComplexity**
-    * Line No.: 158
-    * Physical SLOC: 7
-    * Logical SLOC: 3
-    * Parameter count: 2
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 3
-    * Halstead volume: 63.39850002884625
-    * Halstead effort: 190.19550008653874
-* Function: **processOperators**
-    * Line No.: 166
-    * Physical SLOC: 3
-    * Logical SLOC: 1
-    * Parameter count: 2
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 0.75
-    * Halstead volume: 16.253496664211536
-    * Halstead effort: 12.190122498158651
-* Function: **processOperands**
-    * Line No.: 170
-    * Physical SLOC: 3
-    * Logical SLOC: 1
-    * Parameter count: 2
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 0.75
-    * Halstead volume: 16.253496664211536
-    * Halstead effort: 12.190122498158651
-* Function: **processHalsteadMetric**
-    * Line No.: 174
-    * Physical SLOC: 19
-    * Logical SLOC: 3
-    * Parameter count: 3
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 4.5
-    * Halstead volume: 108
-    * Halstead effort: 486
-* Function: **&lt;anonymous>**
-    * Line No.: 178
-    * Physical SLOC: 13
-    * Logical SLOC: 7
-    * Parameter count: 1
-    * Cyclomatic complexity: 4
-    * Halstead difficulty: 9.454545454545455
-    * Halstead volume: 199.6525931318485
-    * Halstead effort: 1887.6245168829314
-* Function: **halsteadItemEncountered**
-    * Line No.: 194
-    * Physical SLOC: 7
-    * Logical SLOC: 3
-    * Parameter count: 3
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 3.25
-    * Halstead volume: 53.88872502451932
-    * Halstead effort: 175.13835632968778
-* Function: **incrementHalsteadItems**
-    * Line No.: 202
-    * Physical SLOC: 4
-    * Logical SLOC: 2
-    * Parameter count: 3
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 1
-    * Halstead volume: 31.019550008653873
-    * Halstead effort: 31.019550008653873
-* Function: **incrementDistinctHalsteadItems**
-    * Line No.: 207
-    * Physical SLOC: 9
-    * Logical SLOC: 6
-    * Parameter count: 3
-    * Cyclomatic complexity: 3
-    * Halstead difficulty: 5
-    * Halstead volume: 143.0611994437619
-    * Halstead effort: 715.3059972188095
-* Function: **isHalsteadMetricDistinct**
-    * Line No.: 217
-    * Physical SLOC: 3
-    * Logical SLOC: 1
-    * Parameter count: 3
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 3.4375
-    * Halstead volume: 74.00879436282185
-    * Halstead effort: 254.4052306222001
-* Function: **recordDistinctHalsteadMetric**
-    * Line No.: 221
-    * Physical SLOC: 3
-    * Logical SLOC: 1
-    * Parameter count: 3
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 1.4285714285714286
-    * Halstead volume: 50.718800023077
-    * Halstead effort: 72.45542860439572
-* Function: **incrementHalsteadMetric**
-    * Line No.: 225
-    * Physical SLOC: 5
-    * Logical SLOC: 2
-    * Parameter count: 3
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 2.5
-    * Halstead volume: 50.718800023077
-    * Halstead effort: 126.7970000576925
-* Function: **incrementTotalHalsteadItems**
-    * Line No.: 231
-    * Physical SLOC: 3
-    * Logical SLOC: 1
-    * Parameter count: 2
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 0.75
-    * Halstead volume: 16.253496664211536
-    * Halstead effort: 12.190122498158651
-* Function: **processChildrenInNewScope**
-    * Line No.: 235
-    * Physical SLOC: 8
-    * Logical SLOC: 4
-    * Parameter count: 2
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 4.5
-    * Halstead volume: 194.4867642699313
-    * Halstead effort: 875.190439214691
-* Function: **processChildren**
-    * Line No.: 244
-    * Physical SLOC: 13
-    * Logical SLOC: 3
-    * Parameter count: 2
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 4.199999999999999
-    * Halstead volume: 104
-    * Halstead effort: 436.79999999999995
-* Function: **&lt;anonymous>**
-    * Line No.: 248
-    * Physical SLOC: 7
-    * Logical SLOC: 1
-    * Parameter count: 1
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 2.1666666666666665
-    * Halstead volume: 75.28421251514429
-    * Halstead effort: 163.11579378281263
-* Function: **processChild**
-    * Line No.: 258
-    * Physical SLOC: 4
-    * Logical SLOC: 2
-    * Parameter count: 3
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 4.0625
-    * Halstead volume: 70.30835464468075
-    * Halstead effort: 285.6276907440155
-* Function: **calculateMetrics**
-    * Line No.: 263
-    * Physical SLOC: 37
-    * Logical SLOC: 20
-    * Parameter count: 1
-    * Cyclomatic complexity: 3
-    * Halstead difficulty: 20.3125
-    * Halstead volume: 635.5533106067319
-    * Halstead effort: 12909.676621699242
-* Function: **&lt;anonymous>**
-    * Line No.: 289
-    * Physical SLOC: 1
-    * Logical SLOC: 1
-    * Parameter count: 1
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 1.5
-    * Halstead volume: 10
-    * Halstead effort: 15
-* Function: **calculateHalsteadMetrics**
-    * Line No.: 301
-    * Physical SLOC: 15
-    * Logical SLOC: 10
-    * Parameter count: 1
-    * Cyclomatic complexity: 3
-    * Halstead difficulty: 16.5
-    * Halstead volume: 603.5475432598478
-    * Halstead effort: 9958.534463787488
-* Function: **nilHalsteadMetrics**
-    * Line No.: 317
-    * Physical SLOC: 9
-    * Logical SLOC: 1
-    * Parameter count: 1
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 1.75
-    * Halstead volume: 86.37013046707143
-    * Halstead effort: 151.147728317375
-* Function: **sumMaintainabilityMetrics**
-    * Line No.: 327
-    * Physical SLOC: 6
-    * Logical SLOC: 4
-    * Parameter count: 3
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 2.272727272727273
-    * Halstead volume: 159.11890788006696
-    * Halstead effort: 361.63388154560676
-* Function: **calculateMaintainabilityIndex**
-    * Line No.: 334
-    * Physical SLOC: 19
-    * Logical SLOC: 8
-    * Parameter count: 4
-    * Cyclomatic complexity: 5
-    * Halstead difficulty: 13.666666666666666
-    * Halstead volume: 368.0167946706389
-    * Halstead effort: 5029.562860498731
-
 ## /home/phil/Code/complexityReport.js/src/formats/markdown.js
 
-* Maintainability index: 126.64837904909885
-* Aggregate cyclomatic complexity: 3
-* Mean parameter count: 1
+* Maintainability index: 145.78586636353444
+* Aggregate cyclomatic complexity: 1
+* Dependency count: 0
+* Mean parameter count: 1.3333333333333333
 * Function: **format**
     * Line No.: 7
-    * Physical SLOC: 9
-    * Logical SLOC: 5
+    * Physical SLOC: 5
+    * Logical SLOC: 1
     * Parameter count: 1
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 9.09090909090909
-    * Halstead volume: 162.51574464281416
-    * Halstead effort: 1477.4158603892195
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 3.4285714285714284
+    * Halstead volume: 62.907475208398566
+    * Halstead effort: 215.6827721430808
+* Function: **&lt;anonymous>**
+    * Line No.: 8
+    * Physical SLOC: 3
+    * Logical SLOC: 1
+    * Parameter count: 2
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.25
+    * Halstead volume: 28.07354922057604
+    * Halstead effort: 63.16548574629609
 * Function: **formatModule**
-    * Line No.: 17
-    * Physical SLOC: 11
+    * Line No.: 13
+    * Physical SLOC: 10
     * Logical SLOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 1
-    * Halstead difficulty: 2.6666666666666665
-    * Halstead volume: 160.5395382709427
-    * Halstead effort: 428.1054353891805
+    * Halstead difficulty: 2.761904761904762
+    * Halstead volume: 199.68581616031315
+    * Halstead effort: 551.5132065380077
 * Function: **formatFunctions**
-    * Line No.: 29
-    * Physical SLOC: 9
-    * Logical SLOC: 5
+    * Line No.: 24
+    * Physical SLOC: 5
+    * Logical SLOC: 1
     * Parameter count: 1
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 8.5
-    * Halstead volume: 120.92782504182705
-    * Halstead effort: 1027.8865128555299
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.5
+    * Halstead volume: 27
+    * Halstead effort: 67.5
+* Function: **&lt;anonymous>**
+    * Line No.: 25
+    * Physical SLOC: 3
+    * Logical SLOC: 1
+    * Parameter count: 2
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.25
+    * Halstead volume: 28.07354922057604
+    * Halstead effort: 63.16548574629609
 * Function: **formatFunction**
-    * Line No.: 39
+    * Line No.: 30
     * Physical SLOC: 13
     * Logical SLOC: 2
     * Parameter count: 1
@@ -620,21 +329,31 @@
 
 ## /home/phil/Code/complexityReport.js/src/formats/minimal.js
 
-* Maintainability index: 128.6335090637258
-* Aggregate cyclomatic complexity: 3
-* Mean parameter count: 1
+* Maintainability index: 150.1745402591331
+* Aggregate cyclomatic complexity: 1
+* Dependency count: 0
+* Mean parameter count: 1.3333333333333333
 * Function: **format**
     * Line No.: 7
-    * Physical SLOC: 9
-    * Logical SLOC: 5
+    * Physical SLOC: 5
+    * Logical SLOC: 1
     * Parameter count: 1
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 8.5
-    * Halstead volume: 120.92782504182705
-    * Halstead effort: 1027.8865128555299
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.5
+    * Halstead volume: 27
+    * Halstead effort: 67.5
+* Function: **&lt;anonymous>**
+    * Line No.: 8
+    * Physical SLOC: 3
+    * Logical SLOC: 1
+    * Parameter count: 2
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.25
+    * Halstead volume: 28.07354922057604
+    * Halstead effort: 63.16548574629609
 * Function: **formatModule**
-    * Line No.: 17
-    * Physical SLOC: 8
+    * Line No.: 13
+    * Physical SLOC: 6
     * Logical SLOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 1
@@ -642,16 +361,25 @@
     * Halstead volume: 74.00879436282185
     * Halstead effort: 197.3567849675249
 * Function: **formatFunctions**
-    * Line No.: 26
-    * Physical SLOC: 9
-    * Logical SLOC: 5
+    * Line No.: 20
+    * Physical SLOC: 5
+    * Logical SLOC: 1
     * Parameter count: 1
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 8.5
-    * Halstead volume: 120.92782504182705
-    * Halstead effort: 1027.8865128555299
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.5
+    * Halstead volume: 27
+    * Halstead effort: 67.5
+* Function: **&lt;anonymous>**
+    * Line No.: 21
+    * Physical SLOC: 3
+    * Logical SLOC: 1
+    * Parameter count: 2
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.25
+    * Halstead volume: 28.07354922057604
+    * Halstead effort: 63.16548574629609
 * Function: **formatFunction**
-    * Line No.: 36
+    * Line No.: 26
     * Physical SLOC: 10
     * Logical SLOC: 2
     * Parameter count: 1
@@ -662,38 +390,57 @@
 
 ## /home/phil/Code/complexityReport.js/src/formats/plain.js
 
-* Maintainability index: 127.04370030096712
-* Aggregate cyclomatic complexity: 3
-* Mean parameter count: 1
+* Maintainability index: 146.04895809717829
+* Aggregate cyclomatic complexity: 1
+* Dependency count: 0
+* Mean parameter count: 1.3333333333333333
 * Function: **format**
     * Line No.: 7
-    * Physical SLOC: 9
-    * Logical SLOC: 5
+    * Physical SLOC: 5
+    * Logical SLOC: 1
     * Parameter count: 1
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 8.5
-    * Halstead volume: 120.92782504182705
-    * Halstead effort: 1027.8865128555299
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.5
+    * Halstead volume: 27
+    * Halstead effort: 67.5
+* Function: **&lt;anonymous>**
+    * Line No.: 8
+    * Physical SLOC: 3
+    * Logical SLOC: 1
+    * Parameter count: 2
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.25
+    * Halstead volume: 28.07354922057604
+    * Halstead effort: 63.16548574629609
 * Function: **formatModule**
-    * Line No.: 17
+    * Line No.: 13
     * Physical SLOC: 10
     * Logical SLOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 1
-    * Halstead difficulty: 2.7058823529411766
-    * Halstead volume: 153.73110979725664
-    * Halstead effort: 415.97829709845917
+    * Halstead difficulty: 2.8
+    * Halstead volume: 192.56842503028858
+    * Halstead effort: 539.191590084808
 * Function: **formatFunctions**
-    * Line No.: 28
-    * Physical SLOC: 9
-    * Logical SLOC: 5
+    * Line No.: 24
+    * Physical SLOC: 5
+    * Logical SLOC: 1
     * Parameter count: 1
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 8.5
-    * Halstead volume: 120.92782504182705
-    * Halstead effort: 1027.8865128555299
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.5
+    * Halstead volume: 27
+    * Halstead effort: 67.5
+* Function: **&lt;anonymous>**
+    * Line No.: 25
+    * Physical SLOC: 3
+    * Logical SLOC: 1
+    * Parameter count: 2
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.25
+    * Halstead volume: 28.07354922057604
+    * Halstead effort: 63.16548574629609
 * Function: **formatFunction**
-    * Line No.: 38
+    * Line No.: 30
     * Physical SLOC: 13
     * Logical SLOC: 2
     * Parameter count: 1
@@ -706,6 +453,7 @@
 
 * Maintainability index: 141.17826179291737
 * Aggregate cyclomatic complexity: 5
+* Dependency count: 0
 * Mean parameter count: 2.375
 * Function: **format**
     * Line No.: 7
@@ -852,10 +600,383 @@
     * Halstead volume: 55.350905898196764
     * Halstead effort: 114.16124341503082
 
+## /home/phil/Code/complexityReport.js/src/index.js
+
+* Maintainability index: 133.01348373157612
+* Aggregate cyclomatic complexity: 2
+* Dependency count: 4
+* Mean parameter count: 2
+* Function: **run**
+    * Line No.: 26
+    * Physical SLOC: 9
+    * Logical SLOC: 3
+    * Parameter count: 2
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 3.75
+    * Halstead volume: 93.20902501875007
+    * Halstead effort: 349.53384382031277
+
+## /home/phil/Code/complexityReport.js/src/module.js
+
+* Maintainability index: 122.3400341004548
+* Aggregate cyclomatic complexity: 31
+* Dependency count: 4
+* Mean parameter count: 2.0277777777777777
+* Function: **analyse**
+    * Line No.: 14
+    * Physical SLOC: 27
+    * Logical SLOC: 15
+    * Parameter count: 2
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 7.5
+    * Halstead volume: 332.93001187765793
+    * Halstead effort: 2496.9750890824344
+* Function: **getDefaultSettings**
+    * Line No.: 42
+    * Physical SLOC: 9
+    * Logical SLOC: 6
+    * Parameter count: 0
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.0625
+    * Halstead volume: 62.26976913547136
+    * Halstead effort: 128.43139884190967
+* Function: **createReport**
+    * Line No.: 52
+    * Physical SLOC: 7
+    * Logical SLOC: 4
+    * Parameter count: 1
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 3.4375
+    * Halstead volume: 70.30835464468075
+    * Halstead effort: 241.68496909109007
+* Function: **createFunctionReport**
+    * Line No.: 60
+    * Physical SLOC: 15
+    * Logical SLOC: 10
+    * Parameter count: 3
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 6.5625
+    * Halstead volume: 235.22522171496468
+    * Halstead effort: 1543.6655175044557
+* Function: **createInitialHalsteadState**
+    * Line No.: 76
+    * Physical SLOC: 6
+    * Logical SLOC: 3
+    * Parameter count: 0
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.5
+    * Halstead volume: 33
+    * Halstead effort: 82.5
+* Function: **createInitialHalsteadItemState**
+    * Line No.: 83
+    * Physical SLOC: 7
+    * Logical SLOC: 4
+    * Parameter count: 0
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.8
+    * Halstead volume: 41.20902501875006
+    * Halstead effort: 115.38527005250016
+* Function: **processTree**
+    * Line No.: 91
+    * Physical SLOC: 7
+    * Logical SLOC: 2
+    * Parameter count: 3
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 1.875
+    * Halstead volume: 51.89147427955947
+    * Halstead effort: 97.296514274174
+* Function: **&lt;anonymous>**
+    * Line No.: 94
+    * Physical SLOC: 3
+    * Logical SLOC: 1
+    * Parameter count: 1
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 0.625
+    * Halstead volume: 13.931568569324174
+    * Halstead effort: 8.707230355827608
+* Function: **processNode**
+    * Line No.: 99
+    * Physical SLOC: 21
+    * Logical SLOC: 13
+    * Parameter count: 3
+    * Cyclomatic complexity: 4
+    * Halstead difficulty: 6.75
+    * Halstead volume: 249.72817064368866
+    * Halstead effort: 1685.6651518448984
+* Function: **processLloc**
+    * Line No.: 121
+    * Physical SLOC: 3
+    * Logical SLOC: 1
+    * Parameter count: 2
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 0.7
+    * Halstead volume: 20.67970000576925
+    * Halstead effort: 14.475790004038473
+* Function: **incrementCounter**
+    * Line No.: 125
+    * Physical SLOC: 9
+    * Logical SLOC: 6
+    * Parameter count: 4
+    * Cyclomatic complexity: 3
+    * Halstead difficulty: 6.6000000000000005
+    * Halstead volume: 148
+    * Halstead effort: 976.8000000000001
+* Function: **incrementLogicalSloc**
+    * Line No.: 135
+    * Physical SLOC: 7
+    * Logical SLOC: 3
+    * Parameter count: 2
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 3
+    * Halstead volume: 79.72627427729671
+    * Halstead effort: 239.17882283189013
+* Function: **processComplexity**
+    * Line No.: 143
+    * Physical SLOC: 3
+    * Logical SLOC: 1
+    * Parameter count: 2
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 0.7
+    * Halstead volume: 20.67970000576925
+    * Halstead effort: 14.475790004038473
+* Function: **incrementComplexity**
+    * Line No.: 147
+    * Physical SLOC: 7
+    * Logical SLOC: 3
+    * Parameter count: 2
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 3
+    * Halstead volume: 63.39850002884625
+    * Halstead effort: 190.19550008653874
+* Function: **processOperators**
+    * Line No.: 155
+    * Physical SLOC: 3
+    * Logical SLOC: 1
+    * Parameter count: 2
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 0.75
+    * Halstead volume: 16.253496664211536
+    * Halstead effort: 12.190122498158651
+* Function: **processOperands**
+    * Line No.: 159
+    * Physical SLOC: 3
+    * Logical SLOC: 1
+    * Parameter count: 2
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 0.75
+    * Halstead volume: 16.253496664211536
+    * Halstead effort: 12.190122498158651
+* Function: **processHalsteadMetric**
+    * Line No.: 163
+    * Physical SLOC: 19
+    * Logical SLOC: 3
+    * Parameter count: 3
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 4.5
+    * Halstead volume: 108
+    * Halstead effort: 486
+* Function: **&lt;anonymous>**
+    * Line No.: 167
+    * Physical SLOC: 13
+    * Logical SLOC: 7
+    * Parameter count: 1
+    * Cyclomatic complexity: 4
+    * Halstead difficulty: 9.454545454545455
+    * Halstead volume: 199.6525931318485
+    * Halstead effort: 1887.6245168829314
+* Function: **halsteadItemEncountered**
+    * Line No.: 183
+    * Physical SLOC: 7
+    * Logical SLOC: 3
+    * Parameter count: 3
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 3.25
+    * Halstead volume: 53.88872502451932
+    * Halstead effort: 175.13835632968778
+* Function: **incrementHalsteadItems**
+    * Line No.: 191
+    * Physical SLOC: 4
+    * Logical SLOC: 2
+    * Parameter count: 3
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 1
+    * Halstead volume: 31.019550008653873
+    * Halstead effort: 31.019550008653873
+* Function: **incrementDistinctHalsteadItems**
+    * Line No.: 196
+    * Physical SLOC: 9
+    * Logical SLOC: 6
+    * Parameter count: 3
+    * Cyclomatic complexity: 3
+    * Halstead difficulty: 5
+    * Halstead volume: 143.0611994437619
+    * Halstead effort: 715.3059972188095
+* Function: **isHalsteadMetricDistinct**
+    * Line No.: 206
+    * Physical SLOC: 3
+    * Logical SLOC: 1
+    * Parameter count: 3
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 3.4375
+    * Halstead volume: 74.00879436282185
+    * Halstead effort: 254.4052306222001
+* Function: **recordDistinctHalsteadMetric**
+    * Line No.: 210
+    * Physical SLOC: 3
+    * Logical SLOC: 1
+    * Parameter count: 3
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 1.4285714285714286
+    * Halstead volume: 50.718800023077
+    * Halstead effort: 72.45542860439572
+* Function: **incrementHalsteadMetric**
+    * Line No.: 214
+    * Physical SLOC: 5
+    * Logical SLOC: 2
+    * Parameter count: 3
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 2.5
+    * Halstead volume: 50.718800023077
+    * Halstead effort: 126.7970000576925
+* Function: **incrementTotalHalsteadItems**
+    * Line No.: 220
+    * Physical SLOC: 3
+    * Logical SLOC: 1
+    * Parameter count: 2
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 0.75
+    * Halstead volume: 16.253496664211536
+    * Halstead effort: 12.190122498158651
+* Function: **processDependencies**
+    * Line No.: 224
+    * Physical SLOC: 14
+    * Logical SLOC: 7
+    * Parameter count: 1
+    * Cyclomatic complexity: 4
+    * Halstead difficulty: 6.6923076923076925
+    * Halstead volume: 220.89223069906643
+    * Halstead effort: 1478.2787746783677
+* Function: **processChildrenInNewScope**
+    * Line No.: 239
+    * Physical SLOC: 8
+    * Logical SLOC: 4
+    * Parameter count: 2
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 4.5
+    * Halstead volume: 194.4867642699313
+    * Halstead effort: 875.190439214691
+* Function: **processChildren**
+    * Line No.: 248
+    * Physical SLOC: 13
+    * Logical SLOC: 3
+    * Parameter count: 2
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 4.199999999999999
+    * Halstead volume: 104
+    * Halstead effort: 436.79999999999995
+* Function: **&lt;anonymous>**
+    * Line No.: 252
+    * Physical SLOC: 7
+    * Logical SLOC: 1
+    * Parameter count: 1
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 2.1666666666666665
+    * Halstead volume: 75.28421251514429
+    * Halstead effort: 163.11579378281263
+* Function: **processChild**
+    * Line No.: 262
+    * Physical SLOC: 4
+    * Logical SLOC: 2
+    * Parameter count: 3
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 4.0625
+    * Halstead volume: 70.30835464468075
+    * Halstead effort: 285.6276907440155
+* Function: **calculateMetrics**
+    * Line No.: 267
+    * Physical SLOC: 37
+    * Logical SLOC: 20
+    * Parameter count: 1
+    * Cyclomatic complexity: 3
+    * Halstead difficulty: 20.3125
+    * Halstead volume: 635.5533106067319
+    * Halstead effort: 12909.676621699242
+* Function: **&lt;anonymous>**
+    * Line No.: 293
+    * Physical SLOC: 1
+    * Logical SLOC: 1
+    * Parameter count: 1
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 1.5
+    * Halstead volume: 10
+    * Halstead effort: 15
+* Function: **calculateHalsteadMetrics**
+    * Line No.: 305
+    * Physical SLOC: 15
+    * Logical SLOC: 10
+    * Parameter count: 1
+    * Cyclomatic complexity: 3
+    * Halstead difficulty: 16.5
+    * Halstead volume: 603.5475432598478
+    * Halstead effort: 9958.534463787488
+* Function: **nilHalsteadMetrics**
+    * Line No.: 321
+    * Physical SLOC: 9
+    * Logical SLOC: 1
+    * Parameter count: 1
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 1.75
+    * Halstead volume: 86.37013046707143
+    * Halstead effort: 151.147728317375
+* Function: **sumMaintainabilityMetrics**
+    * Line No.: 331
+    * Physical SLOC: 6
+    * Logical SLOC: 4
+    * Parameter count: 3
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.272727272727273
+    * Halstead volume: 159.11890788006696
+    * Halstead effort: 361.63388154560676
+* Function: **calculateMaintainabilityIndex**
+    * Line No.: 338
+    * Physical SLOC: 19
+    * Logical SLOC: 8
+    * Parameter count: 4
+    * Cyclomatic complexity: 5
+    * Halstead difficulty: 13.666666666666666
+    * Halstead volume: 368.0167946706389
+    * Halstead effort: 5029.562860498731
+
+## /home/phil/Code/complexityReport.js/src/project.js
+
+* Maintainability index: 137.0075555262114
+* Aggregate cyclomatic complexity: 1
+* Dependency count: 2
+* Mean parameter count: 1.5
+* Function: **analyse**
+    * Line No.: 12
+    * Physical SLOC: 11
+    * Logical SLOC: 2
+    * Parameter count: 2
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 3.5714285714285716
+    * Halstead volume: 60.94436251225966
+    * Halstead effort: 217.65843754378452
+* Function: **&lt;anonymous>**
+    * Line No.: 17
+    * Physical SLOC: 5
+    * Logical SLOC: 3
+    * Parameter count: 1
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 4.285714285714286
+    * Halstead volume: 75.28421251514429
+    * Halstead effort: 322.6466250649041
+
 ## /home/phil/Code/complexityReport.js/src/safeName.js
 
 * Maintainability index: 122.71489671589015
 * Aggregate cyclomatic complexity: 3
+* Dependency count: 1
 * Mean parameter count: 2
 * Function: **module.exports**
     * Line No.: 7
@@ -871,6 +992,7 @@
 
 * Maintainability index: 156.55238607408194
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 2
 * Mean parameter count: 0
 * Function: **get**
     * Line No.: 9
@@ -886,6 +1008,7 @@
 
 * Maintainability index: 142.87477813190347
 * Aggregate cyclomatic complexity: 2
+* Dependency count: 2
 * Mean parameter count: 0.6666666666666666
 * Function: **get**
     * Line No.: 10
@@ -919,6 +1042,7 @@
 
 * Maintainability index: 155.68123130761276
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 1
 * Mean parameter count: 0.5
 * Function: **get**
     * Line No.: 9
@@ -943,6 +1067,7 @@
 
 * Maintainability index: 156.83047923574097
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 1
 * Mean parameter count: 0
 * Function: **get**
     * Line No.: 9
@@ -958,6 +1083,7 @@
 
 * Maintainability index: 155.76457769251132
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 1
 * Mean parameter count: 0
 * Function: **get**
     * Line No.: 9
@@ -971,18 +1097,19 @@
 
 ## /home/phil/Code/complexityReport.js/src/syntax/CallExpression.js
 
-* Maintainability index: 154.55182726218618
-* Aggregate cyclomatic complexity: 2
-* Mean parameter count: 0.5
+* Maintainability index: 133.23583548517894
+* Aggregate cyclomatic complexity: 15
+* Dependency count: 1
+* Mean parameter count: 1.2307692307692308
 * Function: **get**
     * Line No.: 9
-    * Physical SLOC: 8
+    * Physical SLOC: 28
     * Logical SLOC: 1
     * Parameter count: 0
     * Cyclomatic complexity: 1
-    * Halstead difficulty: 2.8125
-    * Halstead volume: 51.80615605397529
-    * Halstead effort: 145.70481390180552
+    * Halstead difficulty: 3.75
+    * Halstead volume: 66.60791492653966
+    * Halstead effort: 249.77968097452373
 * Function: **&lt;anonymous>**
     * Line No.: 11
     * Physical SLOC: 3
@@ -992,11 +1119,111 @@
     * Halstead difficulty: 2.3333333333333335
     * Halstead volume: 39.863137138648355
     * Halstead effort: 93.01398665684617
+* Function: **&lt;anonymous>**
+    * Line No.: 15
+    * Physical SLOC: 20
+    * Logical SLOC: 6
+    * Parameter count: 2
+    * Cyclomatic complexity: 4
+    * Halstead difficulty: 10.5
+    * Halstead volume: 371.3819625584137
+    * Halstead effort: 3899.510606863344
+* Function: **processRequire**
+    * Line No.: 38
+    * Physical SLOC: 9
+    * Logical SLOC: 4
+    * Parameter count: 1
+    * Cyclomatic complexity: 3
+    * Halstead difficulty: 4.642857142857143
+    * Halstead volume: 89.62406251802891
+    * Halstead effort: 416.11171883370565
+* Function: **processCommonJsRequire**
+    * Line No.: 48
+    * Physical SLOC: 3
+    * Logical SLOC: 1
+    * Parameter count: 1
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.0999999999999996
+    * Halstead volume: 36
+    * Halstead effort: 75.6
+* Function: **resolveRequireDependency**
+    * Line No.: 52
+    * Physical SLOC: 11
+    * Logical SLOC: 5
+    * Parameter count: 2
+    * Cyclomatic complexity: 3
+    * Halstead difficulty: 5.571428571428571
+    * Halstead volume: 92.5109929535273
+    * Halstead effort: 515.4183893125092
+* Function: **createDependency**
+    * Line No.: 64
+    * Physical SLOC: 6
+    * Logical SLOC: 3
+    * Parameter count: 2
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 3.3333333333333335
+    * Halstead volume: 56.472777613085164
+    * Halstead effort: 188.2425920436172
+* Function: **processAmdRequire**
+    * Line No.: 71
+    * Physical SLOC: 11
+    * Logical SLOC: 5
+    * Parameter count: 1
+    * Cyclomatic complexity: 3
+    * Halstead difficulty: 5.384615384615384
+    * Halstead volume: 216.83610007500022
+    * Halstead effort: 1167.5790004038472
+* Function: **processAmdRequireItem**
+    * Line No.: 83
+    * Physical SLOC: 3
+    * Logical SLOC: 1
+    * Parameter count: 2
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 1.4
+    * Halstead volume: 28.07354922057604
+    * Halstead effort: 39.302968908806456
+* Function: **resolveAmdRequireDependency**
+    * Line No.: 87
+    * Physical SLOC: 3
+    * Logical SLOC: 1
+    * Parameter count: 1
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 3
+    * Halstead volume: 16.253496664211536
+    * Halstead effort: 48.760489992634604
+* Function: **processAmdRequireConfig**
+    * Line No.: 91
+    * Physical SLOC: 5
+    * Logical SLOC: 2
+    * Parameter count: 1
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 3.611111111111111
+    * Halstead volume: 91.37651812938249
+    * Halstead effort: 329.970759911659
+* Function: **processAmdRequireConfigProperty**
+    * Line No.: 97
+    * Physical SLOC: 5
+    * Logical SLOC: 2
+    * Parameter count: 1
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 4.090909090909091
+    * Halstead volume: 136
+    * Halstead effort: 556.3636363636364
+* Function: **setAmdPathAlias**
+    * Line No.: 103
+    * Physical SLOC: 5
+    * Logical SLOC: 2
+    * Parameter count: 1
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 5
+    * Halstead volume: 111.01319154423277
+    * Halstead effort: 555.0659577211638
 
 ## /home/phil/Code/complexityReport.js/src/syntax/CatchClause.js
 
 * Maintainability index: 155.2499712915342
 * Aggregate cyclomatic complexity: 2
+* Dependency count: 1
 * Mean parameter count: 1
 * Function: **get**
     * Line No.: 9
@@ -1021,6 +1248,7 @@
 
 * Maintainability index: 155.0315438948429
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 1
 * Mean parameter count: 0
 * Function: **get**
     * Line No.: 9
@@ -1036,6 +1264,7 @@
 
 * Maintainability index: 155.76457769251132
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 1
 * Mean parameter count: 0
 * Function: **get**
     * Line No.: 9
@@ -1051,6 +1280,7 @@
 
 * Maintainability index: 155.3720394442222
 * Aggregate cyclomatic complexity: 2
+* Dependency count: 1
 * Mean parameter count: 0.5
 * Function: **get**
     * Line No.: 9
@@ -1075,6 +1305,7 @@
 
 * Maintainability index: 155.42980181944586
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 1
 * Mean parameter count: 0
 * Function: **get**
     * Line No.: 9
@@ -1090,6 +1321,7 @@
 
 * Maintainability index: 155.13353701758174
 * Aggregate cyclomatic complexity: 2
+* Dependency count: 1
 * Mean parameter count: 0.5
 * Function: **get**
     * Line No.: 9
@@ -1114,6 +1346,7 @@
 
 * Maintainability index: 154.9254525100122
 * Aggregate cyclomatic complexity: 2
+* Dependency count: 1
 * Mean parameter count: 0.5
 * Function: **get**
     * Line No.: 9
@@ -1138,6 +1371,7 @@
 
 * Maintainability index: 155.11465989996054
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 2
 * Mean parameter count: 0.5
 * Function: **get**
     * Line No.: 10
@@ -1162,6 +1396,7 @@
 
 * Maintainability index: 154.88837551538842
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 2
 * Mean parameter count: 0.5
 * Function: **get**
     * Line No.: 10
@@ -1186,6 +1421,7 @@
 
 * Maintainability index: 157.94048616092715
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 1
 * Mean parameter count: 0.5
 * Function: **get**
     * Line No.: 9
@@ -1210,6 +1446,7 @@
 
 * Maintainability index: 144.57203268776175
 * Aggregate cyclomatic complexity: 2
+* Dependency count: 1
 * Mean parameter count: 0.6666666666666666
 * Function: **get**
     * Line No.: 9
@@ -1239,10 +1476,36 @@
     * Halstead volume: 16.253496664211536
     * Halstead effort: 36.57036749447595
 
+## /home/phil/Code/complexityReport.js/src/syntax/Literal.js
+
+* Maintainability index: 141.08130561946314
+* Aggregate cyclomatic complexity: 2
+* Dependency count: 2
+* Mean parameter count: 0.5
+* Function: **get**
+    * Line No.: 10
+    * Physical SLOC: 13
+    * Logical SLOC: 1
+    * Parameter count: 0
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.4
+    * Halstead volume: 31.699250014423125
+    * Halstead effort: 76.07820003461549
+* Function: **&lt;anonymous>**
+    * Line No.: 13
+    * Physical SLOC: 8
+    * Logical SLOC: 3
+    * Parameter count: 1
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 5.5
+    * Halstead volume: 69.76048999263462
+    * Halstead effort: 383.6826949594904
+
 ## /home/phil/Code/complexityReport.js/src/syntax/LogicalExpression.js
 
 * Maintainability index: 154.72185898874935
 * Aggregate cyclomatic complexity: 2
+* Dependency count: 1
 * Mean parameter count: 1
 * Function: **get**
     * Line No.: 9
@@ -1276,6 +1539,7 @@
 
 * Maintainability index: 145.41253609833987
 * Aggregate cyclomatic complexity: 2
+* Dependency count: 1
 * Mean parameter count: 0.5
 * Function: **get**
     * Line No.: 9
@@ -1296,34 +1560,11 @@
     * Halstead volume: 85.83671966625714
     * Halstead effort: 360.51422259828
 
-## /home/phil/Code/complexityReport.js/src/syntax/Literal.js
-
-* Maintainability index: 141.08130561946314
-* Aggregate cyclomatic complexity: 2
-* Mean parameter count: 0.5
-* Function: **get**
-    * Line No.: 10
-    * Physical SLOC: 13
-    * Logical SLOC: 1
-    * Parameter count: 0
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 2.4
-    * Halstead volume: 31.699250014423125
-    * Halstead effort: 76.07820003461549
-* Function: **&lt;anonymous>**
-    * Line No.: 13
-    * Physical SLOC: 8
-    * Logical SLOC: 3
-    * Parameter count: 1
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 5.5
-    * Halstead volume: 69.76048999263462
-    * Halstead effort: 383.6826949594904
-
 ## /home/phil/Code/complexityReport.js/src/syntax/NewExpression.js
 
 * Maintainability index: 154.55182726218618
 * Aggregate cyclomatic complexity: 2
+* Dependency count: 1
 * Mean parameter count: 0.5
 * Function: **get**
     * Line No.: 9
@@ -1348,6 +1589,7 @@
 
 * Maintainability index: 156.55238607408194
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 2
 * Mean parameter count: 0
 * Function: **get**
     * Line No.: 9
@@ -1363,6 +1605,7 @@
 
 * Maintainability index: 155.33990063570505
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 2
 * Mean parameter count: 0.5
 * Function: **get**
     * Line No.: 10
@@ -1383,25 +1626,11 @@
     * Halstead volume: 18.094737505048094
     * Halstead effort: 36.18947501009619
 
-## /home/phil/Code/complexityReport.js/src/syntax/SequenceExpression.js
-
-* Maintainability index: 156.83047923574097
-* Aggregate cyclomatic complexity: 1
-* Mean parameter count: 0
-* Function: **get**
-    * Line No.: 9
-    * Physical SLOC: 3
-    * Logical SLOC: 1
-    * Parameter count: 0
-    * Cyclomatic complexity: 1
-    * Halstead difficulty: 2.0999999999999996
-    * Halstead volume: 30
-    * Halstead effort: 62.999999999999986
-
 ## /home/phil/Code/complexityReport.js/src/syntax/ReturnStatement.js
 
 * Maintainability index: 155.76457769251132
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 1
 * Mean parameter count: 0
 * Function: **get**
     * Line No.: 9
@@ -1413,10 +1642,27 @@
     * Halstead volume: 43.01955000865388
     * Halstead effort: 86.03910001730776
 
+## /home/phil/Code/complexityReport.js/src/syntax/SequenceExpression.js
+
+* Maintainability index: 156.83047923574097
+* Aggregate cyclomatic complexity: 1
+* Dependency count: 1
+* Mean parameter count: 0
+* Function: **get**
+    * Line No.: 9
+    * Physical SLOC: 3
+    * Logical SLOC: 1
+    * Parameter count: 0
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.0999999999999996
+    * Halstead volume: 30
+    * Halstead effort: 62.999999999999986
+
 ## /home/phil/Code/complexityReport.js/src/syntax/SwitchCase.js
 
 * Maintainability index: 154.9105431427434
 * Aggregate cyclomatic complexity: 3
+* Dependency count: 1
 * Mean parameter count: 1
 * Function: **get**
     * Line No.: 9
@@ -1450,6 +1696,7 @@
 
 * Maintainability index: 155.3824051787387
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 1
 * Mean parameter count: 0
 * Function: **get**
     * Line No.: 9
@@ -1465,6 +1712,7 @@
 
 * Maintainability index: 157.71800752429994
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 1
 * Mean parameter count: 0
 * Function: **get**
     * Line No.: 9
@@ -1480,6 +1728,7 @@
 
 * Maintainability index: 155.76457769251132
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 1
 * Mean parameter count: 0
 * Function: **get**
     * Line No.: 9
@@ -1495,6 +1744,7 @@
 
 * Maintainability index: 155.08801365032298
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 1
 * Mean parameter count: 0
 * Function: **get**
     * Line No.: 9
@@ -1510,6 +1760,7 @@
 
 * Maintainability index: 153.86000320466215
 * Aggregate cyclomatic complexity: 2
+* Dependency count: 1
 * Mean parameter count: 0.5
 * Function: **get**
     * Line No.: 9
@@ -1534,6 +1785,7 @@
 
 * Maintainability index: 153.86000320466215
 * Aggregate cyclomatic complexity: 2
+* Dependency count: 1
 * Mean parameter count: 0.5
 * Function: **get**
     * Line No.: 9
@@ -1558,6 +1810,7 @@
 
 * Maintainability index: 155.91012268847996
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 1
 * Mean parameter count: 0.5
 * Function: **get**
     * Line No.: 9
@@ -1582,6 +1835,7 @@
 
 * Maintainability index: 145.22800395303037
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 2
 * Mean parameter count: 0.6666666666666666
 * Function: **get**
     * Line No.: 10
@@ -1615,6 +1869,7 @@
 
 * Maintainability index: 155.3720394442222
 * Aggregate cyclomatic complexity: 2
+* Dependency count: 1
 * Mean parameter count: 0.5
 * Function: **get**
     * Line No.: 9
@@ -1639,6 +1894,7 @@
 
 * Maintainability index: 155.3824051787387
 * Aggregate cyclomatic complexity: 1
+* Dependency count: 1
 * Mean parameter count: 0
 * Function: **get**
     * Line No.: 9
@@ -1654,6 +1910,7 @@
 
 * Maintainability index: 128.27347132021634
 * Aggregate cyclomatic complexity: 6
+* Dependency count: 2
 * Mean parameter count: 1.2857142857142858
 * Function: **getSyntax**
     * Line No.: 12
@@ -1721,20 +1978,21 @@
 
 ## /home/phil/Code/complexityReport.js/src/syntax/traits/index.js
 
-* Maintainability index: 117.57517286688359
+* Maintainability index: 116.08244483623176
 * Aggregate cyclomatic complexity: 3
-* Mean parameter count: 4
+* Dependency count: 3
+* Mean parameter count: 4.5
 * Function: **actualiseTraits**
     * Line No.: 11
-    * Physical SLOC: 11
-    * Logical SLOC: 8
-    * Parameter count: 7
+    * Physical SLOC: 12
+    * Logical SLOC: 9
+    * Parameter count: 8
     * Cyclomatic complexity: 1
-    * Halstead difficulty: 6.041666666666666
-    * Halstead volume: 183.9358278562653
-    * Halstead effort: 1111.2789599649361
+    * Halstead difficulty: 6.153846153846154
+    * Halstead volume: 204.3263250706733
+    * Halstead effort: 1257.392769665682
 * Function: **safeArray**
-    * Line No.: 23
+    * Line No.: 24
     * Physical SLOC: 11
     * Logical SLOC: 5
     * Parameter count: 1
@@ -1745,32 +2003,52 @@
 
 ## /home/phil/Code/complexityReport.js/src/syntax/traits/operands.js
 
-* Maintainability index: 116.7545945827938
-* Aggregate cyclomatic complexity: 2
+* Maintainability index: 150.76859524351758
+* Aggregate cyclomatic complexity: 1
+* Dependency count: 0
 * Mean parameter count: 1
 * Function: **actualiseOperands**
     * Line No.: 7
-    * Physical SLOC: 11
-    * Logical SLOC: 6
+    * Physical SLOC: 5
+    * Logical SLOC: 1
     * Parameter count: 1
-    * Cyclomatic complexity: 2
-    * Halstead difficulty: 11
-    * Halstead volume: 138.3016990363956
-    * Halstead effort: 1521.3186894003516
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 2.6666666666666665
+    * Halstead volume: 22.458839376460833
+    * Halstead effort: 59.89023833722889
+* Function: **&lt;anonymous>**
+    * Line No.: 8
+    * Physical SLOC: 3
+    * Logical SLOC: 2
+    * Parameter count: 1
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 3
+    * Halstead volume: 16.253496664211536
+    * Halstead effort: 48.760489992634604
 
 ## /home/phil/Code/complexityReport.js/src/syntax/traits/operators.js
 
-* Maintainability index: 102.81894756421417
-* Aggregate cyclomatic complexity: 3
+* Maintainability index: 127.30557969916029
+* Aggregate cyclomatic complexity: 2
+* Dependency count: 1
 * Mean parameter count: 1
 * Function: **actualiseOperators**
     * Line No.: 9
-    * Physical SLOC: 17
-    * Logical SLOC: 11
+    * Physical SLOC: 11
+    * Logical SLOC: 4
     * Parameter count: 1
-    * Cyclomatic complexity: 3
-    * Halstead difficulty: 18.46153846153846
-    * Halstead volume: 267.1889547320165
-    * Halstead effort: 4932.719164283381
+    * Cyclomatic complexity: 1
+    * Halstead difficulty: 4.666666666666666
+    * Halstead volume: 55.506595772116384
+    * Halstead effort: 259.0307802698764
+* Function: **&lt;anonymous>**
+    * Line No.: 12
+    * Physical SLOC: 7
+    * Logical SLOC: 4
+    * Parameter count: 1
+    * Cyclomatic complexity: 2
+    * Halstead difficulty: 8.25
+    * Halstead volume: 85.95159310338741
+    * Halstead effort: 709.1006431029462
 
 

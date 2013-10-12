@@ -15,7 +15,9 @@ function analyse (modules, options) {
     check.verifyArray(modules, 'Invalid modules');
 
     return modules.map(function (m) {
-        return moduleAnalyser.analyse(m.source, options);
+        var report = moduleAnalyser.analyse(m.source, options);
+        report.path = m.path;
+        return report;
     }, []);
 }
 
