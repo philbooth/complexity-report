@@ -19,15 +19,7 @@ function get () {
             }
 
             if (node.callee.type === 'Identifier' && node.callee.name === 'require') {
-                if (node.arguments.length === 1) {
-                    return processCommonJsRequire(node);
-                }
-
-                if (node.arguments.length === 2) {
-                    return processAmdRequire(node);
-                }
-
-                return;
+                return processRequire(node);
             }
 
             if (
@@ -41,6 +33,16 @@ function get () {
             }
         }
     );
+}
+
+function processRequire (node) {
+    if (node.arguments.length === 1) {
+        return processCommonJsRequire(node);
+    }
+
+    if (node.arguments.length === 2) {
+        return processAmdRequire(node);
+    }
 }
 
 function processCommonJsRequire (node) {
