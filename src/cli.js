@@ -4,7 +4,7 @@
 
 'use strict';
 
-var options, formatter, filePattern, state,
+var options, formatter, state,
 
 cli = require('commander'),
 fs = require('fs'),
