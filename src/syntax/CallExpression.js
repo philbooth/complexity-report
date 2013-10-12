@@ -46,7 +46,7 @@ function processRequire (node) {
 }
 
 function processCommonJsRequire (node) {
-    return createDependency(node, resolveRequireDependency(node.arguments[0]));
+    return createDependency(node, resolveRequireDependency(node.arguments[0]), 'CommonJS');
 }
 
 function resolveRequireDependency (dependency, resolver) {
@@ -61,10 +61,11 @@ function resolveRequireDependency (dependency, resolver) {
     return '* dynamic dependency *';
 }
 
-function createDependency (node, path) {
+function createDependency (node, path, type) {
     return {
         line: node.loc.start.line,
-        path: path
+        path: path,
+        type: type
     };
 }
 
@@ -77,11 +78,11 @@ function processAmdRequire (node) {
         return processAmdRequireItem(node, node.arguments[0]);
     }
 
-    return createDependency(node, '* dynamic dependencies *');
+    return createDependency(node, '* dynamic dependencies *', 'AMD');
 }
 
 function processAmdRequireItem (node, item) {
-    return createDependency(node, resolveRequireDependency(item, resolveAmdRequireDependency));
+    return createDependency(node, resolveRequireDependency(item, resolveAmdRequireDependency), 'AMD');
 }
 
 function resolveAmdRequireDependency (dependency) {

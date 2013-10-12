@@ -2431,6 +2431,7 @@ suite('module:', function () {
                 assert.isObject(report.dependencies[0]);
                 assert.strictEqual(report.dependencies[0].line, 1);
                 assert.strictEqual(report.dependencies[0].path, './foo');
+                assert.strictEqual(report.dependencies[0].type, 'CommonJS');
             });
         });
 
@@ -2494,6 +2495,7 @@ suite('module:', function () {
                 assert.isObject(report.dependencies[0]);
                 assert.strictEqual(report.dependencies[0].line, 1);
                 assert.strictEqual(report.dependencies[0].path, '* dynamic dependency *');
+                assert.strictEqual(report.dependencies[0].type, 'CommonJS');
             });
         });
 
@@ -2516,6 +2518,7 @@ suite('module:', function () {
                 assert.isObject(report.dependencies[0]);
                 assert.strictEqual(report.dependencies[0].line, 1);
                 assert.strictEqual(report.dependencies[0].path, 'foo');
+                assert.strictEqual(report.dependencies[0].type, 'AMD');
             });
         });
 
@@ -2557,6 +2560,7 @@ suite('module:', function () {
                 assert.strictEqual(report.dependencies[1].path, 'bar');
                 assert.strictEqual(report.dependencies[2].line, 1);
                 assert.strictEqual(report.dependencies[2].path, 'baz');
+                assert.strictEqual(report.dependencies[2].type, 'AMD');
             });
         });
 
@@ -2578,6 +2582,7 @@ suite('module:', function () {
             test('dependencies are correct', function () {
                 assert.strictEqual(report.dependencies[0].line, 2);
                 assert.strictEqual(report.dependencies[0].path, '* dynamic dependency *');
+                assert.strictEqual(report.dependencies[0].type, 'AMD');
             });
         });
 
@@ -2620,10 +2625,13 @@ suite('module:', function () {
             test('dependencies are correct', function () {
                 assert.strictEqual(report.dependencies[0].line, 7);
                 assert.strictEqual(report.dependencies[0].path, 'path/to/foo');
+                assert.strictEqual(report.dependencies[0].type, 'AMD');
                 assert.strictEqual(report.dependencies[1].line, 7);
                 assert.strictEqual(report.dependencies[1].path, 'bar');
+                assert.strictEqual(report.dependencies[0].type, 'AMD');
                 assert.strictEqual(report.dependencies[2].line, 7);
                 assert.strictEqual(report.dependencies[2].path, '../wibble');
+                assert.strictEqual(report.dependencies[0].type, 'AMD');
             });
         });
 
@@ -2645,6 +2653,7 @@ suite('module:', function () {
             test('dependencies are correct', function () {
                 assert.strictEqual(report.dependencies[0].line, 1);
                 assert.strictEqual(report.dependencies[0].path, 'foo');
+                assert.strictEqual(report.dependencies[0].type, 'AMD');
             });
         });
     });
