@@ -29,6 +29,7 @@ function analyse (modules, options) {
         return report;
     }, []);
 
+    // TODO: Add first-order density
     return {
         reports: reports,
         matrices: [ createAdjacencyMatrix(reports) ]
@@ -47,8 +48,6 @@ function createAdjacencyMatrix (reports) {
             matrix[x][y] = getAdjacencyMatrixValue(reports, x, y);
         });
     });
-
-    //console.log(matrix);
 
     return matrix;
 }
