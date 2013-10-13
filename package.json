@@ -16,7 +16,7 @@
     "bin": {
         "cr": "./src/cli.js"
     },
-    "main": "./src/complexityReport.js",
+    "main": "./src",
     "repository": {
         "type": "git",
         "url": "https://github.com/philbooth/complexityReport.js"
@@ -35,13 +35,13 @@
     "dependencies": {
         "check-types": "0.6.x",
         "esprima": "1.0.x",
-        "commander": "1.1.x"
+        "commander": "2.0.x"
     },
     "devDependencies": {
-        "jake": "0.5.x",
-        "jshint": "1.1.x",
-        "mocha": "1.9.x",
-        "chai": "1.6.x"
+        "jake": "0.7.x",
+        "jshint": "2.1.x",
+        "mocha": "1.13.x",
+        "chai": "1.8.x"
     },
     "license": "MIT",
     "scripts": {

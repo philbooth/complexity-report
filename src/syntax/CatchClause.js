@@ -9,7 +9,7 @@ exports.get = get;
 function get (settings) {
     return traits.actualise(
         1,
-        function (node) {
+        function () {
             return settings.trycatch ? 1 : 0;
         },
         'catch', undefined, [ 'param', 'body' ]

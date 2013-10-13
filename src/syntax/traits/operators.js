@@ -7,20 +7,12 @@ var check = require('check-types');
 exports.actualise = actualiseOperators;
 
 function actualiseOperators (properties) {
-    var operators = [], i, property;
-
-    for (i = 0; i < properties.length; i += 1) {
-        property = properties[i];
-
+    return properties.map(function (property) {
         if (check.isObject(property) && typeof property.identifier !== 'undefined') {
-            operators.push(property);
-        } else {
-            operators.push({
-                identifier: property
-            });
+            return property;
         }
-    }
 
-    return operators;
+        return { identifier: property };
+    });
 }
 

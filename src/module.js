@@ -1,31 +1,17 @@
-/**
- * Complexity reporting tool for JavaScript.
- */
-
 /*globals exports, require */
 
 'use strict';
 
-var check, esprima, syntaxDefinitions, safeName, syntaxes, report;
+var check, esprima, syntaxDefinitions, safeName, syntaxes, report, clearDependencies;
 
-exports.run = run;
+exports.analyse = analyse;
 
 check = require('check-types');
 esprima = require('esprima');
 safeName = require('./safeName');
 syntaxDefinitions = require('./syntax');
 
-/**
- * Public function `run`.
- *
- * Returns a an object detailing the complexity of the code in the
- * source argument.
- *
- * @param source {string}    The source code to analyse for complexity.
- * @param [options] {object} Options to modify the complexity calculation.
- *
- */
-function run (source, options) {
+function analyse (source, options) {
     // TODO: Asynchronize.
 
     var settings, ast;
@@ -44,6 +30,7 @@ function run (source, options) {
 
     syntaxes = syntaxDefinitions.get(settings);
     report = createReport(ast.loc);
+    clearDependencies = true;
 
     processTree(ast.body, undefined, undefined);
 
@@ -65,7 +52,8 @@ function getDefaultSettings () {
 function createReport (lines) {
     return {
         aggregate: createFunctionReport(undefined, lines, 0),
-        functions: []
+        functions: [],
+        dependencies: []
     };
 }
 
@@ -114,11 +102,12 @@ function processNode (node, assignedName, currentReport) {
     if (check.isObject(node)) {
         syntax = syntaxes[node.type];
 
-        if (check.isObject(syntaxes[node.type])) {
+        if (check.isObject(syntax)) {
             processLloc(node, currentReport);
             processComplexity(node, currentReport);
             processOperators(node, currentReport);
             processOperands(node, currentReport);
+            processDependencies(node);
 
             if (syntax.newScope) {
                 processChildrenInNewScope(node, assignedName);
@@ -230,6 +219,21 @@ function incrementHalsteadMetric (baseReport, metric, type) {
 
 function incrementTotalHalsteadItems (baseReport, metric) {
     incrementHalsteadMetric(baseReport, metric, 'total');
+}
+
+function processDependencies (node) {
+    var syntax = syntaxes[node.type], dependencies;
+
+    if (check.isFunction(syntax.dependencies)) {
+        dependencies = syntax.dependencies(node, clearDependencies);
+        if (check.isObject(dependencies) || check.isArray(dependencies)) {
+            report.dependencies = report.dependencies.concat(dependencies);
+        }
+
+        // HACK: This will fail with async or if other syntax than CallExpression introduces dependencies.
+        // TODO: Come up with a less crude approach.
+        clearDependencies = false;
+    }
 }
 
 function processChildrenInNewScope (node, assignedName) {
