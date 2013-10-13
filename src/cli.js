@@ -230,16 +230,16 @@ function setSource (modulePath, source) {
 }
 
 function getReports () {
-    var reports, failingModules;
+    var result, failingModules;
 
     try {
-        reports = cr.analyse(state.source, options);
+        result = cr.analyse(state.source, options);
 
         if (!cli.silent) {
-            writeReports(reports);
+            writeReports(result.reports);
         }
 
-        failingModules = getFailingModules(reports);
+        failingModules = getFailingModules(result.reports);
         if (failingModules.length > 0) {
             fail('Warning: Complexity threshold breached!\nFailing modules:\n' + failingModules.join('\n'));
         }
