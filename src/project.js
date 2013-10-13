@@ -29,7 +29,6 @@ function analyse (modules, options) {
         return report;
     }, []);
 
-    // TODO: Add first-order density
     return {
         reports: reports,
         matrices: [ createAdjacencyMatrix(reports) ]
@@ -38,7 +37,7 @@ function analyse (modules, options) {
 
 // TODO: Move this dependency stuff into a separate module
 function createAdjacencyMatrix (reports) {
-    var matrix = new Array(reports.length);
+    var matrix = new Array(reports.length), density = 0;
 
     reports.sort(function (lhs, rhs) {
         return comparePaths(lhs.path, rhs.path);
@@ -46,10 +45,16 @@ function createAdjacencyMatrix (reports) {
         matrix[x] = new Array(reports.length);
         reports.forEach(function (ignore, y) {
             matrix[x][y] = getAdjacencyMatrixValue(reports, x, y);
+            if (matrix[x][y] === 1) {
+                density += 1;
+            }
         });
     });
 
-    return matrix;
+    return {
+        matrix: matrix,
+        density: density
+    };
 }
 
 function comparePaths (lhs, rhs) {

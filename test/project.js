@@ -118,11 +118,15 @@ suite('project:', function () {
             });
 
             test('adjacency matrix exists', function () {
-                assert.isArray(result.matrices[0]);
+                assert.isArray(result.matrices[0].matrix);
             });
 
             test('adjacency matrix has zero length', function () {
-                assert.lengthOf(result.matrices[0], 0);
+                assert.lengthOf(result.matrices[0].matrix, 0);
+            });
+
+            test('first-order density is correct', function () {
+                assert.strictEqual(result.matrices[0].density, 0);
             });
         });
 
@@ -271,31 +275,35 @@ suite('project:', function () {
             });
 
             test('adjacency matrix is correct', function () {
-                assert.lengthOf(result.matrices[0], 4);
+                assert.lengthOf(result.matrices[0].matrix, 4);
 
-                assert.lengthOf(result.matrices[0][0], 4);
-                assert.isNull(result.matrices[0][0][0]);
-                assert.strictEqual(result.matrices[0][0][1], 0);
-                assert.strictEqual(result.matrices[0][0][2], 1);
-                assert.strictEqual(result.matrices[0][0][3], 1);
+                assert.lengthOf(result.matrices[0].matrix[0], 4);
+                assert.isNull(result.matrices[0].matrix[0][0]);
+                assert.strictEqual(result.matrices[0].matrix[0][1], 0);
+                assert.strictEqual(result.matrices[0].matrix[0][2], 1);
+                assert.strictEqual(result.matrices[0].matrix[0][3], 1);
 
-                assert.lengthOf(result.matrices[0][1], 4);
-                assert.strictEqual(result.matrices[0][1][0], 1);
-                assert.isNull(result.matrices[0][1][1]);
-                assert.strictEqual(result.matrices[0][1][2], 0);
-                assert.strictEqual(result.matrices[0][1][3], 0);
+                assert.lengthOf(result.matrices[0].matrix[1], 4);
+                assert.strictEqual(result.matrices[0].matrix[1][0], 1);
+                assert.isNull(result.matrices[0].matrix[1][1]);
+                assert.strictEqual(result.matrices[0].matrix[1][2], 0);
+                assert.strictEqual(result.matrices[0].matrix[1][3], 0);
 
-                assert.lengthOf(result.matrices[0][2], 4);
-                assert.strictEqual(result.matrices[0][2][0], 0);
-                assert.strictEqual(result.matrices[0][2][1], 0);
-                assert.isNull(result.matrices[0][2][2]);
-                assert.strictEqual(result.matrices[0][2][3], 1);
+                assert.lengthOf(result.matrices[0].matrix[2], 4);
+                assert.strictEqual(result.matrices[0].matrix[2][0], 0);
+                assert.strictEqual(result.matrices[0].matrix[2][1], 0);
+                assert.isNull(result.matrices[0].matrix[2][2]);
+                assert.strictEqual(result.matrices[0].matrix[2][3], 1);
 
-                assert.lengthOf(result.matrices[0][3], 4);
-                assert.strictEqual(result.matrices[0][3][0], 0);
-                assert.strictEqual(result.matrices[0][3][1], 0);
-                assert.strictEqual(result.matrices[0][3][2], 1);
-                assert.isNull(result.matrices[0][3][3]);
+                assert.lengthOf(result.matrices[0].matrix[3], 4);
+                assert.strictEqual(result.matrices[0].matrix[3][0], 0);
+                assert.strictEqual(result.matrices[0].matrix[3][1], 0);
+                assert.strictEqual(result.matrices[0].matrix[3][2], 1);
+                assert.isNull(result.matrices[0].matrix[3][3]);
+            });
+
+            test('first order density is correct', function () {
+                assert.strictEqual(result.matrices[0].density, 5);
             });
         });
     });
