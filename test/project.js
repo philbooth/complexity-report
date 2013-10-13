@@ -131,8 +131,8 @@ suite('project:', function () {
 
             setup(function () {
                 result = cr.analyse([
-                    { source: 'if (true) { "foo"; } else { "bar"; }', path: 'a' },
-                    { source: 'function foo (a, b) { if (a) { b(a); } else { a(b); } } function bar (c, d) { var i; for (i = 0; i < c.length; i += 1) { d += 1; } console.log(d); }', path: 'b' }
+                    { source: 'function foo (a, b) { if (a) { b(a); } else { a(b); } } function bar (c, d) { var i; for (i = 0; i < c.length; i += 1) { d += 1; } console.log(d); }', path: 'b' },
+                    { source: 'if (true) { "foo"; } else { "bar"; }', path: 'a' }
                 ]);
             });
 
@@ -244,6 +244,58 @@ suite('project:', function () {
 
             test('second report has correct path', function () {
                 assert.strictEqual(result.reports[1].path, 'b');
+            });
+        });
+
+        suite('modules with dependencies:', function () {
+            var result;
+
+            setup(function () {
+                result = cr.analyse([
+                    { source: 'require("./a");"d";', path: '/d.js' },
+                    { source: 'require("./b");"c";', path: '/a/c.js' },
+                    { source: 'require("./c");"b";', path: '/a/b.js' },
+                    { source: 'require("./a/b");require("./a/c");"a";', path: '/a.js' }
+                ]);
+            });
+
+            teardown(function () {
+                result = undefined;
+            });
+
+            test('reports are in correct order', function () {
+                assert.strictEqual(result.reports[0].path, '/a.js');
+                assert.strictEqual(result.reports[1].path, '/d.js');
+                assert.strictEqual(result.reports[2].path, '/a/b.js');
+                assert.strictEqual(result.reports[3].path, '/a/c.js');
+            });
+
+            test('adjacency matrix is correct', function () {
+                assert.lengthOf(result.matrices[0], 4);
+
+                assert.lengthOf(result.matrices[0][0], 4);
+                assert.isNull(result.matrices[0][0][0]);
+                assert.strictEqual(result.matrices[0][0][1], 0);
+                assert.strictEqual(result.matrices[0][0][2], 1);
+                assert.strictEqual(result.matrices[0][0][3], 1);
+
+                assert.lengthOf(result.matrices[0][1], 4);
+                assert.strictEqual(result.matrices[0][1][0], 1);
+                assert.isNull(result.matrices[0][1][1]);
+                assert.strictEqual(result.matrices[0][1][2], 0);
+                assert.strictEqual(result.matrices[0][1][3], 0);
+
+                assert.lengthOf(result.matrices[0][2], 4);
+                assert.strictEqual(result.matrices[0][2][0], 0);
+                assert.strictEqual(result.matrices[0][2][1], 0);
+                assert.isNull(result.matrices[0][2][2]);
+                assert.strictEqual(result.matrices[0][2][3], 1);
+
+                assert.lengthOf(result.matrices[0][3], 4);
+                assert.strictEqual(result.matrices[0][3][0], 0);
+                assert.strictEqual(result.matrices[0][3][1], 0);
+                assert.strictEqual(result.matrices[0][3][2], 1);
+                assert.isNull(result.matrices[0][3][3]);
             });
         });
     });
