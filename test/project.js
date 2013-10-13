@@ -50,166 +50,200 @@ suite('project:', function () {
             });
         });
 
-        test('analyse throws when source array contains non-JavaScript', function () {
+        test('analyse throws when module array contains non-JavaScript', function () {
             assert.throws(function () {
-                cr.analyse([ { source: 'foo bar' } ]);
+                cr.analyse([ { source: 'foo bar', path: 'baz' } ]);
             });
         });
 
-        test('analyse does not throw when source array contains JavaScript', function () {
+        test('analyse does not throw when module array contains JavaScript', function () {
             assert.doesNotThrow(function () {
-                cr.analyse([ { source: 'function foo () {}' } ]);
+                cr.analyse([ { source: 'function foo () {}', path: 'foo' } ]);
             });
         });
 
         test('analyse throws when non-JavaScript is not first', function () {
             assert.throws(function () {
-                cr.analyse([ { source: 'function foo () {}' }, { source: 'function bar () {}' }, { source: 'foo bar' } ]);
+                cr.analyse([ { source: 'function foo () {}', path: 'foo' }, { source: 'function bar () {}', path: 'bar' }, { source: 'foo bar', path: 'baz' } ]);
             });
         });
 
-        test('analyse does not throw when source array contains multiple JavaScript', function () {
+        test('analyse does not throw when module array contains multiple JavaScript', function () {
             assert.doesNotThrow(function () {
-                cr.analyse([ { source: 'function foo () {}' }, { source: 'console.log("bar");' }, { source: 'var i; for (i = 0; i < 10; i += 1) { alert(i); }' } ]);
+                cr.analyse([ { source: 'function foo () {}', path: 'foo' }, { source: 'console.log("bar");', path: 'bar' }, { source: 'var i; for (i = 0; i < 10; i += 1) { alert(i); }', path: 'baz' } ]);
             });
         });
 
-        test('analyse throws when module array items have no source property', function () {
+        test('analyse throws when module array is missing source', function () {
             assert.throws(function () {
-                cr.analyse([ 'function foo () {}' ]);
+                cr.analyse([ { path: 'foo' } ]);
+            });
+        });
+
+        test('analyse throws when module array is missing path', function () {
+            assert.throws(function () {
+                cr.analyse([ { source: 'function foo () {}' } ]);
             });
         });
 
         suite('no modules:', function () {
-            var reports;
+            var result;
 
             setup(function () {
-                reports = cr.analyse([]);
+                result = cr.analyse([]);
             });
 
             teardown(function () {
-                reports = undefined;
+                result = undefined;
             });
 
-            test('array was returned', function () {
-                assert.isArray(reports);
+            test('object was returned', function () {
+                assert.isObject(result);
             });
 
-            test('array has zero length', function () {
-                assert.lengthOf(reports, 0);
+            test('reports array exists', function () {
+                assert.isArray(result.reports);
+            });
+
+            test('reports array has zero length', function () {
+                assert.lengthOf(result.reports, 0);
+            });
+
+            test('matrices array exists', function () {
+                assert.isArray(result.matrices);
+            });
+
+            test('matrices array has one item', function () {
+                assert.lengthOf(result.matrices, 1);
+            });
+
+            test('adjacency matrix exists', function () {
+                assert.isArray(result.matrices[0]);
+            });
+
+            test('adjacency matrix has zero length', function () {
+                assert.lengthOf(result.matrices[0], 0);
             });
         });
 
         suite('two modules:', function () {
-            var reports;
+            var result;
 
             setup(function () {
-                reports = cr.analyse([
-                    { source: 'if (true) { "foo"; } else { "bar"; }' },
-                    { source: 'function foo (a, b) { if (a) { b(a); } else { a(b); } } function bar (c, d) { var i; for (i = 0; i < c.length; i += 1) { d += 1; } console.log(d); }' }
+                result = cr.analyse([
+                    { source: 'if (true) { "foo"; } else { "bar"; }', path: 'a' },
+                    { source: 'function foo (a, b) { if (a) { b(a); } else { a(b); } } function bar (c, d) { var i; for (i = 0; i < c.length; i += 1) { d += 1; } console.log(d); }', path: 'b' }
                 ]);
             });
 
             teardown(function () {
-                reports = undefined;
+                result = undefined;
             });
 
             test('reports is correct length', function () {
-                assert.lengthOf(reports, 2);
+                assert.lengthOf(result.reports, 2);
             });
 
             test('first report aggregate has correct physical lines of code', function () {
-                assert.strictEqual(reports[0].aggregate.complexity.sloc.physical, 1);
+                assert.strictEqual(result.reports[0].aggregate.complexity.sloc.physical, 1);
             });
 
             test('first report aggregate has correct logical lines of code', function () {
-                assert.strictEqual(reports[0].aggregate.complexity.sloc.logical, 4);
+                assert.strictEqual(result.reports[0].aggregate.complexity.sloc.logical, 4);
             });
 
             test('first report aggregate has correct cyclomatic complexity', function () {
-                assert.strictEqual(reports[0].aggregate.complexity.cyclomatic, 2);
+                assert.strictEqual(result.reports[0].aggregate.complexity.cyclomatic, 2);
             });
 
             test('first report functions is empty', function () {
-                assert.lengthOf(reports[0].functions, 0);
+                assert.lengthOf(result.reports[0].functions, 0);
             });
 
             test('first report aggregate has correct Halstead total operators', function () {
-                assert.strictEqual(reports[0].aggregate.complexity.halstead.operators.total, 2);
+                assert.strictEqual(result.reports[0].aggregate.complexity.halstead.operators.total, 2);
             });
 
             test('first report aggregate has correct Halstead distinct operators', function () {
-                assert.strictEqual(reports[0].aggregate.complexity.halstead.operators.distinct, 2);
+                assert.strictEqual(result.reports[0].aggregate.complexity.halstead.operators.distinct, 2);
             });
 
             test('first report aggregate has correct Halstead total operands', function () {
-                assert.strictEqual(reports[0].aggregate.complexity.halstead.operands.total, 3);
+                assert.strictEqual(result.reports[0].aggregate.complexity.halstead.operands.total, 3);
             });
 
             test('first report aggregate has correct Halstead distinct operands', function () {
-                assert.strictEqual(reports[0].aggregate.complexity.halstead.operands.distinct, 3);
+                assert.strictEqual(result.reports[0].aggregate.complexity.halstead.operands.distinct, 3);
             });
 
             test('first report aggregate has correct Halstead operator identifier length', function () {
                 assert.lengthOf(
-                    reports[0].aggregate.complexity.halstead.operators.identifiers,
-                    reports[0].aggregate.complexity.halstead.operators.distinct
+                    result.reports[0].aggregate.complexity.halstead.operators.identifiers,
+                    result.reports[0].aggregate.complexity.halstead.operators.distinct
                 );
             });
 
             test('first report aggregate has correct Halstead operand identifier length', function () {
                 assert.lengthOf(
-                    reports[0].aggregate.complexity.halstead.operands.identifiers,
-                    reports[0].aggregate.complexity.halstead.operands.distinct
+                    result.reports[0].aggregate.complexity.halstead.operands.identifiers,
+                    result.reports[0].aggregate.complexity.halstead.operands.distinct
                 );
             });
 
             test('first report aggregate has correct Halstead length', function () {
-                assert.strictEqual(reports[0].aggregate.complexity.halstead.length, 5);
+                assert.strictEqual(result.reports[0].aggregate.complexity.halstead.length, 5);
             });
 
             test('first report aggregate has correct Halstead vocabulary', function () {
-                assert.strictEqual(reports[0].aggregate.complexity.halstead.vocabulary, 5);
+                assert.strictEqual(result.reports[0].aggregate.complexity.halstead.vocabulary, 5);
             });
 
             test('first report aggregate has correct Halstead difficulty', function () {
-                assert.strictEqual(reports[0].aggregate.complexity.halstead.difficulty, 1);
+                assert.strictEqual(result.reports[0].aggregate.complexity.halstead.difficulty, 1);
             });
 
             test('first report aggregate has correct Halstead volume', function () {
-                assert.strictEqual(Math.round(reports[0].aggregate.complexity.halstead.volume), 12);
+                assert.strictEqual(Math.round(result.reports[0].aggregate.complexity.halstead.volume), 12);
             });
 
             test('first report aggregate has correct Halstead effort', function () {
-                assert.strictEqual(Math.round(reports[0].aggregate.complexity.halstead.effort), 12);
+                assert.strictEqual(Math.round(result.reports[0].aggregate.complexity.halstead.effort), 12);
             });
 
             test('first report aggregate has correct Halstead bugs', function () {
-                assert.strictEqual(Math.round(reports[0].aggregate.complexity.halstead.bugs), 0);
+                assert.strictEqual(Math.round(result.reports[0].aggregate.complexity.halstead.bugs), 0);
             });
 
             test('first report aggregate has correct Halstead time', function () {
-                assert.strictEqual(Math.round(reports[0].aggregate.complexity.halstead.time), 1);
+                assert.strictEqual(Math.round(result.reports[0].aggregate.complexity.halstead.time), 1);
+            });
+
+            test('first report has correct path', function () {
+                assert.strictEqual(result.reports[0].path, 'a');
             });
 
             test('second report maintainability index is correct', function () {
-                assert.strictEqual(Math.round(reports[1].maintainability), 128);
+                assert.strictEqual(Math.round(result.reports[1].maintainability), 128);
             });
 
             test('second report first function has correct parameter count', function () {
-                assert.strictEqual(reports[1].functions[0].complexity.params, 2);
+                assert.strictEqual(result.reports[1].functions[0].complexity.params, 2);
             });
 
             test('second report second function has correct parameter count', function () {
-                assert.strictEqual(reports[1].functions[1].complexity.params, 2);
+                assert.strictEqual(result.reports[1].functions[1].complexity.params, 2);
             });
 
             test('second report aggregate has correct parameter count', function () {
-                assert.strictEqual(reports[1].aggregate.complexity.params, 4);
+                assert.strictEqual(result.reports[1].aggregate.complexity.params, 4);
             });
 
             test('second report mean parameter count is correct', function () {
-                assert.strictEqual(reports[1].params, 2);
+                assert.strictEqual(result.reports[1].params, 2);
+            });
+
+            test('second report has correct path', function () {
+                assert.strictEqual(result.reports[1].path, 'b');
             });
         });
     });
