@@ -37,11 +37,12 @@ function parseCommandLine () {
         option('-F, --maxfod <first-order density>', 'specify the per-project first-order density threshold', parseFloat).
         option('-O, --maxcost <change cost>', 'specify the per-project change cost threshold', parseFloat).
         option('-S, --maxsize <core size>', 'specify the per-project core size threshold', parseFloat).
-        option('-M, --minmi <maintainability>', 'specify the per-module maintainability index threshold', parseFloat).
-        option('-C, --maxcyc <complexity>', 'specify the per-function cyclomatic complexity threshold', parseInt).
-        option('-D, --maxhd <difficulty>', 'specify the per-function Halstead difficulty threshold', parseFloat).
-        option('-V, --maxhv <volume>', 'specify the per-function Halstead volume threshold', parseFloat).
-        option('-E, --maxhe <effort>', 'specify the per-function Halstead effort threshold', parseFloat).
+        option('-M, --minmi <maintainability index>', 'specify the per-module maintainability index threshold', parseFloat).
+        option('-C, --maxcyc <cyclomatic complexity>', 'specify the per-function cyclomatic complexity threshold', parseInt).
+        option('-Y, --maxcycden <cyclomatic complexity density>', 'specify the per-function cyclomatic complexity density threshold', parseInt).
+        option('-D, --maxhd <halstead difficulty>', 'specify the per-function Halstead difficulty threshold', parseFloat).
+        option('-V, --maxhv <halstead volume>', 'specify the per-function Halstead volume threshold', parseFloat).
+        option('-E, --maxhe <halstead effort>', 'specify the per-function Halstead effort threshold', parseFloat).
         option('-s, --silent', 'don\'t write any output to the console').
         option('-l, --logicalor', 'disregard operator || as source of cyclomatic complexity').
         option('-w, --switchcase', 'disregard switch statements as source of cyclomatic complexity').
@@ -243,26 +244,30 @@ function isThresholdBreached (threshold, metric, inverse) {
 }
 
 function isFunctionComplexityThresholdSet () {
-    return check.number(cli.maxcyc) || check.number(cli.maxhd) || check.number(cli.maxhv) || check.number(cli.maxhe);
+    return check.number(cli.maxcyc) || check.number(cli.maxcycden) || check.number(cli.maxhd) || check.number(cli.maxhv) || check.number(cli.maxhe);
 }
 
 function isFunctionTooComplex (report) {
     var i;
 
     for (i = 0; i < report.functions.length; i += 1) {
-        if (isThresholdBreached(cli.maxcyc, report.functions[i].complexity.cyclomatic)) {
+        if (isThresholdBreached(cli.maxcyc, report.functions[i].cyclomatic)) {
             return true;
         }
 
-        if (isThresholdBreached(cli.maxhd, report.functions[i].complexity.halstead.difficulty)) {
+        if (isThresholdBreached(cli.maxcycden, report.functions[i].cyclomaticDensity)) {
             return true;
         }
 
-        if (isThresholdBreached(cli.maxhv, report.functions[i].complexity.halstead.volume)) {
+        if (isThresholdBreached(cli.maxhd, report.functions[i].halstead.difficulty)) {
             return true;
         }
 
-        if (isThresholdBreached(cli.maxhe, report.functions[i].complexity.halstead.effort)) {
+        if (isThresholdBreached(cli.maxhv, report.functions[i].halstead.volume)) {
+            return true;
+        }
+
+        if (isThresholdBreached(cli.maxhe, report.functions[i].halstead.effort)) {
             return true;
         }
     }
