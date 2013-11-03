@@ -27,7 +27,7 @@ function formatModule (report) {
         '* Cyclomatic complexity density: ', report.aggregate.cyclomaticDensity, '%\n',
         '* Dependency count: ', report.dependencies.length, '\n',
         '* Mean parameter count: ', report.params, '\n',
-        '* Logical LOC: ', report.sloc.logical,
+        '* Logical LOC: ', report.aggregate.sloc.logical,
         formatFunctions(report.functions)
     ].join('');
 }

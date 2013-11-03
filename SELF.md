@@ -11,10 +11,11 @@
 * Cyclomatic complexity density: 28.000000000000004%
 * Dependency count: 7
 * Mean parameter count: 1
+* Logical LOC: 150
 * Function: **parseCommandLine**
     * Line No.: 28
-    * Physical SLOC: 57
-    * Logical SLOC: 20
+    * Physical LOC: 57
+    * Logical LOC: 20
     * Parameter count: 0
     * Cyclomatic complexity: 8
     * Cyclomatic complexity density: 40%
@@ -23,8 +24,8 @@
     * Halstead effort: 19301.72039782577
 * Function: **expectFiles**
     * Line No.: 86
-    * Physical SLOC: 5
-    * Logical SLOC: 2
+    * Physical LOC: 5
+    * Logical LOC: 2
     * Parameter count: 2
     * Cyclomatic complexity: 2
     * Cyclomatic complexity density: 100%
@@ -33,8 +34,8 @@
     * Halstead effort: 90
 * Function: **readFiles**
     * Line No.: 92
-    * Physical SLOC: 15
-    * Logical SLOC: 2
+    * Physical LOC: 15
+    * Logical LOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 50%
@@ -43,8 +44,8 @@
     * Halstead effort: 93.01398665684617
 * Function: **&lt;anonymous>**
     * Line No.: 93
-    * Physical SLOC: 11
-    * Logical SLOC: 7
+    * Physical LOC: 11
+    * Logical LOC: 7
     * Parameter count: 1
     * Cyclomatic complexity: 5
     * Cyclomatic complexity density: 71.42857142857143%
@@ -53,8 +54,8 @@
     * Halstead effort: 1362.4262061299064
 * Function: **readDirectory**
     * Line No.: 108
-    * Physical SLOC: 9
-    * Logical SLOC: 1
+    * Physical LOC: 9
+    * Logical LOC: 1
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -63,8 +64,8 @@
     * Halstead effort: 115.31836100823274
 * Function: **&lt;anonymous>**
     * Line No.: 112
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -73,8 +74,8 @@
     * Halstead effort: 42.11032383086406
 * Function: **&lt;anonymous>**
     * Line No.: 110
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 1
     * Cyclomatic complexity: 2
     * Cyclomatic complexity density: 200%
@@ -83,8 +84,8 @@
     * Halstead effort: 176.92727402362095
 * Function: **conditionallyReadFile**
     * Line No.: 118
-    * Physical SLOC: 9
-    * Logical SLOC: 4
+    * Physical LOC: 9
+    * Logical LOC: 4
     * Parameter count: 1
     * Cyclomatic complexity: 2
     * Cyclomatic complexity density: 50%
@@ -93,8 +94,8 @@
     * Halstead effort: 91.2938400415386
 * Function: **&lt;anonymous>**
     * Line No.: 120
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 0
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -103,8 +104,8 @@
     * Halstead effort: 2.3774437510817346
 * Function: **readFile**
     * Line No.: 128
-    * Physical SLOC: 17
-    * Logical SLOC: 2
+    * Physical LOC: 17
+    * Logical LOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 50%
@@ -113,8 +114,8 @@
     * Halstead effort: 112.92631877271643
 * Function: **&lt;anonymous>**
     * Line No.: 131
-    * Physical SLOC: 13
-    * Logical SLOC: 6
+    * Physical LOC: 13
+    * Logical LOC: 6
     * Parameter count: 2
     * Cyclomatic complexity: 3
     * Cyclomatic complexity density: 50%
@@ -123,8 +124,8 @@
     * Halstead effort: 401.81818181818176
 * Function: **isOpenFileLimitReached**
     * Line No.: 146
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 0
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -133,8 +134,8 @@
     * Halstead effort: 33.68825906469125
 * Function: **error**
     * Line No.: 150
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -143,8 +144,8 @@
     * Halstead effort: 82.41805003750012
 * Function: **fail**
     * Line No.: 154
-    * Physical SLOC: 4
-    * Logical SLOC: 2
+    * Physical LOC: 4
+    * Logical LOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 50%
@@ -153,8 +154,8 @@
     * Halstead effort: 38.5
 * Function: **beginsWithShebang**
     * Line No.: 159
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -163,8 +164,8 @@
     * Halstead effort: 115.38527005250016
 * Function: **commentFirstLine**
     * Line No.: 163
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -173,8 +174,8 @@
     * Halstead effort: 15
 * Function: **setSource**
     * Line No.: 167
-    * Physical SLOC: 10
-    * Logical SLOC: 5
+    * Physical LOC: 10
+    * Logical LOC: 5
     * Parameter count: 2
     * Cyclomatic complexity: 2
     * Cyclomatic complexity density: 40%
@@ -183,8 +184,8 @@
     * Halstead effort: 631.8792176247334
 * Function: **getReports**
     * Line No.: 178
-    * Physical SLOC: 22
-    * Logical SLOC: 13
+    * Physical LOC: 22
+    * Logical LOC: 13
     * Parameter count: 0
     * Cyclomatic complexity: 4
     * Cyclomatic complexity density: 30.76923076923077%
@@ -193,8 +194,8 @@
     * Halstead effort: 2327.4121689387784
 * Function: **writeReports**
     * Line No.: 201
-    * Physical SLOC: 13
-    * Logical SLOC: 5
+    * Physical LOC: 13
+    * Logical LOC: 5
     * Parameter count: 1
     * Cyclomatic complexity: 2
     * Cyclomatic complexity density: 40%
@@ -203,8 +204,8 @@
     * Halstead effort: 709.3592637787699
 * Function: **&lt;anonymous>**
     * Line No.: 205
-    * Physical SLOC: 5
-    * Logical SLOC: 2
+    * Physical LOC: 5
+    * Logical LOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 2
     * Cyclomatic complexity density: 100%
@@ -213,8 +214,8 @@
     * Halstead effort: 27.089161107019226
 * Function: **getFailingModules**
     * Line No.: 215
-    * Physical SLOC: 12
-    * Logical SLOC: 1
+    * Physical LOC: 12
+    * Logical LOC: 1
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -223,8 +224,8 @@
     * Halstead effort: 125.00000000000001
 * Function: **&lt;anonymous>**
     * Line No.: 216
-    * Physical SLOC: 10
-    * Logical SLOC: 3
+    * Physical LOC: 10
+    * Logical LOC: 3
     * Parameter count: 2
     * Cyclomatic complexity: 3
     * Cyclomatic complexity density: 100%
@@ -233,8 +234,8 @@
     * Halstead effort: 482.5822363708013
 * Function: **isModuleComplexityThresholdSet**
     * Line No.: 228
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 0
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -243,8 +244,8 @@
     * Halstead effort: 33.68825906469125
 * Function: **isModuleTooComplex**
     * Line No.: 232
-    * Physical SLOC: 5
-    * Logical SLOC: 2
+    * Physical LOC: 5
+    * Logical LOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 2
     * Cyclomatic complexity density: 100%
@@ -253,8 +254,8 @@
     * Halstead effort: 115.16017395609524
 * Function: **isThresholdBreached**
     * Line No.: 238
-    * Physical SLOC: 7
-    * Logical SLOC: 3
+    * Physical LOC: 7
+    * Logical LOC: 3
     * Parameter count: 3
     * Cyclomatic complexity: 2
     * Cyclomatic complexity density: 66.66666666666666%
@@ -263,8 +264,8 @@
     * Halstead effort: 1077.568045922686
 * Function: **isFunctionComplexityThresholdSet**
     * Line No.: 246
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 0
     * Cyclomatic complexity: 5
     * Cyclomatic complexity density: 500%
@@ -273,8 +274,8 @@
     * Halstead effort: 716.9925001442313
 * Function: **isFunctionTooComplex**
     * Line No.: 250
-    * Physical SLOC: 27
-    * Logical SLOC: 13
+    * Physical LOC: 27
+    * Logical LOC: 13
     * Parameter count: 1
     * Cyclomatic complexity: 7
     * Cyclomatic complexity density: 53.84615384615385%
@@ -283,8 +284,8 @@
     * Halstead effort: 5677.973403489858
 * Function: **isProjectComplexityThresholdSet**
     * Line No.: 278
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 0
     * Cyclomatic complexity: 3
     * Cyclomatic complexity density: 300%
@@ -293,8 +294,8 @@
     * Halstead effort: 318.90509710918684
 * Function: **isProjectTooComplex**
     * Line No.: 282
-    * Physical SLOC: 15
-    * Logical SLOC: 7
+    * Physical LOC: 15
+    * Logical LOC: 7
     * Parameter count: 1
     * Cyclomatic complexity: 4
     * Cyclomatic complexity density: 57.14285714285714%
@@ -309,10 +310,11 @@
 * Cyclomatic complexity density: 25%
 * Dependency count: 0
 * Mean parameter count: 1
+* Logical LOC: 4
 * Function: **format**
     * Line No.: 7
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -322,15 +324,16 @@
 
 ## /home/phil/Code/complexity-report/src/formats/markdown.js
 
-* Maintainability index: 145.0342888108068
+* Maintainability index: 144.7969461915641
 * Cyclomatic complexity: 1
 * Cyclomatic complexity density: 5.88235294117647%
 * Dependency count: 0
 * Mean parameter count: 1.2857142857142858
+* Logical LOC: 17
 * Function: **format**
     * Line No.: 7
-    * Physical SLOC: 5
-    * Logical SLOC: 1
+    * Physical LOC: 5
+    * Logical LOC: 1
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -339,8 +342,8 @@
     * Halstead effort: 115.38527005250016
 * Function: **&lt;anonymous>**
     * Line No.: 8
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -349,8 +352,8 @@
     * Halstead effort: 63.16548574629609
 * Function: **formatProject**
     * Line No.: 13
-    * Physical SLOC: 8
-    * Logical SLOC: 2
+    * Physical LOC: 8
+    * Logical LOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 50%
@@ -359,18 +362,18 @@
     * Halstead effort: 411.77975838550884
 * Function: **formatModule**
     * Line No.: 22
-    * Physical SLOC: 11
-    * Logical SLOC: 2
+    * Physical LOC: 12
+    * Logical LOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 50%
-    * Halstead difficulty: 2.869565217391304
-    * Halstead volume: 228.2346001038465
-    * Halstead effort: 654.9340698632117
+    * Halstead difficulty: 3
+    * Halstead volume: 279.69276394968557
+    * Halstead effort: 839.0782918490568
 * Function: **formatFunctions**
-    * Line No.: 34
-    * Physical SLOC: 5
-    * Logical SLOC: 1
+    * Line No.: 35
+    * Physical LOC: 5
+    * Logical LOC: 1
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -378,9 +381,9 @@
     * Halstead volume: 27
     * Halstead effort: 67.5
 * Function: **&lt;anonymous>**
-    * Line No.: 35
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Line No.: 36
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -388,9 +391,9 @@
     * Halstead volume: 28.07354922057604
     * Halstead effort: 63.16548574629609
 * Function: **formatFunction**
-    * Line No.: 40
-    * Physical SLOC: 14
-    * Logical SLOC: 2
+    * Line No.: 41
+    * Physical LOC: 14
+    * Logical LOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 50%
@@ -405,10 +408,11 @@
 * Cyclomatic complexity density: 7.142857142857142%
 * Dependency count: 0
 * Mean parameter count: 1.3333333333333333
+* Logical LOC: 14
 * Function: **format**
     * Line No.: 7
-    * Physical SLOC: 5
-    * Logical SLOC: 1
+    * Physical LOC: 5
+    * Logical LOC: 1
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -417,8 +421,8 @@
     * Halstead effort: 83.68602003807705
 * Function: **&lt;anonymous>**
     * Line No.: 8
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -427,8 +431,8 @@
     * Halstead effort: 63.16548574629609
 * Function: **formatModule**
     * Line No.: 13
-    * Physical SLOC: 6
-    * Logical SLOC: 2
+    * Physical LOC: 6
+    * Logical LOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 50%
@@ -437,8 +441,8 @@
     * Halstead effort: 197.3567849675249
 * Function: **formatFunctions**
     * Line No.: 20
-    * Physical SLOC: 5
-    * Logical SLOC: 1
+    * Physical LOC: 5
+    * Logical LOC: 1
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -447,8 +451,8 @@
     * Halstead effort: 67.5
 * Function: **&lt;anonymous>**
     * Line No.: 21
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -457,8 +461,8 @@
     * Halstead effort: 63.16548574629609
 * Function: **formatFunction**
     * Line No.: 26
-    * Physical SLOC: 10
-    * Logical SLOC: 2
+    * Physical LOC: 10
+    * Logical LOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 50%
@@ -473,10 +477,11 @@
 * Cyclomatic complexity density: 20%
 * Dependency count: 0
 * Mean parameter count: 1.5
+* Logical LOC: 5
 * Function: **format**
     * Line No.: 7
-    * Physical SLOC: 5
-    * Logical SLOC: 1
+    * Physical LOC: 5
+    * Logical LOC: 1
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -485,8 +490,8 @@
     * Halstead effort: 83.68602003807705
 * Function: **&lt;anonymous>**
     * Line No.: 8
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -496,15 +501,16 @@
 
 ## /home/phil/Code/complexity-report/src/formats/plain.js
 
-* Maintainability index: 145.33637396131812
+* Maintainability index: 145.07765131953624
 * Cyclomatic complexity: 1
 * Cyclomatic complexity density: 5.88235294117647%
 * Dependency count: 0
 * Mean parameter count: 1.2857142857142858
+* Logical LOC: 17
 * Function: **format**
     * Line No.: 7
-    * Physical SLOC: 5
-    * Logical SLOC: 1
+    * Physical LOC: 5
+    * Logical LOC: 1
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -513,8 +519,8 @@
     * Halstead effort: 115.38527005250016
 * Function: **&lt;anonymous>**
     * Line No.: 8
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -523,8 +529,8 @@
     * Halstead effort: 63.16548574629609
 * Function: **formatProject**
     * Line No.: 13
-    * Physical SLOC: 7
-    * Logical SLOC: 2
+    * Physical LOC: 7
+    * Logical LOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 50%
@@ -533,18 +539,18 @@
     * Halstead effort: 245.33333333333331
 * Function: **formatModule**
     * Line No.: 21
-    * Physical SLOC: 11
-    * Logical SLOC: 2
+    * Physical LOC: 12
+    * Logical LOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 50%
-    * Halstead difficulty: 2.909090909090909
-    * Halstead volume: 220.92066675263135
-    * Halstead effort: 642.6783032803821
+    * Halstead difficulty: 3.04
+    * Halstead volume: 272.04693572714405
+    * Halstead effort: 827.0226846105179
 * Function: **formatFunctions**
-    * Line No.: 33
-    * Physical SLOC: 5
-    * Logical SLOC: 1
+    * Line No.: 34
+    * Physical LOC: 5
+    * Logical LOC: 1
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -552,9 +558,9 @@
     * Halstead volume: 27
     * Halstead effort: 67.5
 * Function: **&lt;anonymous>**
-    * Line No.: 34
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Line No.: 35
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -562,9 +568,9 @@
     * Halstead volume: 28.07354922057604
     * Halstead effort: 63.16548574629609
 * Function: **formatFunction**
-    * Line No.: 39
-    * Physical SLOC: 14
-    * Logical SLOC: 2
+    * Line No.: 40
+    * Physical LOC: 14
+    * Logical LOC: 2
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 50%
@@ -579,10 +585,11 @@
 * Cyclomatic complexity density: 9.523809523809524%
 * Dependency count: 0
 * Mean parameter count: 2.3529411764705883
+* Logical LOC: 42
 * Function: **format**
     * Line No.: 7
-    * Physical SLOC: 18
-    * Logical SLOC: 1
+    * Physical LOC: 18
+    * Logical LOC: 1
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -591,8 +598,8 @@
     * Halstead effort: 582.7728652232418
 * Function: **&lt;anonymous>**
     * Line No.: 20
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -601,8 +608,8 @@
     * Halstead effort: 56.848937171666485
 * Function: **createElementWithAttributes**
     * Line No.: 26
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 5
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -611,8 +618,8 @@
     * Halstead effort: 157.31702335073723
 * Function: **createElementWithTags**
     * Line No.: 30
-    * Physical SLOC: 5
-    * Logical SLOC: 1
+    * Physical LOC: 5
+    * Logical LOC: 1
     * Parameter count: 5
     * Cyclomatic complexity: 3
     * Cyclomatic complexity density: 300%
@@ -621,8 +628,8 @@
     * Halstead effort: 462
 * Function: **indent**
     * Line No.: 36
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -631,8 +638,8 @@
     * Halstead effort: 161.4401422030739
 * Function: **formatModule**
     * Line No.: 40
-    * Physical SLOC: 13
-    * Logical SLOC: 6
+    * Physical LOC: 13
+    * Logical LOC: 6
     * Parameter count: 2
     * Cyclomatic complexity: 2
     * Cyclomatic complexity density: 33.33333333333333%
@@ -641,8 +648,8 @@
     * Halstead effort: 2647.173913043478
 * Function: **incrementIndentation**
     * Line No.: 54
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 1
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -651,8 +658,8 @@
     * Halstead effort: 15
 * Function: **formatFunction**
     * Line No.: 58
-    * Physical SLOC: 13
-    * Logical SLOC: 2
+    * Physical LOC: 13
+    * Logical LOC: 2
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 50%
@@ -661,8 +668,8 @@
     * Halstead effort: 1766.9495634234554
 * Function: **createElement**
     * Line No.: 72
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 4
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -671,8 +678,8 @@
     * Halstead effort: 67.3765181293825
 * Function: **formatSlocComplexity**
     * Line No.: 76
-    * Physical SLOC: 6
-    * Logical SLOC: 1
+    * Physical LOC: 6
+    * Logical LOC: 1
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -681,8 +688,8 @@
     * Halstead effort: 63.39850002884626
 * Function: **formatSlocMetrics**
     * Line No.: 83
-    * Physical SLOC: 4
-    * Logical SLOC: 1
+    * Physical LOC: 4
+    * Logical LOC: 1
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -691,8 +698,8 @@
     * Halstead effort: 250.94737505048096
 * Function: **formatParameterComplexity**
     * Line No.: 88
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -701,8 +708,8 @@
     * Halstead effort: 35.372672017925815
 * Function: **formatCyclomaticComplexity**
     * Line No.: 92
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -711,8 +718,8 @@
     * Halstead effort: 35.372672017925815
 * Function: **formatCyclomaticDensity**
     * Line No.: 96
-    * Physical SLOC: 3
-    * Logical SLOC: 1
+    * Physical LOC: 3
+    * Logical LOC: 1
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -721,8 +728,8 @@
     * Halstead effort: 35.372672017925815
 * Function: **formatHalsteadComplexity**
     * Line No.: 100
-    * Physical SLOC: 6
-    * Logical SLOC: 1
+    * Physical LOC: 6
+    * Logical LOC: 1
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -731,8 +738,8 @@
     * Halstead effort: 63.39850002884626
 * Function: **formatHalsteadMetrics**
     * Line No.: 107
-    * Physical SLOC: 9
-    * Logical SLOC: 1
+    * Physical LOC: 9
+    * Logical LOC: 1
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 100%
@@ -741,8 +748,8 @@
     * Halstead effort: 1417.1082699225192
 * Function: **formatAggregate**
     * Line No.: 117
-    * Physical SLOC: 12
-    * Logical SLOC: 2
+    * Physical LOC: 12
+    * Logical LOC: 2
     * Parameter count: 2
     * Cyclomatic complexity: 1
     * Cyclomatic complexity density: 50%
