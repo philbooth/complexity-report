@@ -26,7 +26,8 @@ function formatModule (report) {
         '* Cyclomatic complexity: ', report.aggregate.cyclomatic, '\n',
         '* Cyclomatic complexity density: ', report.aggregate.cyclomaticDensity, '%\n',
         '* Dependency count: ', report.dependencies.length, '\n',
-        '* Mean parameter count: ', report.params,
+        '* Mean parameter count: ', report.params, '\n',
+        '* Logical LOC: ', report.sloc.logical,
         formatFunctions(report.functions)
     ].join('');
 }
@@ -41,8 +42,8 @@ function formatFunction (report) {
     return [
         '* Function: **', report.name.replace('<', '&lt;'), '**\n',
         '    * Line No.: ', report.line, '\n',
-        '    * Physical SLOC: ', report.sloc.physical, '\n',
-        '    * Logical SLOC: ', report.sloc.logical, '\n',
+        '    * Physical LOC: ', report.sloc.physical, '\n',
+        '    * Logical LOC: ', report.sloc.logical, '\n',
         '    * Parameter count: ', report.params, '\n',
         '    * Cyclomatic complexity: ', report.cyclomatic, '\n',
         '    * Cyclomatic complexity density: ', report.cyclomaticDensity, '%\n',
