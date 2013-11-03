@@ -59,7 +59,7 @@ function formatFunction (indentation, data) {
     var nextIndentation = incrementIndentation(indentation);
 
     return createElementWithAttributes(
-        indentation, 'function', 'name="' + data.name + '"', true,
+        indentation, 'function', 'name="' + data.name.replace('<', '&lt;').replace('>', '&gt;') + '"', true,
         createElement(nextIndentation, 'line', false, data.line) +
             formatSlocComplexity(nextIndentation, data.sloc) +
                 formatParameterComplexity(nextIndentation, data.params) +
