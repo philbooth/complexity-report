@@ -133,7 +133,7 @@ sudo npm install -g complexity-report
 ## Usage
 
 ```
-cr [options] <file...>
+cr [options] <path>
 ```
 
 The tool will recursively read files
@@ -142,38 +142,30 @@ automatically.
 
 ### Command-line options
 
-Valid options are:
-
-* `-o <file>`: Specify an output file for the report,
-  defaults to `stdout`.
-* `-f <format>`: Specify an output format for the report,
-  defaults to `plain`.
-* `-a`: Include hidden files in the report.
-* `-p <regex>`: Specify the files to be processed
-  using a regular expression to match against file names,
-  defaults to `\.js$`.
-* `-r <regex>`: Specify the directories to be processed
-  using a regular expression to match against directory names,
-  defaults to all directories.  Usefull if you want to exclude specific
-  directories such as 'node_modules': -r '^((?!node_modules).)*$'
-* `-x <number>`: Specify the maximum number of files to open concurrently,
-  defaults to `1024`.
-* `-m <maintainability>`: Specify the per-module maintainability index threshold
-  (below which, the process will fail when exiting).
-* `-c <complexity>`: Specify the per-function cyclomatic complexity threshold
-  (beyond which, the process will fail when exiting).
-* `-d <difficulty>`: Specify the per-function Halstead difficulty threshold
-  (beyond which, the process will fail when exiting).
-* `-v <volume>`: Specify the per-function Halstead volume threshold
-  (beyond which, the process will fail when exiting).
-* `-e <effort>`: Specify the per-function Halstead effort threshold
-  (beyond which, the process will fail when exiting).
-* `-s`: Silences the console output.
-* `-l`: Disregards operator `||` as a source of cyclomatic complexity.
-* `-w`: Disregards `switch` statements as a source of cyclomatic complexity.
-* `-i`: Treats `for`...`in` loops as a source of cyclomatic complexity.
-* `-t`: Treats `catch` clauses as a source of cyclomatic complexity.
-* `-n`: Uses the [Microsoft-variant maintainability index][msvariant].
+```
+-h, --help                                       output usage information
+-o, --output <file>                              specify an output file for the report
+-f, --format <format>                            specify the output format of the report
+-a, --allfiles                                   include hidden files in the report
+-p, --filepattern <pattern>                      specify the files to process using a regular expression to match against file names
+-P, --dirpattern <pattern>                       specify the directories to process using a regular expression to match against directory names
+-m, --maxfiles <number>                          specify the maximum number of files to have open at any point
+-F, --maxfod <first-order density>               specify the per-project first-order density threshold
+-O, --maxcost <change cost>                      specify the per-project change cost threshold
+-S, --maxsize <core size>                        specify the per-project core size threshold
+-M, --minmi <maintainability index>              specify the per-module maintainability index threshold
+-C, --maxcyc <cyclomatic complexity>             specify the per-function cyclomatic complexity threshold
+-Y, --maxcycden <cyclomatic complexity density>  specify the per-function cyclomatic complexity density threshold
+-D, --maxhd <halstead difficulty>                specify the per-function Halstead difficulty threshold
+-V, --maxhv <halstead volume>                    specify the per-function Halstead volume threshold
+-E, --maxhe <halstead effort>                    specify the per-function Halstead effort threshold
+-s, --silent                                     don't write any output to the console
+-l, --logicalor                                  disregard operator || as source of cyclomatic complexity
+-w, --switchcase                                 disregard switch statements as source of cyclomatic complexity
+-i, --forin                                      treat for...in statements as source of cyclomatic complexity
+-t, --trycatch                                   treat catch clauses as source of cyclomatic complexity
+-n, --newmi                                      use the Microsoft-variant maintainability index (scale of 0 to 100)
+```
 
 ### Output formats
 
@@ -223,6 +215,6 @@ See the [contribution guidelines][contributions].
 [nodeinstall]: http://nodejs.org/download
 [msvariant]: http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx
 [format]: https://github.com/philbooth/escomplex/blob/master/README.md#result
-[contributions]: https://github.com/philbooth/blob/master/CONTRIBUTING.md
+[contributions]: https://github.com/philbooth/complexity-report/blob/master/CONTRIBUTING.md
 [license]: https://github.com/philbooth/complexity-report/blob/master/COPYING
 

@@ -27,8 +27,8 @@ readFiles(cli.args);
 
 function parseCommandLine () {
     cli.
-        usage('[options] <file...>').
-        option('-o, --output <file>', 'specify an output file for the report').
+        usage('[options] <path>').
+        option('-o, --output <path>', 'specify an output file for the report').
         option('-f, --format <format>', 'specify the output format of the report').
         option('-a, --allfiles', 'include hidden files in the report').
         option('-p, --filepattern <pattern>', 'specify the files to process using a regular expression to match against file names').
