@@ -39,7 +39,7 @@ function parseCommandLine () {
         option('-S, --maxsize <core size>', 'specify the per-project core size threshold', parseFloat).
         option('-M, --minmi <maintainability index>', 'specify the per-module maintainability index threshold', parseFloat).
         option('-C, --maxcyc <cyclomatic complexity>', 'specify the per-function cyclomatic complexity threshold', parseInt).
-        option('-Y, --maxcycden <cyclomatic complexity density>', 'specify the per-function cyclomatic complexity density threshold', parseInt).
+        option('-Y, --maxcycden <cyclomatic density>', 'specify the per-function cyclomatic complexity density threshold', parseInt).
         option('-D, --maxhd <halstead difficulty>', 'specify the per-function Halstead difficulty threshold', parseFloat).
         option('-V, --maxhv <halstead volume>', 'specify the per-function Halstead volume threshold', parseFloat).
         option('-E, --maxhe <halstead effort>', 'specify the per-function Halstead effort threshold', parseFloat).

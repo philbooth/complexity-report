@@ -1,7 +1,5 @@
 # complexity-report
 
-[![Build status][ci-image]][ci-status]
-
 Software complexity analysis for JavaScript projects.
 Command-line elder brother of [JSComplexity.org][jscomplexity].
 
@@ -143,28 +141,28 @@ automatically.
 ### Command-line options
 
 ```
--h, --help                                       output usage information
--o, --output <file>                              specify an output file for the report
--f, --format <format>                            specify the output format of the report
--a, --allfiles                                   include hidden files in the report
--p, --filepattern <pattern>                      specify the files to process using a regular expression to match against file names
--P, --dirpattern <pattern>                       specify the directories to process using a regular expression to match against directory names
--m, --maxfiles <number>                          specify the maximum number of files to have open at any point
--F, --maxfod <first-order density>               specify the per-project first-order density threshold
--O, --maxcost <change cost>                      specify the per-project change cost threshold
--S, --maxsize <core size>                        specify the per-project core size threshold
--M, --minmi <maintainability index>              specify the per-module maintainability index threshold
--C, --maxcyc <cyclomatic complexity>             specify the per-function cyclomatic complexity threshold
--Y, --maxcycden <cyclomatic complexity density>  specify the per-function cyclomatic complexity density threshold
--D, --maxhd <halstead difficulty>                specify the per-function Halstead difficulty threshold
--V, --maxhv <halstead volume>                    specify the per-function Halstead volume threshold
--E, --maxhe <halstead effort>                    specify the per-function Halstead effort threshold
--s, --silent                                     don't write any output to the console
--l, --logicalor                                  disregard operator || as source of cyclomatic complexity
--w, --switchcase                                 disregard switch statements as source of cyclomatic complexity
--i, --forin                                      treat for...in statements as source of cyclomatic complexity
--t, --trycatch                                   treat catch clauses as source of cyclomatic complexity
--n, --newmi                                      use the Microsoft-variant maintainability index (scale of 0 to 100)
+-h, --help                            output usage information
+-o, --output <file>                   specify an output file for the report
+-f, --format <format>                 specify the output format of the report
+-a, --allfiles                        include hidden files in the report
+-p, --filepattern <pattern>           specify the files to process using a regular expression to match against file names
+-P, --dirpattern <pattern>            specify the directories to process using a regular expression to match against directory names
+-m, --maxfiles <number>               specify the maximum number of files to have open at any point
+-F, --maxfod <first-order density>    specify the per-project first-order density threshold
+-O, --maxcost <change cost>           specify the per-project change cost threshold
+-S, --maxsize <core size>             specify the per-project core size threshold
+-M, --minmi <maintainability index>   specify the per-module maintainability index threshold
+-C, --maxcyc <cyclomatic complexity>  specify the per-function cyclomatic complexity threshold
+-Y, --maxcycden <cyclomatic density>  specify the per-function cyclomatic complexity density threshold
+-D, --maxhd <halstead difficulty>     specify the per-function Halstead difficulty threshold
+-V, --maxhv <halstead volume>         specify the per-function Halstead volume threshold
+-E, --maxhe <halstead effort>         specify the per-function Halstead effort threshold
+-s, --silent                          don't write any output to the console
+-l, --logicalor                       disregard operator || as source of cyclomatic complexity
+-w, --switchcase                      disregard switch statements as source of cyclomatic complexity
+-i, --forin                           treat for...in statements as source of cyclomatic complexity
+-t, --trycatch                        treat catch clauses as source of cyclomatic complexity
+-n, --newmi                           use the Microsoft-variant maintainability index (scale of 0 to 100)
 ```
 
 ### Output formats
