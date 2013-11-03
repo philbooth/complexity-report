@@ -58,20 +58,20 @@ function parseCommandLine () {
         newmi: cli.newmi || false
     };
 
-    if (check.isUnemptyString(cli.format) === false) {
+    if (check.unemptyString(cli.format) === false) {
         cli.format = 'plain';
     }
 
-    if (check.isUnemptyString(cli.filepattern) === false) {
+    if (check.unemptyString(cli.filepattern) === false) {
         cli.filepattern = '\\.js$';
     }
     cli.filepattern = new RegExp(cli.filepattern);
 
-    if (check.isUnemptyString(cli.dirpattern)) {
+    if (check.unemptyString(cli.dirpattern)) {
         cli.dirpattern = new RegExp(cli.dirpattern);
     }
 
-    if (check.isNumber(cli.maxfiles) === false) {
+    if (check.number(cli.maxfiles) === false) {
         cli.maxfiles = 1024;
     }
 
@@ -200,7 +200,7 @@ function getReports () {
 function writeReports (result) {
     var formatted = formatter.format(result);
 
-    if (check.isUnemptyString(cli.output)) {
+    if (check.unemptyString(cli.output)) {
         fs.writeFile(cli.output, formatted, 'utf8', function (err) {
             if (err) {
                 error('writeReport', err);
@@ -225,7 +225,7 @@ function getFailingModules (reports) {
 }
 
 function isModuleComplexityThresholdSet () {
-    return check.isNumber(cli.minmi);
+    return check.number(cli.minmi);
 }
 
 function isModuleTooComplex (report) {
@@ -236,14 +236,14 @@ function isModuleTooComplex (report) {
 
 function isThresholdBreached (threshold, metric, inverse) {
     if (!inverse) {
-        return check.isNumber(threshold) && metric > threshold;
+        return check.number(threshold) && metric > threshold;
     }
 
-    return check.isNumber(threshold) && metric < threshold;
+    return check.number(threshold) && metric < threshold;
 }
 
 function isFunctionComplexityThresholdSet () {
-    return check.isNumber(cli.maxcyc) || check.isNumber(cli.maxhd) || check.isNumber(cli.maxhv) || check.isNumber(cli.maxhe);
+    return check.number(cli.maxcyc) || check.number(cli.maxhd) || check.number(cli.maxhv) || check.number(cli.maxhe);
 }
 
 function isFunctionTooComplex (report) {
@@ -271,7 +271,7 @@ function isFunctionTooComplex (report) {
 }
 
 function isProjectComplexityThresholdSet () {
-    return check.isNumber(cli.maxfod) || check.isNumber(cli.maxcost) || check.isNumber(cli.maxsize);
+    return check.number(cli.maxfod) || check.number(cli.maxcost) || check.number(cli.maxsize);
 }
 
 function isProjectTooComplex (result) {

@@ -26,7 +26,7 @@
     ],
     "dependencies": {
         "escomplex-js": "0.1.x",
-        "check-types": "0.6.x",
+        "check-types": "0.7.x",
         "commander": "2.0.x"
     },
     "devDependencies": {
