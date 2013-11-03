@@ -23,7 +23,8 @@ function formatModule (report) {
     return [
         '## ', report.path, '\n\n',
         '* Maintainability index: ', report.maintainability, '\n',
-        '* Aggregate cyclomatic complexity: ', report.aggregate.cyclomatic, '\n',
+        '* Cyclomatic complexity: ', report.aggregate.cyclomatic, '\n',
+        '* Cyclomatic complexity density: ', report.aggregate.cyclomaticDensity, '%\n',
         '* Dependency count: ', report.dependencies.length, '\n',
         '* Mean parameter count: ', report.params,
         formatFunctions(report.functions)
