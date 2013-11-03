@@ -2,6 +2,7 @@
 
 Software complexity analysis for JavaScript projects.
 Command-line elder brother of [JSComplexity.org][jscomplexity].
+Front-end for [escomplex].
 
 * [Software complexity analysis](#software-complexity-analysis)
 * [How it works](#how-it-works)
