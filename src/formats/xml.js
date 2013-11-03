@@ -19,7 +19,7 @@ function format (result) {
         true,
         result.reports.reduce(function (formatted, report) {
             return formatted + formatModule(4, report);
-        }, '');
+        }, '')
     );
 }
 
@@ -102,7 +102,7 @@ function formatCyclomaticComplexity (indentation, data) {
     return createElement(indentation, 'cyclomatic', false, data);
 }
 
-function formatCyclomaticDensity (indentation.data) {
+function formatCyclomaticDensity (indentation, data) {
     return createElement(indentation, 'cyclomatic-density', false, data);
 }
 
