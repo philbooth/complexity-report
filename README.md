@@ -54,14 +54,15 @@ Code is passed to escomplex
 in the form of syntax trees
 that have been generated
 with [esprima],
-a popular JavaScript parser.
+the popular JavaScript parser.
 
 [Here is an example report][eg].
 
 ## Complexity metrics
 
 The readme for escomplex contains
-a [brief overview of the metrics][metrics].
+a [brief overview of the metrics][metrics]
+it produces.
 
 ## What not to do with the results
 
@@ -75,10 +76,10 @@ whatever that might mean.
 Software development is a varied field
 and every project is subject
 to a unique set of environmental factors.
-Any attempt to proscribe generic hard limits
+Attempts to set generic hard limits
 for these complexity metrics
-is essentially arbitrary
-and fails to sufficiently consider
+must essentially be arbitrary
+and fail to consider
 the specific requirements
 of a given project.
 Further, complexity itself
