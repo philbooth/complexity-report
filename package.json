@@ -1,25 +1,18 @@
 {
     "name": "complexity-report",
-    "version": "0.10.5",
+    "version": "1.0.0",
+    "description": "Software complexity analysis for JavaScript projects",
+    "homepage": "https://github.com/philbooth/complexity-report",
+    "bugs": "https://github.com/philbooth/complexity-report/issues",
+    "license": "MIT",
     "author": "Phil Booth <pmbooth@gmail.com>",
-    "description": "A tool for reporting code complexity metrics in JavaScript projects.",
-    "contributors": [
-        { "name": "Phil Booth", "email": "pmbooth@gmail.com" },
-        { "name": "Juzer Ali" },
-        { "name": "Mark Trostler" },
-        { "name": "Wyatt Preul" },
-        { "name": "Rowan Manning" },
-        { "name": "Andrew Pennebaker" },
-        { "name": "Nils Kenneweg" },
-        { "name": "Eric Burin des Roziers" }
-    ],
+    "main": "./src",
     "bin": {
         "cr": "./src/cli.js"
     },
-    "main": "./src",
     "repository": {
         "type": "git",
-        "url": "https://github.com/philbooth/complexityReport.js"
+        "url": "https://github.com/philbooth/complexity-report.git"
     },
     "keywords": [
         "complexity",
@@ -30,7 +23,7 @@
         "static",
         "analysis",
         "metrics",
-        "esprima"
+        "escomplex"
     ],
     "dependencies": {
         "check-types": "0.6.x",
@@ -38,14 +31,13 @@
         "commander": "2.0.x"
     },
     "devDependencies": {
-        "jake": "0.7.x",
         "jshint": "2.1.x",
         "mocha": "1.13.x",
         "chai": "1.8.x"
     },
-    "license": "MIT",
     "scripts": {
-        "test": "jake test"
+        "lint": "./node_modules/jshint/bin/jshint src --config config/jshint.json",
+        "test": "./node_modules/mocha/bin/mocha --ui tdd --reporter spec --colors test"
     }
 }
 
