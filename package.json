@@ -6,9 +6,8 @@
     "bugs": "https://github.com/philbooth/complexity-report/issues",
     "license": "MIT",
     "author": "Phil Booth <pmbooth@gmail.com>",
-    "main": "./src",
     "bin": {
-        "cr": "./src/cli.js"
+        "cr": "./src/index.js"
     },
     "repository": {
         "type": "git",
@@ -26,8 +25,8 @@
         "escomplex"
     ],
     "dependencies": {
+        "escomplex-js": "0.1.x",
         "check-types": "0.6.x",
-        "esprima": "1.0.x",
         "commander": "2.0.x"
     },
     "devDependencies": {

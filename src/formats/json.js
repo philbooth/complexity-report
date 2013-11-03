@@ -4,7 +4,7 @@
 
 exports.format = format;
 
-function format (reports) {
-    return JSON.stringify(reports, undefined, 2);
+function format (result) {
+    return JSON.stringify(result, undefined, 4);
 }
 

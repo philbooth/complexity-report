@@ -4,15 +4,22 @@
 
 exports.format = format;
 
-function format (reports) {
-    var formatted = '', i;
-
-    for (i = 0; i < reports.length; i += 1) {
-        formatted += formatModule(2, reports[i]);
-    }
-
+function format (result) {
     return createElementWithAttributes(
-        0, 'reports', 'xmlns="" xml:lang="en"', true, formatted
+        0,
+        'project',
+        'xmlns="" xml:lang="en" timestamp="' +
+            Date.now() +
+            '" first-order-denisty="' +
+            result.firstOrderDensity +
+            '" change-cost="' +
+            result.changeCost +
+            '" core-size="' +
+            result.coreSize + '"',
+        true,
+        result.reports.reduce(function (formatted, report) {
+            return formatted + formatModule(4, report);
+        }, '');
     );
 }
 
@@ -38,7 +45,7 @@ function formatModule (indentation, report) {
     }
 
     return createElementWithAttributes(
-        indentation, 'report', 'module="' + report.path + '"', true,
+        indentation, 'module', 'path="' + report.path + '"', true,
         createElement(nextIndentation, 'maintainability', false, report.maintainability) +
             formatAggregate(nextIndentation, report.aggregate) + functions
     );
@@ -70,6 +77,7 @@ function formatComplexity (indentation, data) {
         formatSlocComplexity(nextIndentation, data.sloc) +
             formatParameterComplexity(nextIndentation, data.params) +
             formatCyclomaticComplexity(nextIndentation, data.cyclomatic) +
+            formatCyclomaticDensity(nextIndentation, data.cyclomaticDensity) +
             formatHalsteadComplexity(nextIndentation, data.halstead)
     );
 }
@@ -92,6 +100,10 @@ function formatParameterComplexity (indentation, data) {
 
 function formatCyclomaticComplexity (indentation, data) {
     return createElement(indentation, 'cyclomatic', false, data);
+}
+
+function formatCyclomaticDensity (indentation.data) {
+    return createElement(indentation, 'cyclomatic-density', false, data);
 }
 
 function formatHalsteadComplexity (indentation, data) {

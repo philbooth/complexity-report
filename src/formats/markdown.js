@@ -4,10 +4,19 @@
 
 exports.format = format;
 
-function format (reports) {
-    return reports.reduce(function (formatted, report) {
+function format (result) {
+    return result.reports.reduce(function (formatted, report) {
         return formatted + formatModule(report) + '\n\n';
-    }, '# Complexity report ~ ' + (new Date()).toLocaleDateString() + '\n\n');
+    }, formatProject(result));
+}
+
+function formatProject (result) {
+    return [
+        '# Complexity report, ', (new Date()).toLocaleDateString(), '\n\n',
+        '* First-order density: ', result.firstOrderDensity, '%\n',
+        '* Change cost: ', result.changeCost, '%\n',
+        '* Core size: ', result.coreSize, '%\n\n'
+    ].join('');
 }
 
 function formatModule (report) {
@@ -35,6 +44,7 @@ function formatFunction (report) {
         '    * Logical SLOC: ', report.complexity.sloc.logical, '\n',
         '    * Parameter count: ', report.complexity.params, '\n',
         '    * Cyclomatic complexity: ', report.complexity.cyclomatic, '\n',
+        '    * Cyclomatic complexity density: ', report.complexity.cyclomaticDensity, '%\n',
         '    * Halstead difficulty: ', report.complexity.halstead.difficulty, '\n',
         '    * Halstead volume: ', report.complexity.halstead.volume, '\n',
         '    * Halstead effort: ', report.complexity.halstead.effort

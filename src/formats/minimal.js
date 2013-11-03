@@ -4,8 +4,8 @@
 
 exports.format = format;
 
-function format (reports) {
-    return reports.reduce(function (formatted, report) {
+function format (result) {
+    return result.reports.reduce(function (formatted, report) {
         return formatted + formatModule(report) + '\n';
     }, '');
 }
