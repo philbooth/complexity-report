@@ -28,82 +28,27 @@ readFiles(cli.args);
 function parseCommandLine () {
     cli.
         usage('[options] <file...>').
-        option(
-            '-o, --output <file>',
-            'specify an output file for the report'
-        ).
-        option(
-            '-f, --format <format>',
-            'specify the output format of the report'
-        ).
-        option(
-            '-a, --allfiles',
-            'include hidden files in the report'
-        ).
-        option(
-            '-p, --filepattern <pattern>',
-            'specify the files to process using a regular expression to match against file names'
-        ).
-        option(
-            '-r, --dirpattern <pattern>',
-            'specify the directories to process using a regular expression to match against directory names'
-        ).
-        option(
-            '-x, --maxfiles <number>',
-            'specify the maximum number of files to have open at any point',
-            parseInt
-        ).
-        option(
-            '-m, --minmi <maintainability>',
-            'specify the per-module maintainability index threshold',
-            parseFloat
-        ).
-        option(
-            '-c, --maxcc <complexity>',
-            'specify the per-function cyclomatic complexity threshold',
-            parseInt
-        ).
-        option(
-            '-d, --maxhd <difficulty>',
-            'specify the per-function Halstead difficulty threshold',
-            parseFloat
-        ).
-        option(
-            '-v, --maxhv <volume>',
-            'specify the per-function Halstead volume threshold',
-            parseFloat
-        ).
-        option(
-            '-e, --maxhe <effort>',
-            'specify the per-function Halstead effort threshold',
-            parseFloat
-        ).
-        option(
-            '-s, --silent',
-            'don\'t write any output to the console'
-        ).
-        option(
-            '-l, --logicalor',
-            'disregard operator || as source of cyclomatic complexity'
-        ).
-        option(
-            '-w, --switchcase',
-            'disregard switch statements as source of cyclomatic complexity'
-        ).
-        option(
-            '-i, --forin',
-            'treat for...in statements as source of cyclomatic complexity'
-        ).
-        option(
-            '-t, --trycatch',
-            'treat catch clauses as source of cyclomatic complexity'
-        ).
-        option(
-            '-n, --newmi',
-            'use the Microsoft-variant maintainability index (scale of 0 to 100)'
-        );
-
-    cli.parse(process.argv);
+        option('-o, --output <file>', 'specify an output file for the report').
+        option('-f, --format <format>', 'specify the output format of the report').
+        option('-a, --allfiles', 'include hidden files in the report').
+        option('-p, --filepattern <pattern>', 'specify the files to process using a regular expression to match against file names').
+        option('-P, --dirpattern <pattern>', 'specify the directories to process using a regular expression to match against directory names').
+        option('-m, --maxfiles <number>', 'specify the maximum number of files to have open at any point', parseInt).
+        option('-F, --maxfod <first-order density>', 'specify the per-project first-order density threshold', parseFloat).
+        option('-O, --maxcost <change cost>', 'specify the per-project change cost threshold', parseFloat).
+        option('-S, --maxsize <core size>', 'specify the per-project core size threshold', parseFloat).
+        option('-M, --minmi <maintainability>', 'specify the per-module maintainability index threshold', parseFloat).
+        option('-C, --maxcyc <complexity>', 'specify the per-function cyclomatic complexity threshold', parseInt).
+        option('-D, --maxhd <difficulty>', 'specify the per-function Halstead difficulty threshold', parseFloat).
+        option('-V, --maxhv <volume>', 'specify the per-function Halstead volume threshold', parseFloat).
+        option('-E, --maxhe <effort>', 'specify the per-function Halstead effort threshold', parseFloat).
+        option('-s, --silent', 'don\'t write any output to the console').
+        option('-l, --logicalor', 'disregard operator || as source of cyclomatic complexity').
+        option('-w, --switchcase', 'disregard switch statements as source of cyclomatic complexity').
+        option('-i, --forin', 'treat for...in statements as source of cyclomatic complexity').
+        option('-t, --trycatch', 'treat catch clauses as source of cyclomatic complexity').
+        option('-n, --newmi', 'use the Microsoft-variant maintainability index (scale of 0 to 100)').
+        parse(process.argv);
 
     options = {
         logicalor: !cli.logicalor,
@@ -241,7 +186,11 @@ function getReports () {
 
         failingModules = getFailingModules(result.reports);
         if (failingModules.length > 0) {
-            fail('Warning: Complexity threshold breached!\nFailing modules:\n' + failingModules.join('\n'));
+            return fail('Warning: Complexity threshold breached!\nFailing modules:\n' + failingModules.join('\n'));
+        }
+
+        if (isProjectComplexityThresholdSet() && isProjectTooComplex(result)) {
+            fail('Warning: Project complexity threshold breached!');
         }
     } catch (err) {
         error('getReports', err);
@@ -294,14 +243,14 @@ function isThresholdBreached (threshold, metric, inverse) {
 }
 
 function isFunctionComplexityThresholdSet () {
-    return check.isNumber(cli.maxcc) || check.isNumber(cli.maxhd) || check.isNumber(cli.maxhv) || check.isNumber(cli.maxhe);
+    return check.isNumber(cli.maxcyc) || check.isNumber(cli.maxhd) || check.isNumber(cli.maxhv) || check.isNumber(cli.maxhe);
 }
 
 function isFunctionTooComplex (report) {
     var i;
 
     for (i = 0; i < report.functions.length; i += 1) {
-        if (isThresholdBreached(cli.maxcc, report.functions[i].complexity.cyclomatic)) {
+        if (isThresholdBreached(cli.maxcyc, report.functions[i].complexity.cyclomatic)) {
             return true;
         }
 
@@ -316,6 +265,26 @@ function isFunctionTooComplex (report) {
         if (isThresholdBreached(cli.maxhe, report.functions[i].complexity.halstead.effort)) {
             return true;
         }
+    }
+
+    return false;
+}
+
+function isProjectComplexityThresholdSet () {
+    return check.isNumber(cli.maxfod) || check.isNumber(cli.maxcost) || check.isNumber(cli.maxsize);
+}
+
+function isProjectTooComplex (result) {
+    if (isThresholdBreached(cli.maxfod, result.firstOrderDensity)) {
+        return true;
+    }
+
+    if (isThresholdBreached(cli.maxcost, result.changeCost)) {
+        return true;
+    }
+
+    if (isThresholdBreached(cli.maxsize, result.coreSize)) {
+        return true;
     }
 
     return false;
