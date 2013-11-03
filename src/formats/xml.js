@@ -61,25 +61,16 @@ function formatFunction (indentation, data) {
     return createElementWithAttributes(
         indentation, 'function', 'name="' + data.name + '"', true,
         createElement(nextIndentation, 'line', false, data.line) +
-            formatComplexity(nextIndentation, data.complexity)
+            formatSlocComplexity(nextIndentation, data.sloc) +
+                formatParameterComplexity(nextIndentation, data.params) +
+                formatCyclomaticComplexity(nextIndentation, data.cyclomatic) +
+                formatCyclomaticDensity(nextIndentation, data.cyclomaticDensity) +
+                formatHalsteadComplexity(nextIndentation, data.halstead)
     );
 }
 
 function createElement (indentation, tag, linebreak, content) {
     return createElementWithTags(indentation, tag, tag, linebreak, content);
-}
-
-function formatComplexity (indentation, data) {
-    var nextIndentation = incrementIndentation(indentation);
-
-    return createElement(
-        indentation, 'complexity', true,
-        formatSlocComplexity(nextIndentation, data.sloc) +
-            formatParameterComplexity(nextIndentation, data.params) +
-            formatCyclomaticComplexity(nextIndentation, data.cyclomatic) +
-            formatCyclomaticDensity(nextIndentation, data.cyclomaticDensity) +
-            formatHalsteadComplexity(nextIndentation, data.halstead)
-    );
 }
 
 function formatSlocComplexity (indentation, data) {
@@ -124,9 +115,15 @@ function formatHalsteadMetrics (indentation, data) {
 }
 
 function formatAggregate (indentation, data) {
+    var nextIndentation = incrementIndentation(indentation);
+
     return createElement(
         indentation, 'aggregate', true,
-        formatComplexity(incrementIndentation(indentation), data.complexity)
+        formatSlocComplexity(nextIndentation, data.sloc) +
+            formatParameterComplexity(nextIndentation, data.params) +
+            formatCyclomaticComplexity(nextIndentation, data.cyclomatic) +
+            formatCyclomaticDensity(nextIndentation, data.cyclomaticDensity) +
+            formatHalsteadComplexity(nextIndentation, data.halstead)
     );
 }
 

@@ -22,7 +22,7 @@ function formatModule (report) {
     return [
         report.path, '\n\n',
         '  Maintainability index: ', report.maintainability, '\n',
-        '  Aggregate cyclomatic complexity: ', report.aggregate.complexity.cyclomatic, '\n',
+        '  Aggregate cyclomatic complexity: ', report.aggregate.cyclomatic, '\n',
         '  Dependency count: ', report.dependencies.length, '\n',
         '  Mean parameter count: ', report.params,
         formatFunctions(report.functions)
@@ -39,14 +39,14 @@ function formatFunction (report) {
     return [
         '  Function: ', report.name, '\n',
         '    Line No.: ', report.line, '\n',
-        '    Physical SLOC: ', report.complexity.sloc.physical, '\n',
-        '    Logical SLOC: ', report.complexity.sloc.logical, '\n',
-        '    Parameter count: ', report.complexity.params, '\n',
-        '    Cyclomatic complexity: ', report.complexity.cyclomatic, '\n',
-        '    Cyclomatic complexity density: ', report.complexity.cyclomaticDensity, '%\n',
-        '    Halstead difficulty: ', report.complexity.halstead.difficulty, '\n',
-        '    Halstead volume: ', report.complexity.halstead.volume, '\n',
-        '    Halstead effort: ', report.complexity.halstead.effort
+        '    Physical SLOC: ', report.sloc.physical, '\n',
+        '    Logical SLOC: ', report.sloc.logical, '\n',
+        '    Parameter count: ', report.params, '\n',
+        '    Cyclomatic complexity: ', report.cyclomatic, '\n',
+        '    Cyclomatic complexity density: ', report.cyclomaticDensity, '%\n',
+        '    Halstead difficulty: ', report.halstead.difficulty, '\n',
+        '    Halstead volume: ', report.halstead.volume, '\n',
+        '    Halstead effort: ', report.halstead.effort
     ].join('');
 }
 

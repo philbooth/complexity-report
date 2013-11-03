@@ -30,7 +30,7 @@ function formatFunction (report) {
         ' (',
         report.line,
         '): ',
-        report.complexity.cyclomatic
+        report.cyclomatic
     ].join('');
 }
 
