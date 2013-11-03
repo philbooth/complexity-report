@@ -52,7 +52,7 @@ function formatModule (indentation, report) {
 }
 
 function incrementIndentation (indentation) {
-    return indentation + 2;
+    return indentation + 4;
 }
 
 function formatFunction (indentation, data) {
