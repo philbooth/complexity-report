@@ -6,12 +6,13 @@
 
 ## /home/phil/Code/escomplex/src/index.js
 
-* Maintainability index: 132.31087395723623
+* Physical LOC: 24
+* Logical LOC: 7* Mean parameter count: 3
 * Cyclomatic complexity: 2
 * Cyclomatic complexity density: 28.57142857142857%
+* Maintainability index: 132.31087395723623
 * Dependency count: 3
-* Mean parameter count: 3
-* Logical LOC: 7
+
 * Function: **analyse**
     * Line No.: 24
     * Physical LOC: 7
@@ -25,12 +26,13 @@
 
 ## /home/phil/Code/escomplex/src/module.js
 
-* Maintainability index: 120.72293362340362
+* Physical LOC: 331
+* Logical LOC: 191* Mean parameter count: 2.212121212121212
 * Cyclomatic complexity: 28
 * Cyclomatic complexity density: 14.659685863874344%
+* Maintainability index: 120.72293362340362
 * Dependency count: 1
-* Mean parameter count: 2.212121212121212
-* Logical LOC: 191
+
 * Function: **analyse**
     * Line No.: 9
     * Physical LOC: 60
@@ -364,12 +366,13 @@
 
 ## /home/phil/Code/escomplex/src/project.js
 
-* Maintainability index: 124.89166768409123
+* Physical LOC: 234
+* Logical LOC: 133* Mean parameter count: 1.8518518518518519
 * Cyclomatic complexity: 22
 * Cyclomatic complexity density: 16.541353383458645%
+* Maintainability index: 124.89166768409123
 * Dependency count: 4
-* Mean parameter count: 1.8518518518518519
-* Logical LOC: 133
+
 * Function: **analyse**
     * Line No.: 14
     * Physical LOC: 28
@@ -643,12 +646,13 @@
 
 ## /home/phil/Code/escomplex/src/safeName.js
 
-* Maintainability index: 122.71489671589015
+* Physical LOC: 15
+* Logical LOC: 8* Mean parameter count: 2
 * Cyclomatic complexity: 3
 * Cyclomatic complexity density: 37.5%
+* Maintainability index: 122.71489671589015
 * Dependency count: 1
-* Mean parameter count: 2
-* Logical LOC: 8
+
 * Function: **module.exports**
     * Line No.: 7
     * Physical LOC: 11
