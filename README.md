@@ -1,8 +1,8 @@
 # complexity-report
 
 Software complexity analysis for JavaScript projects.
-Command-line elder brother of [JSComplexity.org][jscomplexity].
-Front-end for [escomplex].
+Command-line front-end for [escomplex].
+Less attractive elder brother of [JSComplexity.org][jscomplexity].
 
 * [Software complexity analysis](#software-complexity-analysis)
 * [How it works](#how-it-works)
@@ -206,9 +206,9 @@ See the [contribution guidelines][contributions].
 
 [ci-image]: https://secure.travis-ci.org/philbooth/complexity-report.png?branch=master
 [ci-status]: http://travis-ci.org/#!/philbooth/complexity-report
+[escomplex]: https://github.com/philbooth/escomplex
 [jscomplexity]: http://jscomplexity.org/
 [node]: http://nodejs.org/
-[escomplex]: https://github.com/philbooth/escomplex
 [esprima]: http://esprima.org/
 [eg]: https://github.com/philbooth/complexity-report/blob/master/EXAMPLE.md
 [metrics]: https://github.com/philbooth/escomplex/blob/master/README.md#metrics
