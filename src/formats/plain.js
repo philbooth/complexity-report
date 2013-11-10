@@ -22,12 +22,12 @@ function formatModule (report) {
     return [
         report.path, '\n\n',
         '  Physical LOC: ', report.aggregate.sloc.physical, '\n',
-        '  Logical LOC: ', report.aggregate.sloc.logical,
+        '  Logical LOC: ', report.aggregate.sloc.logical, '\n',
         '  Mean parameter count: ', report.params, '\n',
         '  Cyclomatic complexity: ', report.aggregate.cyclomatic, '\n',
         '  Cyclomatic complexity density: ', report.aggregate.cyclomaticDensity, '%\n',
         '  Maintainability index: ', report.maintainability, '\n',
-        '  Dependency count: ', report.dependencies.length, '\n',
+        '  Dependency count: ', report.dependencies.length,
         formatFunctions(report.functions)
     ].join('');
 }
