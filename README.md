@@ -210,7 +210,7 @@ See the [contribution guidelines][contributions].
 [node]: http://nodejs.org/
 [escomplex]: https://github.com/philbooth/escomplex
 [esprima]: http://esprima.org/
-[eg]: https://github.com/philbooth/complexity-report/blob/master/SELF.md
+[eg]: https://github.com/philbooth/complexity-report/blob/master/EXAMPLE.md
 [metrics]: https://github.com/philbooth/escomplex/blob/master/README.md#metrics
 [nodeinstall]: http://nodejs.org/download
 [msvariant]: http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx
