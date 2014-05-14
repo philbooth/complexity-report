@@ -1,6 +1,6 @@
 {
     "name": "complexity-report",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Software complexity analysis for JavaScript projects",
     "homepage": "https://github.com/philbooth/complexity-report",
     "bugs": "https://github.com/philbooth/complexity-report/issues",
@@ -25,7 +25,7 @@
         "escomplex"
     ],
     "dependencies": {
-        "escomplex-js": "0.1.1",
+        "escomplex-js": "0.1.2",
         "check-types": "1.1.x",
         "commander": "2.0.x"
     },
