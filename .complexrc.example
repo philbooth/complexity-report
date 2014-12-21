@@ -1,0 +1,23 @@
+{
+  "output": "/Users/pbooth/complexity-report.md",
+  "format": "markdown",
+  "allfiles": false,
+  "filepattern": "\\.js$",
+  "dirpattern": "(server)|(client)|(helpers)",
+  "maxfiles": 256,
+  "maxfod": 20,
+  "maxcost": 50,
+  "maxsize": 25,
+  "minmi": 100,
+  "maxcyc": 8,
+  "maxcycden": 100,
+  "maxhd": 20,
+  "maxhv": 500,
+  "maxhe": 2000,
+  "silent": false,
+  "logicalor": false,
+  "switchcase": false,
+  "forin": false,
+  "trycatch": false,
+  "newmi": false
+}
