@@ -1,6 +1,6 @@
 {
     "name": "complexity-report",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "Software complexity analysis for JavaScript projects",
     "homepage": "https://github.com/philbooth/complexity-report",
     "bugs": "https://github.com/philbooth/complexity-report/issues",
