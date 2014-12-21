@@ -144,7 +144,8 @@ automatically.
 
 ```
 -h, --help                            output usage information
--o, --output <file>                   specify an output file for the report
+-c, --config <path>                   specify a configuration JSON file
+-o, --output <path>                   specify an output file for the report
 -f, --format <format>                 specify the output format of the report
 -a, --allfiles                        include hidden files in the report
 -p, --filepattern <pattern>           specify the files to process using a regular expression to match against file names
@@ -166,6 +167,34 @@ automatically.
 -t, --trycatch                        treat catch clauses as source of cyclomatic complexity
 -n, --newmi                           use the Microsoft-variant maintainability index (scale of 0 to 100)
 ```
+
+### Configuration files
+
+By default,
+complexity-report will attempt
+to read configuration options
+from a JSON file
+called `.complexrc`
+in the current working directory.
+This file should contain
+a JSON object
+with property names
+matching the long-form
+option names
+from the command line
+(the ones that follow `--`).
+Options set in this file
+will be over-ridden
+by options specified
+on the command line.
+
+See an [example configuration file][egconfig].
+
+You can also specify
+an alternative path
+to this file
+using the `-c`
+command-line option.
 
 ### Output formats
 
@@ -193,8 +222,8 @@ as [defined by escomplex][format],
 and return its string
 representation of the report.
 
-See `src/formats/plain.js`
-for an example format.
+See [the plain formatter][plain]
+for an example.
 
 ## Development
 
@@ -213,8 +242,9 @@ See the [contribution guidelines][contributions].
 [eg]: https://github.com/philbooth/complexity-report/blob/master/EXAMPLE.md
 [metrics]: https://github.com/philbooth/escomplex/blob/master/README.md#metrics
 [nodeinstall]: http://nodejs.org/download
-[msvariant]: http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx
+[egconfig]: https://github.com/philbooth/complexity-report/blob/master/.complexrc.example
 [format]: https://github.com/philbooth/escomplex/blob/master/README.md#result
+[plain]: https://github.com/philbooth/complexity-report/blob/master/src/formats/plain.js
 [contributions]: https://github.com/philbooth/complexity-report/blob/master/CONTRIBUTING.md
 [license]: https://github.com/philbooth/complexity-report/blob/master/COPYING
 

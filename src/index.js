@@ -26,8 +26,11 @@ expectFiles(cli.args, cli.help.bind(cli));
 readFiles(cli.args);
 
 function parseCommandLine () {
+    var config;
+
     cli.
         usage('[options] <path>').
+        option('-c, --config <path>', 'specify path to configuration JSON file').
         option('-o, --output <path>', 'specify an output file for the report').
         option('-f, --format <format>', 'specify the output format of the report').
         option('-a, --allfiles', 'include hidden files in the report').
@@ -50,6 +53,14 @@ function parseCommandLine () {
         option('-t, --trycatch', 'treat catch clauses as source of cyclomatic complexity').
         option('-n, --newmi', 'use the Microsoft-variant maintainability index (scale of 0 to 100)').
         parse(process.argv);
+
+    config = readConfig(cli.config);
+
+    Object.keys(config).forEach(function (key) {
+        if (cli[key] === undefined) {
+            cli[key] = config[key];
+        }
+    });
 
     options = {
         logicalor: !cli.logicalor,
@@ -80,6 +91,28 @@ function parseCommandLine () {
         formatter = require('./formats/' + cli.format);
     } catch (err) {
         formatter = require(cli.format);
+    }
+}
+
+function readConfig (configPath) {
+    var configInfo;
+
+    try {
+        if (check.not.unemptyString(configPath)) {
+            configPath = path.join(process.cwd(), '.complexrc');
+        }
+
+        if (fs.existsSync(configPath)) {
+            configInfo = fs.statSync(configPath);
+
+            if (configInfo.isFile()) {
+                return JSON.parse(fs.readFileSync(configPath), { encoding: 'utf8' });
+            }
+        }
+
+        return {};
+    } catch (err) {
+        error('readConfig', err);
     }
 }
 
@@ -149,11 +182,11 @@ function isOpenFileLimitReached () {
 
 function error (functionName, err) {
     fail('Fatal error [' + functionName + ']: ' + err.message);
+    process.exit(1);
 }
 
 function fail (message) {
     console.log(message);
-    process.exit(1);
 }
 
 function beginsWithShebang (source) {
