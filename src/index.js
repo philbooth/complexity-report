@@ -178,11 +178,11 @@ function isOpenFileLimitReached () {
 
 function error (functionName, err) {
     fail('Fatal error [' + functionName + ']: ' + err.message);
+    process.exit(1);
 }
 
 function fail (message) {
     console.log(message);
-    process.exit(1);
 }
 
 function beginsWithShebang (source) {
