@@ -12,7 +12,7 @@ path = require('path'),
 js = require('escomplex-js'),
 check = require('check-types');
 
-parseCommandLine();
+parseCommandLine(readConfig());
 
 state = {
     starting: true,
@@ -25,7 +25,23 @@ state = {
 expectFiles(cli.args, cli.help.bind(cli));
 readFiles(cli.args);
 
-function parseCommandLine () {
+function readConfig () {
+    var configPath, configInfo;
+
+    configPath = path.join(process.cwd(), '.complexrc');
+
+    if (fs.existsSync(configPath)) {
+        configInfo = fs.statSync(configPath);
+
+        if (configInfo.isFile()) {
+            return JSON.parse(fs.readFileSync(configPath), { encoding: 'utf8' });
+        }
+    }
+
+    return {};
+}
+
+function parseCommandLine (config) {
     cli.
         usage('[options] <path>').
         option('-o, --output <path>', 'specify an output file for the report').
@@ -50,6 +66,12 @@ function parseCommandLine () {
         option('-t, --trycatch', 'treat catch clauses as source of cyclomatic complexity').
         option('-n, --newmi', 'use the Microsoft-variant maintainability index (scale of 0 to 100)').
         parse(process.argv);
+
+    Object.keys(config).forEach(function (key) {
+        if (cli[key] === undefined) {
+            cli[key] = config[key];
+        }
+    });
 
     options = {
         logicalor: !cli.logicalor,
