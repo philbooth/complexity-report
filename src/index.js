@@ -97,19 +97,23 @@ function parseCommandLine () {
 function readConfig (configPath) {
     var configInfo;
 
-    if (check.not.unemptyString(configPath)) {
-        configPath = path.join(process.cwd(), '.complexrc');
-    }
-
-    if (fs.existsSync(configPath)) {
-        configInfo = fs.statSync(configPath);
-
-        if (configInfo.isFile()) {
-            return JSON.parse(fs.readFileSync(configPath), { encoding: 'utf8' });
+    try {
+        if (check.not.unemptyString(configPath)) {
+            configPath = path.join(process.cwd(), '.complexrc');
         }
-    }
 
-    return {};
+        if (fs.existsSync(configPath)) {
+            configInfo = fs.statSync(configPath);
+
+            if (configInfo.isFile()) {
+                return JSON.parse(fs.readFileSync(configPath), { encoding: 'utf8' });
+            }
+        }
+
+        return {};
+    } catch (err) {
+        error('readConfig', err);
+    }
 }
 
 function expectFiles (paths, noFilesFn) {
