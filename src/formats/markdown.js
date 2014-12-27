@@ -13,11 +13,11 @@ function format (result) {
 function formatProject (result) {
     return [
         '# Complexity report, ', (new Date()).toLocaleDateString(), '\n\n',
-        '* Mean per-function logical LOC: ', result.loc, '%\n',
-        '* Mean per-function parameter count: ', result.params, '%\n',
-        '* Mean per-function cyclomatic complexity: ', result.cyclomatic, '%\n',
-        '* Mean per-function Halstead effort: ', result.effort, '%\n',
-        '* Mean per-module maintainability index: ', result.maintainability, '%\n',
+        '* Mean per-function logical LOC: ', result.loc, '\n',
+        '* Mean per-function parameter count: ', result.params, '\n',
+        '* Mean per-function cyclomatic complexity: ', result.cyclomatic, '\n',
+        '* Mean per-function Halstead effort: ', result.effort, '\n',
+        '* Mean per-module maintainability index: ', result.maintainability, '\n',
         '* First-order density: ', result.firstOrderDensity, '%\n',
         '* Change cost: ', result.changeCost, '%\n',
         '* Core size: ', result.coreSize, '%\n\n'
