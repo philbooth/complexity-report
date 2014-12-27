@@ -1,5 +1,10 @@
-# Complexity report, Sunday, December 21, 2014
+# Complexity report, Saturday, December 27, 2014
 
+* Mean per-function logical LOC: 4.191244239631336%
+* Mean per-function parameter count: 2.2211981566820276%
+* Mean per-function cyclomatic complexity: 2.1059907834101383%
+* Mean per-function Halstead effort: 802.4973507353953%
+* Mean per-module maintainability index: 125.24778532321781%
 * First-order density: 18.75%
 * Change cost: 43.75%
 * Core size: 25%
@@ -27,11 +32,11 @@
 ## /Users/pbooth/code/escomplex/src/module.js
 
 * Physical LOC: 331
-* Logical LOC: 190
-* Mean parameter count: 2.212121212121212
-* Cyclomatic complexity: 27
-* Cyclomatic complexity density: 14.210526315789473%
-* Maintainability index: 120.83765757396243
+* Logical LOC: 192
+* Mean parameter count: 2.142857142857143
+* Cyclomatic complexity: 26
+* Cyclomatic complexity density: 13.541666666666666%
+* Maintainability index: 122.31078309873308
 * Dependency count: 1
 * Function: **analyse**
     * Line No.: 9
@@ -296,15 +301,25 @@
 * Function: **calculateMetrics**
     * Line No.: 238
     * Physical LOC: 39
-    * Logical LOC: 22
+    * Logical LOC: 20
     * Parameter count: 1
-    * Cyclomatic complexity: 3
-    * Cyclomatic complexity density: 13.636363636363635%
-    * Halstead difficulty: 20.02
-    * Halstead volume: 650.7430116670046
-    * Halstead effort: 13027.875093573432
+    * Cyclomatic complexity: 2
+    * Cyclomatic complexity density: 10%
+    * Halstead difficulty: 12.037037037037038
+    * Halstead volume: 557.4115101222976
+    * Halstead effort: 6709.582992212842
 * Function: **&lt;anonymous>**
-    * Line No.: 266
+    * Line No.: 250
+    * Physical LOC: 5
+    * Logical LOC: 3
+    * Parameter count: 1
+    * Cyclomatic complexity: 1
+    * Cyclomatic complexity density: 33.33333333333333%
+    * Halstead difficulty: 1.4285714285714286
+    * Halstead volume: 44.37895002019238
+    * Halstead effort: 63.39850002884626
+* Function: **&lt;anonymous>**
+    * Line No.: 264
     * Physical LOC: 1
     * Logical LOC: 1
     * Parameter count: 1
@@ -313,6 +328,16 @@
     * Halstead difficulty: 1.5
     * Halstead volume: 10
     * Halstead effort: 15
+* Function: **&lt;anonymous>**
+    * Line No.: 273
+    * Physical LOC: 3
+    * Logical LOC: 1
+    * Parameter count: 1
+    * Cyclomatic complexity: 1
+    * Cyclomatic complexity density: 100%
+    * Halstead difficulty: 1.5
+    * Halstead volume: 25.84962500721156
+    * Halstead effort: 38.77443751081734
 * Function: **calculateCyclomaticDensity**
     * Line No.: 278
     * Physical LOC: 3
@@ -366,23 +391,23 @@
 
 ## /Users/pbooth/code/escomplex/src/project.js
 
-* Physical LOC: 241
-* Logical LOC: 137
-* Mean parameter count: 1.8518518518518519
-* Cyclomatic complexity: 22
-* Cyclomatic complexity density: 16.05839416058394%
-* Maintainability index: 124.14198166311239
+* Physical LOC: 270
+* Logical LOC: 156
+* Mean parameter count: 1.7419354838709677
+* Cyclomatic complexity: 23
+* Cyclomatic complexity density: 14.743589743589745%
+* Maintainability index: 124.0598813563106
 * Dependency count: 4
 * Function: **analyse**
     * Line No.: 14
-    * Physical LOC: 35
-    * Logical LOC: 10
+    * Physical LOC: 36
+    * Logical LOC: 11
     * Parameter count: 3
     * Cyclomatic complexity: 1
-    * Cyclomatic complexity density: 10%
-    * Halstead difficulty: 8.357142857142858
-    * Halstead volume: 189.98960215439456
-    * Halstead effort: 1587.7702465760117
+    * Cyclomatic complexity density: 9.090909090909092%
+    * Halstead difficulty: 8.4
+    * Halstead volume: 206.32331253245206
+    * Halstead effort: 1733.1158252725975
 * Function: **&lt;anonymous>**
     * Line No.: 21
     * Physical LOC: 17
@@ -394,7 +419,7 @@
     * Halstead volume: 226.17809780285066
     * Halstead effort: 1749.1106230087119
 * Function: **createAdjacencyMatrix**
-    * Line No.: 50
+    * Line No.: 51
     * Physical LOC: 18
     * Logical LOC: 5
     * Parameter count: 1
@@ -404,7 +429,7 @@
     * Halstead volume: 166.7970000576925
     * Halstead effort: 917.3835003173086
 * Function: **&lt;anonymous>**
-    * Line No.: 55
+    * Line No.: 56
     * Physical LOC: 9
     * Logical LOC: 2
     * Parameter count: 2
@@ -414,7 +439,7 @@
     * Halstead volume: 79.95445336320968
     * Halstead effort: 266.51484454403226
 * Function: **&lt;anonymous>**
-    * Line No.: 57
+    * Line No.: 58
     * Physical LOC: 6
     * Logical LOC: 3
     * Parameter count: 2
@@ -424,7 +449,7 @@
     * Halstead volume: 101.57915548582149
     * Halstead effort: 541.7554959243812
 * Function: **&lt;anonymous>**
-    * Line No.: 53
+    * Line No.: 54
     * Physical LOC: 3
     * Logical LOC: 1
     * Parameter count: 2
@@ -434,7 +459,7 @@
     * Halstead volume: 30.880904142633646
     * Halstead effort: 81.06237337441333
 * Function: **comparePaths**
-    * Line No.: 69
+    * Line No.: 70
     * Physical LOC: 13
     * Logical LOC: 7
     * Parameter count: 2
@@ -444,7 +469,7 @@
     * Halstead volume: 303.2413500673362
     * Halstead effort: 6368.06835141406
 * Function: **getAdjacencyMatrixValue**
-    * Line No.: 83
+    * Line No.: 84
     * Physical LOC: 11
     * Logical LOC: 5
     * Parameter count: 3
@@ -454,7 +479,7 @@
     * Halstead volume: 76.10749561002055
     * Halstead effort: 412.2489345542779
 * Function: **doesDependencyExist**
-    * Line No.: 95
+    * Line No.: 96
     * Physical LOC: 9
     * Logical LOC: 1
     * Parameter count: 2
@@ -464,7 +489,7 @@
     * Halstead volume: 39.863137138648355
     * Halstead effort: 93.01398665684617
 * Function: **&lt;anonymous>**
-    * Line No.: 96
+    * Line No.: 97
     * Physical LOC: 7
     * Logical LOC: 3
     * Parameter count: 2
@@ -474,7 +499,7 @@
     * Halstead volume: 66.60791492653966
     * Halstead effort: 228.9647075599801
 * Function: **checkDependency**
-    * Line No.: 105
+    * Line No.: 106
     * Physical LOC: 11
     * Logical LOC: 5
     * Parameter count: 3
@@ -484,7 +509,7 @@
     * Halstead volume: 83.04820237218406
     * Halstead effort: 284.7366938474882
 * Function: **isCommonJSDependency**
-    * Line No.: 117
+    * Line No.: 118
     * Physical LOC: 3
     * Logical LOC: 1
     * Parameter count: 1
@@ -494,7 +519,7 @@
     * Halstead volume: 18.094737505048094
     * Halstead effort: 36.18947501009619
 * Function: **isInternalCommonJSDependency**
-    * Line No.: 121
+    * Line No.: 122
     * Physical LOC: 10
     * Logical LOC: 1
     * Parameter count: 1
@@ -504,7 +529,7 @@
     * Halstead volume: 132.6436125266828
     * Halstead effort: 900.081656431062
 * Function: **isDependency**
-    * Line No.: 132
+    * Line No.: 133
     * Physical LOC: 9
     * Logical LOC: 4
     * Parameter count: 3
@@ -514,7 +539,7 @@
     * Halstead volume: 151.23612512626258
     * Halstead effort: 1411.5371678451174
 * Function: **percentifyDensity**
-    * Line No.: 142
+    * Line No.: 143
     * Physical LOC: 3
     * Logical LOC: 1
     * Parameter count: 2
@@ -524,7 +549,7 @@
     * Halstead volume: 39
     * Halstead effort: 156
 * Function: **percentify**
-    * Line No.: 146
+    * Line No.: 147
     * Physical LOC: 7
     * Logical LOC: 3
     * Parameter count: 2
@@ -534,7 +559,7 @@
     * Halstead volume: 44.37895002019238
     * Halstead effort: 221.8947501009619
 * Function: **createVisibilityMatrix**
-    * Line No.: 154
+    * Line No.: 155
     * Physical LOC: 29
     * Logical LOC: 9
     * Parameter count: 1
@@ -544,7 +569,7 @@
     * Halstead volume: 212
     * Halstead effort: 1445.4545454545453
 * Function: **&lt;anonymous>**
-    * Line No.: 157
+    * Line No.: 158
     * Physical LOC: 4
     * Logical LOC: 2
     * Parameter count: 0
@@ -554,7 +579,7 @@
     * Halstead volume: 59.794705707972525
     * Halstead effort: 140.94466345450667
 * Function: **&lt;anonymous>**
-    * Line No.: 162
+    * Line No.: 163
     * Physical LOC: 3
     * Logical LOC: 1
     * Parameter count: 2
@@ -564,7 +589,7 @@
     * Halstead volume: 23.264662506490403
     * Halstead effort: 34.89699375973561
 * Function: **&lt;anonymous>**
-    * Line No.: 166
+    * Line No.: 167
     * Physical LOC: 13
     * Logical LOC: 1
     * Parameter count: 2
@@ -574,7 +599,7 @@
     * Halstead volume: 27
     * Halstead effort: 67.5
 * Function: **&lt;anonymous>**
-    * Line No.: 167
+    * Line No.: 168
     * Physical LOC: 11
     * Logical LOC: 5
     * Parameter count: 2
@@ -584,7 +609,7 @@
     * Halstead volume: 58.81033751683406
     * Halstead effort: 245.0430729868086
 * Function: **setCoreSize**
-    * Line No.: 184
+    * Line No.: 185
     * Physical LOC: 38
     * Logical LOC: 16
     * Parameter count: 1
@@ -594,7 +619,7 @@
     * Halstead volume: 422.59091326949994
     * Halstead effort: 7043.181887825
 * Function: **&lt;anonymous>**
-    * Line No.: 197
+    * Line No.: 198
     * Physical LOC: 11
     * Logical LOC: 1
     * Parameter count: 2
@@ -604,7 +629,7 @@
     * Halstead volume: 43.18506523353572
     * Halstead effort: 115.16017395609524
 * Function: **&lt;anonymous>**
-    * Line No.: 198
+    * Line No.: 199
     * Physical LOC: 9
     * Logical LOC: 5
     * Parameter count: 3
@@ -614,7 +639,7 @@
     * Halstead volume: 83.76180828526728
     * Halstead effort: 725.9356718056497
 * Function: **&lt;anonymous>**
-    * Line No.: 214
+    * Line No.: 215
     * Physical LOC: 5
     * Logical LOC: 2
     * Parameter count: 2
@@ -624,7 +649,7 @@
     * Halstead volume: 75.28421251514429
     * Halstead effort: 322.6466250649041
 * Function: **getMedian**
-    * Line No.: 223
+    * Line No.: 224
     * Physical LOC: 9
     * Logical LOC: 4
     * Parameter count: 1
@@ -634,7 +659,7 @@
     * Halstead volume: 171.90318620677482
     * Halstead effort: 1729.7758112056715
 * Function: **compareNumbers**
-    * Line No.: 233
+    * Line No.: 234
     * Physical LOC: 11
     * Logical LOC: 5
     * Parameter count: 2
@@ -643,6 +668,46 @@
     * Halstead difficulty: 5.625
     * Halstead volume: 53.88872502451932
     * Halstead effort: 303.12407826292116
+* Function: **calculateAverages**
+    * Line No.: 246
+    * Physical LOC: 27
+    * Logical LOC: 14
+    * Parameter count: 1
+    * Cyclomatic complexity: 2
+    * Cyclomatic complexity density: 14.285714285714285%
+    * Halstead difficulty: 10.625
+    * Halstead volume: 282.02638308846554
+    * Halstead effort: 2996.5303203149465
+* Function: **&lt;anonymous>**
+    * Line No.: 263
+    * Physical LOC: 5
+    * Logical LOC: 1
+    * Parameter count: 1
+    * Cyclomatic complexity: 1
+    * Cyclomatic complexity density: 100%
+    * Halstead difficulty: 1.5
+    * Halstead volume: 34.86917501586544
+    * Halstead effort: 52.303762523798156
+* Function: **&lt;anonymous>**
+    * Line No.: 264
+    * Physical LOC: 3
+    * Logical LOC: 1
+    * Parameter count: 1
+    * Cyclomatic complexity: 1
+    * Cyclomatic complexity density: 100%
+    * Halstead difficulty: 1.6666666666666667
+    * Halstead volume: 18.575424759098897
+    * Halstead effort: 30.95904126516483
+* Function: **&lt;anonymous>**
+    * Line No.: 269
+    * Physical LOC: 3
+    * Logical LOC: 1
+    * Parameter count: 1
+    * Cyclomatic complexity: 1
+    * Cyclomatic complexity density: 100%
+    * Halstead difficulty: 2.25
+    * Halstead volume: 28.07354922057604
+    * Halstead effort: 63.16548574629609
 
 ## /Users/pbooth/code/escomplex/src/safeName.js
 
