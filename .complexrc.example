@@ -2,6 +2,7 @@
   "output": "/Users/pbooth/complexity-report.md",
   "format": "markdown",
   "allfiles": false,
+  "ignoreerrors": true,
   "filepattern": "\\.js$",
   "dirpattern": "(server)|(client)|(helpers)",
   "maxfiles": 256,
