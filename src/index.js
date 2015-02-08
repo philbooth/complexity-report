@@ -33,11 +33,11 @@ function parseCommandLine () {
         option('-c, --config <path>', 'specify path to configuration JSON file').
         option('-o, --output <path>', 'specify an output file for the report').
         option('-f, --format <format>', 'specify the output format of the report').
+        option('-e, --ignoreerrors', 'ignore parser errors').
         option('-a, --allfiles', 'include hidden files in the report').
         option('-p, --filepattern <pattern>', 'specify the files to process using a regular expression to match against file names').
         option('-P, --dirpattern <pattern>', 'specify the directories to process using a regular expression to match against directory names').
         option('-x, --excludepattern <pattern>', 'specify the the directories to exclude using a regular expression to match against directory names').
-        option('-e, --ignoreerrors', 'ignore any files that fail to parsed into an AST').
         option('-m, --maxfiles <number>', 'specify the maximum number of files to have open at any point', parseInt).
         option('-F, --maxfod <first-order density>', 'specify the per-project first-order density threshold', parseFloat).
         option('-O, --maxcost <change cost>', 'specify the per-project change cost threshold', parseFloat).
