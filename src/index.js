@@ -36,6 +36,8 @@ function parseCommandLine () {
         option('-a, --allfiles', 'include hidden files in the report').
         option('-p, --filepattern <pattern>', 'specify the files to process using a regular expression to match against file names').
         option('-P, --dirpattern <pattern>', 'specify the directories to process using a regular expression to match against directory names').
+        option('-e, --excludepattern <pattern>', 'specify the the directories to exclude using a regular expression to match against directory names').
+        option('-I, --ignoreerrors', 'ignore any files that fail to parsed into an AST').
         option('-m, --maxfiles <number>', 'specify the maximum number of files to have open at any point', parseInt).
         option('-F, --maxfod <first-order density>', 'specify the per-project first-order density threshold', parseFloat).
         option('-O, --maxcost <change cost>', 'specify the per-project change cost threshold', parseFloat).
@@ -67,7 +69,8 @@ function parseCommandLine () {
         switchcase: !cli.switchcase,
         forin: cli.forin || false,
         trycatch: cli.trycatch || false,
-        newmi: cli.newmi || false
+        newmi: cli.newmi || false,
+        ignoreErrors: cli.ignoreerrors || false
     };
 
     if (check.unemptyString(cli.format) === false) {
@@ -81,6 +84,10 @@ function parseCommandLine () {
 
     if (check.unemptyString(cli.dirpattern)) {
         cli.dirpattern = new RegExp(cli.dirpattern);
+    }
+
+    if (check.unemptyString(cli.excludepattern)) {
+        cli.excludepattern = new RegExp(cli.excludepattern);
     }
 
     if (check.number(cli.maxfiles) === false) {
@@ -127,7 +134,7 @@ function readFiles (paths) {
         var stat = fs.statSync(p);
 
         if (stat.isDirectory()) {
-            if (!cli.dirpattern || cli.dirpattern.test(p)) {
+            if ((!cli.dirpattern || cli.dirpattern.test(p)) && (!cli.excludepattern || !cli.excludepattern.test(p))) {
                 readDirectory(p);
             }
         } else if (cli.filepattern.test(p)) {
