@@ -147,9 +147,11 @@ automatically.
 -c, --config <path>                   specify a configuration JSON file
 -o, --output <path>                   specify an output file for the report
 -f, --format <format>                 specify the output format of the report
+-e, --ignoreerrors                    ignore parser errors
 -a, --allfiles                        include hidden files in the report
 -p, --filepattern <pattern>           specify the files to process using a regular expression to match against file names
 -P, --dirpattern <pattern>            specify the directories to process using a regular expression to match against directory names
+-x, --excludepattern <pattern>        specify the the directories to exclude using a regular expression to match against directory names
 -m, --maxfiles <number>               specify the maximum number of files to have open at any point
 -F, --maxfod <first-order density>    specify the per-project first-order density threshold
 -O, --maxcost <change cost>           specify the per-project change cost threshold
