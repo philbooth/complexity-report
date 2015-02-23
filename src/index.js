@@ -10,6 +10,8 @@ cli = require('commander'),
 fs = require('fs'),
 path = require('path'),
 js = require('escomplex-js'),
+coffee = require('escomplex-coffee'),
+escomplex = require('escomplex'),
 check = require('check-types');
 
 parseCommandLine();
@@ -17,7 +19,10 @@ parseCommandLine();
 state = {
     starting: true,
     openFileCount: 0,
-    source: [],
+    sources: {
+      js: [],
+      coffee: []
+    },
     tooComplex: false,
     failingModules: []
 };
@@ -54,6 +59,7 @@ function parseCommandLine () {
         option('-i, --forin', 'treat for...in statements as source of cyclomatic complexity').
         option('-t, --trycatch', 'treat catch clauses as source of cyclomatic complexity').
         option('-n, --newmi', 'use the Microsoft-variant maintainability index (scale of 0 to 100)').
+        option('-T, --coffeescript', 'include coffee-script files').
         parse(process.argv);
 
     config = readConfig(cli.config);
@@ -78,7 +84,11 @@ function parseCommandLine () {
     }
 
     if (check.unemptyString(cli.filepattern) === false) {
-        cli.filepattern = '\\.js$';
+        if (cli.coffeescript) {
+          cli.filepattern = '\\.(js|coffee)$';
+        } else {
+          cli.filepattern = '\\.js$';
+        }
     }
     cli.filepattern = new RegExp(cli.filepattern);
 
@@ -205,7 +215,8 @@ function commentFirstLine (source) {
 }
 
 function setSource (modulePath, source) {
-    state.source.push({
+    var type = getType(modulePath);
+    state.sources[type].push({
         path: modulePath,
         code: source
     });
@@ -215,11 +226,19 @@ function setSource (modulePath, source) {
     }
 }
 
+function getType(modulePath) {
+    return path.extname(modulePath).replace('.', '');
+}
+
 function getReports () {
-    var result, failingModules;
+    var jsResult, coffeeResult, result, failingModules;
 
     try {
-        result = js.analyse(state.source, options);
+        jsResult = js.analyse(state.sources.js, options);
+        if (cli.coffeescript) {
+            coffeeResult = coffee.analyse(state.sources.coffee, options);
+        }
+        result = mergeResults(jsResult, coffeeResult);
 
         if (!cli.silent) {
             writeReports(result);
@@ -236,6 +255,14 @@ function getReports () {
     } catch (err) {
         error('getReports', err);
     }
+}
+
+// merge the array of reports together and rerun through the code to compute aggregates
+function mergeResults(jsRes, coffeeRes) {
+
+  jsRes.reports = jsRes.reports.concat(coffeeRes.reports);
+
+  return escomplex.processResults(jsRes);
 }
 
 function writeReports (result) {
