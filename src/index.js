@@ -259,6 +259,9 @@ function getReports () {
 
 // merge the array of reports together and rerun through the code to compute aggregates
 function mergeResults(jsRes, coffeeRes) {
+  if (!coffeeRes) {
+      return jsRes;
+  }
 
   jsRes.reports = jsRes.reports.concat(coffeeRes.reports);
 
