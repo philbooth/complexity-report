@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-/*globals require, process, console, setImmediate */
+/*globals require, process, console */
 
 'use strict';
 
-var options, formatter, state,
+var options, formatter, state, queue,
 
 cli = require('commander'),
 fs = require('fs'),
@@ -12,23 +12,37 @@ path = require('path'),
 js = require('escomplex-js'),
 coffee = require('escomplex-coffee'),
 escomplex = require('escomplex'),
-check = require('check-types');
+check = require('check-types'),
+async = require('async');
+
 
 parseCommandLine();
 
 state = {
-    starting: true,
-    openFileCount: 0,
     sources: {
-      js: [],
-      coffee: []
+        js: [],
+        coffee: []
     },
-    tooComplex: false,
-    failingModules: []
 };
 
 expectFiles(cli.args, cli.help.bind(cli));
-readFiles(cli.args);
+queue = async.queue(function(filePath, cb) {
+    fs.readFile(filePath, 'utf8', function (err, source) {
+        if (err) {
+            error('readFile', err);
+        }
+
+        if (beginsWithShebang(source)) {
+            source = commentFirstLine(source);
+        }
+
+        setSource(filePath, source);
+        cb();
+    });
+}, cli.maxfiles);
+readFiles(cli.args, function() {
+    console.log('fin');
+});
 
 function parseCommandLine () {
     var config;
@@ -60,6 +74,7 @@ function parseCommandLine () {
         option('-t, --trycatch', 'treat catch clauses as source of cyclomatic complexity').
         option('-n, --newmi', 'use the Microsoft-variant maintainability index (scale of 0 to 100)').
         option('-T, --coffeescript', 'include coffee-script files').
+        option('-S, --nocoresize', 'don\'t calculate core size or visibility matrix').
         parse(process.argv);
 
     config = readConfig(cli.config);
@@ -76,7 +91,8 @@ function parseCommandLine () {
         forin: cli.forin || false,
         trycatch: cli.trycatch || false,
         newmi: cli.newmi || false,
-        ignoreErrors: cli.ignoreerrors || false
+        ignoreErrors: cli.ignoreerrors || false,
+        noCoreSize: cli.nocoresize || false
     };
 
     if (check.unemptyString(cli.format) === false) {
@@ -85,9 +101,9 @@ function parseCommandLine () {
 
     if (check.unemptyString(cli.filepattern) === false) {
         if (cli.coffeescript) {
-          cli.filepattern = '\\.(js|coffee)$';
+            cli.filepattern = '\\.(js|coffee)$';
         } else {
-          cli.filepattern = '\\.js$';
+            cli.filepattern = '\\.js$';
         }
     }
     cli.filepattern = new RegExp(cli.filepattern);
@@ -139,62 +155,49 @@ function expectFiles (paths, noFilesFn) {
     }
 }
 
-function readFiles (paths) {
-    paths.forEach(function (p) {
-        var stat = fs.statSync(p);
-
-        if (stat.isDirectory()) {
-            if ((!cli.dirpattern || cli.dirpattern.test(p)) && (!cli.excludepattern || !cli.excludepattern.test(p))) {
-                readDirectory(p);
-            }
-        } else if (cli.filepattern.test(p)) {
-            conditionallyReadFile(p);
+function readFiles (paths, cb) {
+    async.each(paths, processPath, function(err) {
+        if (err) {
+            error('readFiles', err);
         }
+        queue.drain = function() {
+            getReports();
+            cb();
+        };
     });
-
-    state.starting = false;
 }
 
-function readDirectory (directoryPath) {
-    readFiles(
-        fs.readdirSync(directoryPath).filter(function (p) {
+function processPath(p, cb) {
+    fs.stat(p, function(err, stat) {
+        if (err) {
+            return cb(err);
+        }
+        if (stat.isDirectory()) {
+            if ((!cli.dirpattern || cli.dirpattern.test(p)) && (!cli.excludepattern || !cli.excludepattern.test(p))) {
+                return readDirectory(p, cb);
+            }
+        } else if (cli.filepattern.test(p)) {
+            queue.push(p);
+        }
+        cb();
+    });
+}
+
+function readDirectory (directoryPath, cb) {
+    fs.readdir(directoryPath, function(err, files) {
+        if (err) {
+            return cb(err);
+        }
+        files = files.filter(function (p) {
             return path.basename(p).charAt(0) !== '.' || cli.allfiles;
         }).map(function (p) {
             return path.resolve(directoryPath, p);
-        })
-    );
-}
-
-function conditionallyReadFile (filePath) {
-    if (isOpenFileLimitReached()) {
-        setImmediate(function () {
-            conditionallyReadFile(filePath);
         });
-    } else {
-        readFile(filePath);
-    }
-}
-
-function readFile (filePath) {
-    state.openFileCount += 1;
-
-    fs.readFile(filePath, 'utf8', function (err, source) {
-        if (err) {
-            error('readFile', err);
+        if (!files.length) {
+            return cb();
         }
-
-        state.openFileCount -= 1;
-
-        if (beginsWithShebang(source)) {
-            source = commentFirstLine(source);
-        }
-
-        setSource(filePath, source);
+        async.each(files, processPath, cb);
     });
-}
-
-function isOpenFileLimitReached () {
-    return state.openFileCount >= cli.maxfiles;
 }
 
 function error (functionName, err) {
@@ -220,10 +223,6 @@ function setSource (modulePath, source) {
         path: modulePath,
         code: source
     });
-
-    if (state.starting === false && state.openFileCount === 0) {
-        getReports();
-    }
 }
 
 function getType(modulePath) {
@@ -234,10 +233,11 @@ function getReports () {
     var jsResult, coffeeResult, result, failingModules;
 
     try {
-        jsResult = js.analyse(state.sources.js, options);
         if (cli.coffeescript) {
+            options.skipProcess = true;
             coffeeResult = coffee.analyse(state.sources.coffee, options);
         }
+        jsResult = js.analyse(state.sources.js, options);
         result = mergeResults(jsResult, coffeeResult);
 
         if (!cli.silent) {
@@ -259,13 +259,13 @@ function getReports () {
 
 // merge the array of reports together and rerun through the code to compute aggregates
 function mergeResults(jsRes, coffeeRes) {
-  if (!coffeeRes) {
-      return jsRes;
-  }
+    if (!coffeeRes) {
+        return jsRes;
+    }
 
-  jsRes.reports = jsRes.reports.concat(coffeeRes.reports);
+    jsRes.reports = jsRes.reports.concat(coffeeRes.reports);
 
-  return escomplex.processResults(jsRes);
+    return escomplex.processResults(jsRes, cli.nocoresize || false);
 }
 
 function writeReports (result) {
