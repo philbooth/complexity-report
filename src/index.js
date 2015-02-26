@@ -74,7 +74,7 @@ function parseCommandLine () {
         option('-t, --trycatch', 'treat catch clauses as source of cyclomatic complexity').
         option('-n, --newmi', 'use the Microsoft-variant maintainability index (scale of 0 to 100)').
         option('-T, --coffeescript', 'include coffee-script files').
-        option('-S, --nocoresize', 'don\'t calculate core size or visibility matrix').
+        option('-Q, --nocoresize', 'don\'t calculate core size or visibility matrix').
         parse(process.argv);
 
     config = readConfig(cli.config);
