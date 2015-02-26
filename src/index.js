@@ -41,7 +41,6 @@ queue = async.queue(function(filePath, cb) {
     });
 }, cli.maxfiles);
 readFiles(cli.args, function() {
-    console.log('fin');
 });
 
 function parseCommandLine () {
@@ -234,7 +233,7 @@ function getReports () {
 
     try {
         if (cli.coffeescript) {
-            options.skipProcess = true;
+            options.skipCalculation = true;
             coffeeResult = coffee.analyse(state.sources.coffee, options);
         }
         jsResult = js.analyse(state.sources.js, options);
