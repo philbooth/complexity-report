@@ -26,21 +26,8 @@ state = {
 };
 
 expectFiles(cli.args, cli.help.bind(cli));
-queue = async.queue(function(filePath, cb) {
-    fs.readFile(filePath, 'utf8', function (err, source) {
-        if (err) {
-            error('readFile', err);
-        }
-
-        if (beginsWithShebang(source)) {
-            source = commentFirstLine(source);
-        }
-
-        setSource(filePath, source);
-        cb();
-    });
-}, cli.maxfiles);
-readFiles(cli.args, function() {
+queue = async.queue(readFile, cli.maxfiles);
+processPaths(cli.args, function() {
 });
 
 function parseCommandLine () {
@@ -154,7 +141,7 @@ function expectFiles (paths, noFilesFn) {
     }
 }
 
-function readFiles (paths, cb) {
+function processPaths (paths, cb) {
     async.each(paths, processPath, function(err) {
         if (err) {
             error('readFiles', err);
@@ -199,6 +186,21 @@ function readDirectory (directoryPath, cb) {
     });
 }
 
+function readFile(filePath, cb) {
+    fs.readFile(filePath, 'utf8', function (err, source) {
+        if (err) {
+            error('readFile', err);
+        }
+
+        if (beginsWithShebang(source)) {
+            source = commentFirstLine(source);
+        }
+
+        setSource(filePath, source);
+        cb();
+    });
+}
+
 function error (functionName, err) {
     fail('Fatal error [' + functionName + ']: ' + err.message);
     process.exit(1);
@@ -233,6 +235,10 @@ function getReports () {
 
     try {
         if (cli.coffeescript) {
+            // if we have coffeescript,
+            // we will be merning results
+            // and recalculating all the values.
+            // skipping the calculation here saves on computation
             options.skipCalculation = true;
             coffeeResult = coffee.analyse(state.sources.coffee, options);
         }
