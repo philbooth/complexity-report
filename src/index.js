@@ -15,6 +15,10 @@ escomplex = require('escomplex'),
 check = require('check-types'),
 async = require('async');
 
+// Node v0.10 polyfill for process.exitCode
+process.on('exit', function(code) {
+    process.exit(code || process.exitCode);
+});
 
 parseCommandLine();
 
@@ -208,6 +212,7 @@ function error (functionName, err) {
 
 function fail (message) {
     console.log(message);
+    process.exitCode = 2;
 }
 
 function beginsWithShebang (source) {
