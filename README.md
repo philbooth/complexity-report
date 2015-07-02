@@ -1,5 +1,7 @@
 # complexity-report
 
+**NOTE: This project is no longer maintained. If you're interested in taking ownership of this repo, please contact me.**
+
 Software complexity analysis for JavaScript projects.
 Command-line front-end for [escomplex].
 Less attractive elder brother of [JSComplexity.org][jscomplexity].
