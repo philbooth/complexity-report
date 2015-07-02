@@ -1,6 +1,6 @@
 # complexity-report
 
-**NOTE: This project is no longer maintained. If you're interested in taking ownership of this repo, please contact me.**
+**NOTE: This project is no longer maintained. If you're interested in taking ownership, please contact me.**
 
 Software complexity analysis for JavaScript projects.
 Command-line front-end for [escomplex].
