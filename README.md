@@ -1,6 +1,10 @@
 # complexity-report
 
-**NOTE: This fork is no longer maintained. Use [Jared's fork][jared] instead.**
+:exclamation: :anguished: :exclamation: :anguished: :exclamation: :anguished: :exclamation: :anguished: :exclamation: :anguished: :exclamation: :anguished: :exclamation: :anguished: :exclamation: :anguished: :exclamation: :anguished: :exclamation: :anguished: :exclamation:
+
+**NOTE: This fork is no longer maintained. Use [Jared's fork](https://github.com/jared-stilwell/complexity-report) instead.**
+
+:exclamation: :anguished: :exclamation: :anguished: :exclamation: :anguished: :exclamation: :anguished: :exclamation: :anguished: :exclamation: :anguished: :exclamation: :anguished: :exclamation: :anguished: :exclamation: :anguished: :exclamation: :anguished: :exclamation:
 
 Software complexity analysis for JavaScript projects.
 Command-line front-end for [escomplex].
@@ -238,9 +242,6 @@ See the [contribution guidelines][contributions].
 
 [MIT][license]
 
-[ci-image]: https://secure.travis-ci.org/philbooth/complexity-report.png?branch=master
-[ci-status]: http://travis-ci.org/#!/philbooth/complexity-report
-[jared]: https://github.com/jared-stilwell/complexity-report
 [escomplex]: https://github.com/philbooth/escomplex
 [jscomplexity]: http://jscomplexity.org/
 [node]: http://nodejs.org/
@@ -253,4 +254,3 @@ See the [contribution guidelines][contributions].
 [plain]: https://github.com/philbooth/complexity-report/blob/master/src/formats/plain.js
 [contributions]: https://github.com/philbooth/complexity-report/blob/master/CONTRIBUTING.md
 [license]: https://github.com/philbooth/complexity-report/blob/master/COPYING
-
