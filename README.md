@@ -1,6 +1,6 @@
 # complexity-report
 
-**NOTE: This project is no longer maintained. If you're interested in taking ownership, please contact me.**
+**NOTE: This fork is no longer maintained. Use [Jared's fork][jared] instead.**
 
 Software complexity analysis for JavaScript projects.
 Command-line front-end for [escomplex].
@@ -240,6 +240,7 @@ See the [contribution guidelines][contributions].
 
 [ci-image]: https://secure.travis-ci.org/philbooth/complexity-report.png?branch=master
 [ci-status]: http://travis-ci.org/#!/philbooth/complexity-report
+[jared]: https://github.com/jared-stilwell/complexity-report
 [escomplex]: https://github.com/philbooth/escomplex
 [jscomplexity]: http://jscomplexity.org/
 [node]: http://nodejs.org/
